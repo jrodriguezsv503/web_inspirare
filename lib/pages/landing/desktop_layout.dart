@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:inspirare/theme/web_theme.dart';
-import 'package:inspirare/widgets/cards_desktop.dart';
+import 'package:inspirare/widgets/sections/hero_section.dart';
+import 'package:inspirare/widgets/sections/about_section.dart';
+import 'package:inspirare/widgets/sections/services_section.dart';
+import 'package:inspirare/widgets/sections/testimonials_section.dart';
+import 'package:inspirare/widgets/sections/contact_section.dart';
+import 'package:inspirare/widgets/sections/footer_section.dart';
 
 class HeroSectionWeb extends StatefulWidget {
   const HeroSectionWeb({super.key});
@@ -11,243 +15,240 @@ class HeroSectionWeb extends StatefulWidget {
 }
 
 class _HeroSectionWebState extends State<HeroSectionWeb> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isScrolled = false;
+
+  // Section keys for scroll navigation
+  final GlobalKey _heroKey = GlobalKey();
+  final GlobalKey _aboutKey = GlobalKey();
+  final GlobalKey _servicesKey = GlobalKey();
+  final GlobalKey _testimonialsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final scrolled = _scrollController.offset > 100;
+    if (scrolled != _isScrolled) {
+      setState(() => _isScrolled = scrolled);
+    }
+  }
+
+  void _scrollToSection(String section) {
+    GlobalKey? key;
+    switch (section) {
+      case 'inicio':
+        key = _heroKey;
+        break;
+      case 'nosotros':
+        key = _aboutKey;
+        break;
+      case 'servicios':
+        key = _servicesKey;
+        break;
+      case 'historias':
+        key = _testimonialsKey;
+        break;
+      case 'contacto':
+        key = _contactKey;
+        break;
+    }
+
+    if (key?.currentContext != null) {
+      Scrollable.ensureVisible(
+        key!.currentContext!,
+        duration: const Duration(milliseconds: 800),
+        curve: AppTransitions.smooth,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Usamos un Scaffold como base de nuestra página
     return Scaffold(
+      backgroundColor: Palette.background,
       body: Stack(
         children: [
-          // 1. IMAGEN DE FONDO
-          // La colocamos como el primer elemento para que quede detrás de todo.
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                // Asegúrate de que la ruta a tu imagen sea correcta
-                image: AssetImage('assets/images/1.webp'),
-                // BoxFit.cover hace que la imagen cubra todo el espacio sin deformarse
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-
-          // (Opcional) Una capa semitransparente para mejorar la legibilidad del texto
-          Container(
-            color: const Color.fromARGB(15, 0, 0, 0).withValues(alpha: 0.15),
-          ),
-          // 2. CONTENIDO SUPERPUESTO
-          // Usamos un Padding para que el contenido no quede pegado a los bordes
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 30.0,
-              horizontal: 80.0,
-            ),
+          // Main scrollable content
+          SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 2.1 BARRA DE NAVEGACIÓN SUPERIOR (CUSTOM APPBAR)
-                _CustomAppBar(),
-
-                // 2.2 CONTENIDO CENTRAL alineado a la izquierda
-                Expanded(
-                  child: Align(alignment: Alignment.center, child: SizedBox()),
+                // Hero Section
+                Container(
+                  key: _heroKey,
+                  child: HeroSection(
+                    onNavTap: _scrollToSection,
+                  ),
                 ),
-
-                // 2.3 TEXTO INFERIOR
-                _BottomText(),
+                // About Section
+                Container(
+                  key: _aboutKey,
+                  child: const AboutSection(),
+                ),
+                // Services Section
+                Container(
+                  key: _servicesKey,
+                  child: const ServicesSection(),
+                ),
+                // Testimonials Section
+                Container(
+                  key: _testimonialsKey,
+                  child: const TestimonialsSection(),
+                ),
+                // Contact Section
+                Container(
+                  key: _contactKey,
+                  child: const ContactSection(),
+                ),
+                // Footer Section
+                const FooterSection(),
               ],
             ),
           ),
+          // Sticky Navigation (appears on scroll)
+          AnimatedPositioned(
+            duration: AppTransitions.normal,
+            curve: AppTransitions.smooth,
+            top: _isScrolled ? 0 : -100,
+            left: 0,
+            right: 0,
+            child: _StickyNavBar(
+              onNavTap: _scrollToSection,
+              isVisible: _isScrolled,
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-// Widget para la barra de navegación
-class _CustomAppBar extends StatelessWidget {
+class _StickyNavBar extends StatelessWidget {
+  final Function(String) onNavTap;
+  final bool isVisible;
+
+  const _StickyNavBar({
+    required this.onNavTap,
+    required this.isVisible,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Lado izquierdo
-        Row(
-          children: [
-            const Text(
-              'Inspirare',
-              style: TextStyle(
-                color: Palette.background,
-                fontFamily: Fonts.brand,
-                fontSize: 48,
-              ),
+    return AnimatedOpacity(
+      duration: AppTransitions.normal,
+      opacity: isVisible ? 1.0 : 0.0,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        decoration: BoxDecoration(
+          color: Palette.dark.withValues(alpha: 0.95),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.2),
+              blurRadius: 20,
+              offset: const Offset(0, 4),
             ),
-            const SizedBox(width: 50),
-            _navLink(context, 'Nosotros'),
-            const SizedBox(width: 20),
-            _navLink(context, 'Historias'),
-            const SizedBox(width: 20),
-            _navLink(context, 'Productos'),
           ],
         ),
-        // Lado derecho
-        Row(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(width: 30),
-            // Botón CTA destacado
+            // Brand
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: () {
-                  showNonModalPopup(context, ContactContent());
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Palette.primary,
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Palette.primary.withValues(alpha: 0.4),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: const Text(
-                    'Contáctanos',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.none,
-                      fontFamily: Fonts.body,
-                    ),
+                onTap: () => onNavTap('inicio'),
+                child: Text(
+                  'Inspirare',
+                  style: TextStyle(
+                    fontFamily: Fonts.brand,
+                    fontSize: 28,
+                    color: Palette.background,
                   ),
                 ),
               ),
+            ),
+            // Nav links
+            Row(
+              children: [
+                _StickyNavLink(text: 'Nosotros', onTap: () => onNavTap('nosotros')),
+                const SizedBox(width: 32),
+                _StickyNavLink(text: 'Servicios', onTap: () => onNavTap('servicios')),
+                const SizedBox(width: 32),
+                _StickyNavLink(text: 'Historias', onTap: () => onNavTap('historias')),
+                const SizedBox(width: 32),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () => onNavTap('contacto'),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: Palette.primary,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: Text(
+                        'Contáctanos',
+                        style: TextStyle(
+                          fontFamily: Fonts.body,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget _navLink(BuildContext context, String text) {
-    return GestureDetector(
-      onTap: () {
-        Widget? dialogContent;
-        if (text == 'Nosotros') {
-          dialogContent = NosotrosContent();
-        } else if (text == 'Historias') {
-          dialogContent = HistoriesContent();
-        } else if (text == 'Productos') {
-          dialogContent = ProductContent();
-        } else if (text == 'Contactanos') {
-          dialogContent = ContactContent();
-        }
-        if (dialogContent != null) {
-          showNonModalPopup(context, dialogContent);
-        }
-      },
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white70,
-            fontSize: 18,
-            decoration: TextDecoration.none,
-          ),
-        ),
       ),
     );
-  }
-
-  // Popup no modal usando Overlay
-  void showNonModalPopup(BuildContext context, Widget content) {
-    final overlay = Overlay.of(context);
-    late OverlayEntry entry;
-    entry = OverlayEntry(
-      builder: (context) => Stack(
-        children: [
-          // Fondo transparente que cierra el popup al hacer click
-          Positioned.fill(
-            child: GestureDetector(
-              onTap: () => entry.remove(),
-              child: Container(color: Colors.transparent),
-            ),
-          ),
-          // Popup centrado
-          Center(
-            child: Material(
-              color: Colors.transparent,
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 700),
-                padding: const EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.7),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          color: Palette.background,
-                          size: 28,
-                        ),
-                        onPressed: () => entry.remove(),
-                        tooltip: 'Cerrar',
-                      ),
-                    ),
-                    Padding(padding: const EdgeInsets.all(20), child: content),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    overlay.insert(entry);
   }
 }
 
-// Widget para el contenido central
+class _StickyNavLink extends StatefulWidget {
+  final String text;
+  final VoidCallback onTap;
 
-// Widget para el texto de la parte inferior
-class _BottomText extends StatelessWidget {
+  const _StickyNavLink({required this.text, required this.onTap});
+
+  @override
+  State<_StickyNavLink> createState() => _StickyNavLinkState();
+}
+
+class _StickyNavLinkState extends State<_StickyNavLink> {
+  bool _isHovered = false;
+
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 20.0),
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            style: const TextStyle(fontSize: 18, color: Colors.white70),
-            children: <TextSpan>[
-              TextSpan(
-                text: 'Creamos experiencias digitales que ',
-                style: TextStyle(fontFamily: Fonts.body),
-              ),
-              TextSpan(
-                text: 'Inspiran',
-                style: TextStyle(
-                  fontSize: 28,
-                  color: Palette.background,
-                  fontFamily: Fonts.brand,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: Text(
+          widget.text,
+          style: TextStyle(
+            fontFamily: Fonts.body,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: _isHovered ? Palette.primary : Palette.background.withValues(alpha: 0.8),
           ),
         ),
       ),

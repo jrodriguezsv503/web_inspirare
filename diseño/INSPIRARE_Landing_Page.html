@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="INSPIRARE - Creamos experiencias digitales que inspiran. Desarrollo de aplicaciones móviles, sitios web y soluciones tecnológicas en El Salvador.">
+    <meta name="keywords" content="desarrollo web, aplicaciones móviles, software, El Salvador, tecnología, inspirare">
+    <meta name="author" content="INSPIRARE, S.A.S.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="INSPIRARE - Experiencias Digitales que Inspiran">
+    <meta property="og:description" content="Transformamos tus ideas en realidades digitales. Desarrollo de apps, sitios web y soluciones tecnológicas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inspirare.app">
+    
+    <title>INSPIRARE | Experiencias Digitales que Inspiran</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* ═══════════════════════════════════════════════════════════════════════
+           CSS VARIABLES - INSPIRARE DESIGN TOKENS
+           ═══════════════════════════════════════════════════════════════════════ */
+        :root {
+            --color-primary: #08C4D4;
+            --color-primary-light: #7EEAF4;
+            --color-primary-dark: #069AAA;
+            --color-dark: #212630;
+            --color-dark-light: #3A4252;
+            --color-background: #FFF9F5;
+            --color-accent-warm: #F4A259;
+            
+            --font-brand: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           RESET & BASE
+           ═══════════════════════════════════════════════════════════════════════ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-background);
+            color: var(--color-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: 4px;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           ANIMATIONS
+           ═══════════════════════════════════════════════════════════════════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(8, 196, 212, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(8, 196, 212, 0.7); }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s var(--transition-smooth) forwards;
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 0.8s var(--transition-smooth) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════════════════════════════════════ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(33, 38, 48, 0.3) 0%,
+                rgba(33, 38, 48, 0.1) 40%,
+                rgba(33, 38, 48, 0.5) 100%
+            );
+            z-index: 1;
+        }
+
+        /* Grain texture overlay */
+        .hero-grain {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 5%;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           NAVIGATION
+           ═══════════════════════════════════════════════════════════════════════ */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            opacity: 0;
+            animation: fadeIn 1s var(--transition-smooth) 0.3s forwards;
+        }
+
+        .nav-brand {
+            font-family: var(--font-brand);
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-style: italic;
+            color: var(--color-background);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .nav-brand:hover {
+            color: var(--color-primary);
+            text-shadow: 0 0 30px rgba(8, 196, 212, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: rgba(255, 249, 245, 0.8);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: width 0.3s var(--transition-smooth);
+        }
+
+        .nav-link:hover {
+            color: var(--color-background);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 0.75rem 1.75rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            box-shadow: 0 4px 20px rgba(8, 196, 212, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(8, 196, 212, 0.5);
+            background: var(--color-primary-dark);
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-background);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           HERO MAIN CONTENT
+           ═══════════════════════════════════════════════════════════════════════ */
+        .hero-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-bottom: 4rem;
+        }
+
+        .hero-tagline {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s var(--transition-smooth) 0.5s forwards;
+        }
+
+        .hero-tagline-text {
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            color: rgba(255, 249, 245, 0.85);
+            font-weight: 400;
+        }
+
+        .hero-tagline-highlight {
+            font-family: var(--font-brand);
+            font-size: 2rem;
+            font-weight: 900;
+            font-style: italic;
+            color: var(--color-background);
+            position: relative;
+        }
+
+        .hero-tagline-highlight::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+            z-index: -1;
+            opacity: 0.6;
+            transform: skewX(-5deg);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           SECTIONS COMMON
+           ═══════════════════════════════════════════════════════════════════════ */
+        .section {
+            padding: 6rem 5%;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-label::before,
+        .section-label::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 1px;
+            background: var(--color-primary);
+        }
+
+        .section-label::before { right: calc(100% + 15px); }
+        .section-label::after { left: calc(100% + 15px); }
+
+        .section-title {
+            font-family: var(--font-brand);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: var(--color-dark);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--color-dark-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           ABOUT SECTION
+           ═══════════════════════════════════════════════════════════════════════ */
+        .about {
+            background: var(--color-dark);
+            color: var(--color-background);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(8, 196, 212, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-text h2 {
+            font-family: var(--font-brand);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .about-text h2 span {
+            color: var(--color-primary);
+        }
+
+        .about-text p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: rgba(255, 249, 245, 0.85);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-mission {
+            background: rgba(8, 196, 212, 0.1);
+            border-left: 3px solid var(--color-primary);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin-top: 2rem;
+        }
+
+        .about-mission p {
+            font-style: italic;
+            margin: 0;
+            color: rgba(255, 249, 245, 0.9);
+        }
+
+        .about-visual {
+            position: relative;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 249, 245, 0.05);
+            border: 1px solid rgba(8, 196, 212, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .stat-card:hover {
+            background: rgba(8, 196, 212, 0.1);
+            border-color: var(--color-primary);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-family: var(--font-brand);
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 249, 245, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           SERVICES SECTION
+           ═══════════════════════════════════════════════════════════════════════ */
+        .services {
+            background: var(--color-background);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--transition-smooth);
+            border: 1px solid rgba(33, 38, 48, 0.08);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(33, 38, 48, 0.12);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .service-title {
+            font-family: var(--font-brand);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: var(--color-dark-light);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           TESTIMONIALS SECTION
+           ═══════════════════════════════════════════════════════════════════════ */
+        .testimonials {
+            background: linear-gradient(180deg, var(--color-background) 0%, #F5F0EC 100%);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(33, 38, 48, 0.06);
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(33, 38, 48, 0.1);
+        }
+
+        .testimonial-quote-icon {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: var(--color-primary);
+            opacity: 0.2;
+        }
+
+        .testimonial-logo {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover .testimonial-logo {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--color-dark);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(33, 38, 48, 0.1);
+        }
+
+        .testimonial-author-info h4 {
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .testimonial-author-info span {
+            font-size: 0.9rem;
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           CONTACT SECTION
+           ═══════════════════════════════════════════════════════════════════════ */
+        .contact {
+            background: var(--color-dark);
+            color: var(--color-background);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 50%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(8, 196, 212, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info h2 {
+            font-family: var(--font-brand);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info h2 span {
+            color: var(--color-primary);
+        }
+
+        .contact-info > p {
+            font-size: 1.125rem;
+            color: rgba(255, 249, 245, 0.8);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(255, 249, 245, 0.9);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            color: var(--color-primary);
+            transform: translateX(5px);
+        }
+
+        .contact-method-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(8, 196, 212, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover .contact-method-icon {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .contact-cta {
+            background: rgba(255, 249, 245, 0.05);
+            border: 1px solid rgba(8, 196, 212, 0.3);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .contact-cta h3 {
+            font-family: var(--font-brand);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .contact-cta p {
+            color: rgba(255, 249, 245, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════════════ */
+        .footer {
+            background: #1a1d24;
+            color: rgba(255, 249, 245, 0.6);
+            padding: 3rem 5%;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-brand {
+            font-family: var(--font-brand);
+            font-size: 1.75rem;
+            font-weight: 900;
+            font-style: italic;
+            color: var(--color-background);
+        }
+
+        .footer-legal {
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .footer-legal p {
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 249, 245, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-background);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--color-primary);
+            transform: translateY(-3px);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           MOBILE MENU
+           ═══════════════════════════════════════════════════════════════════════ */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: rgba(33, 38, 48, 0.98);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: var(--color-background);
+            cursor: pointer;
+        }
+
+        .mobile-menu a {
+            font-family: var(--font-brand);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-background);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--color-primary);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-mobile-toggle {
+                display: block;
+            }
+
+            .nav-brand {
+                font-size: 1.75rem;
+            }
+
+            .services-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-tagline-text {
+                font-size: 1rem;
+            }
+
+            .hero-tagline-highlight {
+                font-size: 1.5rem;
+            }
+
+            .section {
+                padding: 4rem 5%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════
+           SCROLL REVEAL
+           ═══════════════════════════════════════════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="hero" id="inicio">
+        <div class="hero-background">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80" 
+                 alt="Portal luminoso en campo de flores - Inspirare" 
+                 loading="eager">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-grain"></div>
+        
+        <div class="hero-content">
+            <nav class="nav">
+                <a href="#inicio" class="nav-brand">Inspirare</a>
+                
+                <ul class="nav-links">
+                    <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+                    <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="#historias" class="nav-link">Historias</a></li>
+                    <li><button class="nav-cta" onclick="scrollToSection('contacto')">Contáctanos</button></li>
+                </ul>
+
+                <button class="nav-mobile-toggle" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" width="28" height="28"></i>
+                </button>
+            </nav>
+
+            <div class="hero-main">
+                <div class="hero-tagline">
+                    <span class="hero-tagline-text">Creamos experiencias digitales que</span>
+                    <span class="hero-tagline-highlight">Inspiran</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         MOBILE MENU
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+            <i data-lucide="x" width="32" height="32"></i>
+        </button>
+        <a href="#nosotros" onclick="toggleMobileMenu()">Nosotros</a>
+        <a href="#servicios" onclick="toggleMobileMenu()">Servicios</a>
+        <a href="#historias" onclick="toggleMobileMenu()">Historias</a>
+        <a href="#contacto" onclick="toggleMobileMenu()">Contáctanos</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         ABOUT SECTION
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="section about" id="nosotros">
+        <div class="about-content">
+            <div class="about-text reveal">
+                <h2>Transformamos ideas en <span>realidades digitales</span></h2>
+                <p>
+                    En <strong>Inspirare</strong>, somos un equipo de desarrolladores y diseñadores 
+                    apasionados por la tecnología y la creación de productos digitales que marcan 
+                    la diferencia. Combinamos creatividad y experiencia técnica para llevar tu 
+                    visión al siguiente nivel.
+                </p>
+                <p>
+                    Desde El Salvador para el mundo, construimos soluciones que no solo funcionan, 
+                    sino que inspiran a quienes las usan.
+                </p>
+                
+                <div class="about-mission">
+                    <p>
+                        <strong>Nuestra misión:</strong> Ayudarte a crecer en el mundo digital 
+                        con herramientas confiables, seguras e innovadoras.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="about-visual reveal">
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Años de experiencia</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Proyectos entregados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Clientes satisfechos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Soporte continuo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         SERVICES SECTION
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="section services" id="servicios">
+        <div class="section-header reveal">
+            <span class="section-label">Nuestros Servicios</span>
+            <h2 class="section-title">Soluciones a tu medida</h2>
+            <p class="section-subtitle">
+                Cada proyecto es único. Diseñamos y desarrollamos soluciones personalizadas 
+                que se adaptan perfectamente a tus necesidades.
+            </p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <i data-lucide="smartphone" width="28" height="28"></i>
+                </div>
+                <h3 class="service-title">Aplicaciones Móviles</h3>
+                <p class="service-description">
+                    Creamos aplicaciones móviles intuitivas y atractivas para iOS y Android, 
+                    diseñadas para ofrecer una experiencia de usuario excepcional y adaptarse 
+                    a las necesidades específicas de tu negocio.
+                </p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <i data-lucide="globe" width="28" height="28"></i>
+                </div>
+                <h3 class="service-title">Desarrollo Web</h3>
+                <p class="service-description">
+                    Diseñamos y desarrollamos sitios web modernos, rápidos y adaptables, 
+                    enfocados en potenciar tu presencia digital y atraer más clientes 
+                    con interfaces que convierten.
+                </p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon">
+                    <i data-lucide="headphones" width="28" height="28"></i>
+                </div>
+                <h3 class="service-title">Soporte & Mantenimiento</h3>
+                <p class="service-description">
+                    Tu tecnología siempre funcionando. Te acompañamos con asistencia técnica 
+                    confiable, actualizaciones constantes y soporte continuo para garantizar 
+                    el éxito de tus proyectos digitales.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         TESTIMONIALS SECTION
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="section testimonials" id="historias">
+        <div class="section-header reveal">
+            <span class="section-label">Historias de Éxito</span>
+            <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+            <p class="section-subtitle">
+                La satisfacción de nuestros clientes es nuestra mayor motivación.
+            </p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <i data-lucide="quote" class="testimonial-quote-icon" width="48" height="48"></i>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black' font-size='24' fill='%23F4B942'%3ESEMYP%3C/text%3E%3C/svg%3E" 
+                     alt="SEMYP Logo" class="testimonial-logo">
+                <p class="testimonial-text">
+                    "El equipo de Inspirare ha sido fundamental para el éxito de nuestro proyecto. 
+                    Su dedicación, creatividad y profesionalismo han superado nuestras expectativas. 
+                    Gracias a ellos, implementamos nuestro sistema de facturación electrónica en tiempo récord."
+                </p>
+                <div class="testimonial-author">
+                    <div class="testimonial-author-info">
+                        <h4>Gerente General</h4>
+                        <span>SEMYP</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card reveal">
+                <i data-lucide="quote" class="testimonial-quote-icon" width="48" height="48"></i>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black' font-size='24' fill='%23E74C3C'%3EAUCOM%3C/text%3E%3C/svg%3E" 
+                     alt="AUCOM Logo" class="testimonial-logo">
+                <p class="testimonial-text">
+                    "Trabajar con Inspirare ha sido una experiencia excepcional. La dedicación y 
+                    profesionalismo de su equipo nos permitieron implementar nuestro sistema de 
+                    facturación electrónica en tiempo récord. Sin duda, son el socio tecnológico ideal."
+                </p>
+                <div class="testimonial-author">
+                    <div class="testimonial-author-info">
+                        <h4>Gerente General</h4>
+                        <span>AUCOM S.A. de C.V.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         CONTACT SECTION
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="section contact" id="contacto">
+        <div class="contact-content">
+            <div class="contact-info reveal">
+                <h2>¡Hablemos de <span>tu proyecto!</span></h2>
+                <p>
+                    Estamos listos para hacer realidad tus ideas. Cuéntanos sobre tu proyecto 
+                    y juntos encontraremos la mejor solución para llevarlo al siguiente nivel.
+                </p>
+                
+                <div class="contact-methods">
+                    <a href="tel:+50379336960" class="contact-method">
+                        <div class="contact-method-icon">
+                            <i data-lucide="phone" width="20" height="20"></i>
+                        </div>
+                        <span>+503 7933-6960</span>
+                    </a>
+                    
+                    <a href="mailto:info@inspirare.app" class="contact-method">
+                        <div class="contact-method-icon">
+                            <i data-lucide="mail" width="20" height="20"></i>
+                        </div>
+                        <span>info@inspirare.app</span>
+                    </a>
+                    
+                    <a href="https://inspirare.app" class="contact-method">
+                        <div class="contact-method-icon">
+                            <i data-lucide="globe" width="20" height="20"></i>
+                        </div>
+                        <span>inspirare.app</span>
+                    </a>
+                    
+                    <div class="contact-method">
+                        <div class="contact-method-icon">
+                            <i data-lucide="map-pin" width="20" height="20"></i>
+                        </div>
+                        <span>Soyapango, San Salvador, El Salvador</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-cta reveal">
+                <h3>¿Listo para empezar?</h3>
+                <p>Respuesta en menos de 24 horas</p>
+                
+                <a href="https://wa.me/50379336960?text=Hola%20Inspirare!%20Me%20interesa%20conocer%20más%20sobre%20sus%20servicios." 
+                   class="btn-whatsapp" target="_blank">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Chatea por WhatsApp
+                </a>
+                
+                <a href="mailto:info@inspirare.app" class="btn-secondary">
+                    <i data-lucide="mail" width="18" height="18"></i>
+                    Escríbenos un email
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         FOOTER
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">Inspirare</div>
+            
+            <div class="footer-legal">
+                <p>INSPIRARE, Sociedad por Acciones Simplificada</p>
+                <p>NIT: 0622-151025-101-4 | NRC: 373709-8</p>
+                <p>© 2025 Todos los derechos reservados</p>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://wa.me/50379336960" target="_blank" aria-label="WhatsApp">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                </a>
+                <a href="mailto:info@inspirare.app" aria-label="Email">
+                    <i data-lucide="mail" width="20" height="20"></i>
+                </a>
+                <a href="https://inspirare.app" aria-label="Website">
+                    <i data-lucide="globe" width="20" height="20"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         SCRIPTS
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Smooth scroll to section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Scroll reveal animation
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (elementTop < windowHeight - revealPoint) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Navbar background on scroll
+        function handleNavbarScroll() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(33, 38, 48, 0.95)';
+                nav.style.backdropFilter = 'blur(10px)';
+                nav.style.padding = '0.75rem 0';
+                nav.style.margin = '0 -5%';
+                nav.style.paddingLeft = '5%';
+                nav.style.paddingRight = '5%';
+                nav.style.position = 'fixed';
+                nav.style.top = '0';
+                nav.style.left = '5%';
+                nav.style.right = '5%';
+                nav.style.zIndex = '100';
+                nav.style.borderRadius = '0 0 16px 16px';
+            } else {
+                nav.style.background = 'transparent';
+                nav.style.backdropFilter = 'none';
+                nav.style.padding = '1rem 0';
+                nav.style.margin = '0';
+                nav.style.position = 'relative';
+                nav.style.borderRadius = '0';
+            }
+        }
+
+        // Event listeners
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('scroll', handleNavbarScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBackground = document.querySelector('.hero-background img');
+            if (heroBackground && scrolled < window.innerHeight) {
+                heroBackground.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
