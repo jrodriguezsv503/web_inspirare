@@ -1,0 +1,45 @@
+name: inspirare
+description: "Creamos aplicaciones móviles y web personalizadas que inspiran y conectan."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  font_awesome_flutter: ^10.9.0
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: PlayfairDisplay-Blackitalic
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-BlackItalic.ttf
+          weight: 900 
+
+    - family: PlayfairDisplay-ExtraBold
+      fonts: 
+        - asset: assets/fonts/PlayfairDisplay-ExtraBold.ttf
+          weight: 800
+
+    - family: Roboto-Medium
+      fonts:     
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 200
+      
+    - family: PlayfairDisplay-Regular
+      fonts:     
+        - asset: assets/fonts/PlayfairDisplay-Regular.ttf
+          weight: 400
