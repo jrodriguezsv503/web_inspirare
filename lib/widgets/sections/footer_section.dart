@@ -209,7 +209,7 @@ class FooterSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '\u00a9 2026 INSPIRARE, S.A.S. \u2014 NIT: 0622-151025-101-4',
+                  '\u00a9 2026 INSPIRARE S.A.S.',
                   style: TextStyle(
                     fontFamily: Fonts.body,
                     fontSize: 13,

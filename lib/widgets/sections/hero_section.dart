@@ -29,7 +29,7 @@ class HeroSection extends StatelessWidget {
           child: Column(
             children: [
               // Badge
-              AnimatedSection(child: _HeroBadge()),
+              AnimatedSection(child: _HeroBadge(isMobile: isSmall)),
               const SizedBox(height: 32),
               // Headline
               AnimatedSection(
@@ -119,6 +119,10 @@ class HeroSection extends StatelessWidget {
 }
 
 class _HeroBadge extends StatefulWidget {
+  final bool isMobile;
+
+  const _HeroBadge({this.isMobile = false});
+
   @override
   State<_HeroBadge> createState() => _HeroBadgeState();
 }
@@ -148,8 +152,13 @@ class _HeroBadgeState extends State<_HeroBadge>
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = widget.isMobile;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 14 : 20,
+        vertical: 8,
+      ),
       decoration: BoxDecoration(
         color: Palette.primary.withValues(alpha: 0.1),
         border: Border.all(color: Palette.primary.withValues(alpha: 0.25)),
@@ -179,14 +188,16 @@ class _HeroBadgeState extends State<_HeroBadge>
             ),
           ),
           const SizedBox(width: 8),
-          Text(
-            '2 Productos en Producci\u00f3n y m\u00e1s en desarrollo',
-            style: TextStyle(
-              fontFamily: Fonts.body,
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Palette.primary,
-              letterSpacing: 0.5,
+          Flexible(
+            child: Text(
+              '2 Productos en Producci\u00f3n y m\u00e1s en desarrollo',
+              style: TextStyle(
+                fontFamily: Fonts.body,
+                fontSize: isMobile ? 11 : 13,
+                fontWeight: FontWeight.w600,
+                color: Palette.primary,
+                letterSpacing: isMobile ? 0 : 0.5,
+              ),
             ),
           ),
         ],

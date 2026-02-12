@@ -16,9 +16,7 @@ class WhySection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: Palette.dark,
-      ),
+      decoration: BoxDecoration(color: Palette.dark),
       child: Stack(
         children: [
           // Decorative radial gradient
@@ -55,8 +53,7 @@ class WhySection extends StatelessWidget {
                     AnimatedSection(
                       child: SectionHeader(
                         label: 'Por Qu\u00e9 INSPIRARE',
-                        title:
-                            'Construido para\nel mercado salvadore\u00f1o',
+                        title: 'Construido para\nel mercado salvadore\u00f1o',
                         subtitle:
                             'No somos una adaptaci\u00f3n de software extranjero. Cada l\u00ednea de c\u00f3digo est\u00e1 dise\u00f1ada para la realidad de El Salvador.',
                         isLeftAligned: true,
@@ -68,9 +65,7 @@ class WhySection extends StatelessWidget {
                     _buildGrid(isSmall, isTablet),
                     SizedBox(height: isSmall ? 48 : 80),
                     // Tech stack ribbon
-                    AnimatedSection(
-                      child: _TechStackRibbon(isMobile: isSmall),
-                    ),
+                    AnimatedSection(child: _TechStackRibbon(isMobile: isSmall)),
                   ],
                 ),
               ),
@@ -115,7 +110,7 @@ class WhySection extends StatelessWidget {
         emoji: '\ud83d\udcb0',
         title: 'Precio Justo',
         description:
-            'Planes desde \$14.99/mes. Tecnolog\u00eda de primer nivel a precios accesibles para la realidad centroamericana.',
+            'Planes desde \$15.00/mes. Tecnolog\u00eda de primer nivel a precios accesibles para la realidad Salvadore\u00f1a.',
         iconBg: Palette.success.withValues(alpha: 0.15),
       ),
       _WhyCardData(

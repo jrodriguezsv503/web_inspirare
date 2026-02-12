@@ -97,9 +97,10 @@ class _ProductTagState extends State<_ProductTag>
       vsync: this,
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
-    _pulse = Tween<double>(begin: 1.0, end: 0.5).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _pulse = Tween<double>(
+      begin: 1.0,
+      end: 0.5,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -122,10 +123,7 @@ class _ProductTagState extends State<_ProductTag>
           AnimatedBuilder(
             animation: _pulse,
             builder: (context, child) {
-              return Opacity(
-                opacity: _pulse.value,
-                child: child,
-              );
+              return Opacity(opacity: _pulse.value, child: child);
             },
             child: Container(
               width: 6,
@@ -222,11 +220,7 @@ class _ProductLinkState extends State<_ProductLink> {
               AnimatedPadding(
                 duration: AppTransitions.fast,
                 padding: EdgeInsets.only(left: _isHovered ? 14 : 8),
-                child: Icon(
-                  Icons.arrow_forward,
-                  size: 16,
-                  color: widget.color,
-                ),
+                child: Icon(Icons.arrow_forward, size: 16, color: widget.color),
               ),
             ],
           ),
@@ -298,7 +292,7 @@ class _DTEProductCardState extends State<_DTEProductCard> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Plataforma de facturaci\u00f3n electr\u00f3nica certificada por el Ministerio de Hacienda. Emite Facturas, Cr\u00e9ditos Fiscales y Notas de Cr\u00e9dito en segundos.',
+                      'Plataforma de facturaci\u00f3n electr\u00f3nica que te certifica como emisor DTE . Emite Facturas, Cr\u00e9ditos Fiscales y Notas de Cr\u00e9dito y más en segundos.',
                       style: TextStyle(
                         fontFamily: Fonts.body,
                         fontSize: 15,
@@ -314,8 +308,8 @@ class _DTEProductCardState extends State<_DTEProductCard> {
                         _FeatureTag('Factura Electr\u00f3nica'),
                         _FeatureTag('Cr\u00e9dito Fiscal'),
                         _FeatureTag('Nota de Cr\u00e9dito'),
-                        _FeatureTag('API REST'),
-                        _FeatureTag('Multi-usuario'),
+                        _FeatureTag('En la Nube'),
+                        _FeatureTag('Disponible 24/7'),
                       ],
                     ),
                     const SizedBox(height: 32),
@@ -419,7 +413,7 @@ class _ContaSASProductCardState extends State<_ContaSASProductCard> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Gesti\u00f3n contable y tributaria inteligente para empresas S.A.S. en El Salvador. Con asistente legal de IA basado en legislaci\u00f3n salvadore\u00f1a.',
+                      'Gesti\u00f3n contable y tributaria inteligente para contribuyente en El Salvador. Con asistente legal de IA basado en legislaci\u00f3n salvadore\u00f1a.',
                       style: TextStyle(
                         fontFamily: Fonts.body,
                         fontSize: 15,
