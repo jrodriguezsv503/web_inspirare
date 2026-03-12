@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:inspirare/core/constants/app_constants.dart';
+import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 
+/// Sección hero principal con badge, headline, botones de acción y barra de métricas.
 class HeroSection extends StatelessWidget {
   final bool isMobile;
   final VoidCallback? onProductsTap;
@@ -46,8 +48,8 @@ class HeroSection extends StatelessWidget {
                         color: Palette.dark,
                         letterSpacing: -1.5,
                       ),
-                      children: [
-                        const TextSpan(text: 'Software que '),
+                      children: const [
+                        TextSpan(text: 'Software que '),
                         TextSpan(
                           text: 'transforma',
                           style: TextStyle(
@@ -56,7 +58,7 @@ class HeroSection extends StatelessWidget {
                             color: Palette.primary,
                           ),
                         ),
-                        const TextSpan(text: ' negocios en El Salvador'),
+                        TextSpan(text: ' negocios en El Salvador'),
                       ],
                     ),
                   ),
@@ -69,7 +71,7 @@ class HeroSection extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 540),
                   child: Text(
-                    'Creamos plataformas SaaS con inteligencia artificial para automatizar la gesti\u00f3n tributaria, contable y financiera de empresas salvadore\u00f1as.',
+                    'Creamos plataformas SaaS con inteligencia artificial para automatizar la gestión tributaria, contable y financiera de empresas salvadoreñas.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: Fonts.body,
@@ -97,8 +99,7 @@ class HeroSection extends StatelessWidget {
                     ),
                     _SecondaryButton(
                       label: 'Hablar con el equipo',
-                      onTap: () =>
-                          launchUrl(Uri.parse('https://wa.me/50379336960')),
+                      onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
                       fullWidth: isSmall,
                     ),
                   ],
@@ -190,7 +191,7 @@ class _HeroBadgeState extends State<_HeroBadge>
           const SizedBox(width: 8),
           Flexible(
             child: Text(
-              '2 Productos en Producci\u00f3n y m\u00e1s en desarrollo',
+              '2 Productos en Producción y más en desarrollo',
               style: TextStyle(
                 fontFamily: Fonts.body,
                 fontSize: isMobile ? 11 : 13,
@@ -213,8 +214,8 @@ class _MetricsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final metrics = [
-      ('2', 'Productos en Producci\u00f3n'),
+    const metrics = [
+      ('2', 'Productos en Producción'),
       ('SaaS', 'Modelo de Negocio'),
       ('IA', 'Integrada en Productos'),
       ('24/7', 'Plataforma Cloud'),
@@ -288,7 +289,7 @@ class _MetricItem extends StatelessWidget {
       children: [
         Text(
           number,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: Fonts.body,
             fontSize: 36,
             fontWeight: FontWeight.w700,
@@ -299,7 +300,7 @@ class _MetricItem extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: Fonts.body,
             fontSize: 13,
             color: Palette.textMuted,
@@ -365,7 +366,7 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
             children: [
               Text(
                 widget.label,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: Fonts.body,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -428,7 +429,7 @@ class _SecondaryButtonState extends State<_SecondaryButton> {
           child: Text(
             widget.label,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: Fonts.body,
               fontSize: 15,
               fontWeight: FontWeight.w600,

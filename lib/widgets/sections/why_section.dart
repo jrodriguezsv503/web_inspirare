@@ -3,6 +3,7 @@ import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
 
+/// Sección oscura "Por Qué INSPIRARE" con 6 tarjetas de beneficios y ribbon tecnológico.
 class WhySection extends StatelessWidget {
   final bool isMobile;
 
@@ -16,7 +17,7 @@ class WhySection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: Palette.dark),
+      decoration: const BoxDecoration(color: Palette.dark),
       child: Stack(
         children: [
           // Decorative radial gradient
@@ -231,7 +232,7 @@ class _WhyCardState extends State<_WhyCard> {
             const SizedBox(height: 24),
             Text(
               widget.data.title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: Fonts.title,
                 fontSize: 20,
                 color: Colors.white,

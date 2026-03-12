@@ -1,10 +1,19 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:inspirare/core/constants/app_constants.dart';
+import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 
+/// Barra de navegación fija con efecto glassmorphism (backdrop blur).
+///
+/// Cambia su apariencia al hacer scroll y muestra un menú hamburguesa
+/// en pantallas móviles.
 class GlassmorphismNav extends StatefulWidget {
-  final Function(String) onNavTap;
+  /// Callback invocado al tocar un item de navegación.
+  final void Function(NavSection) onNavTap;
+
+  /// Controller del scroll principal para detectar offset.
   final ScrollController scrollController;
 
   const GlassmorphismNav({
@@ -40,7 +49,7 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
     }
   }
 
-  void _handleNavTap(String section) {
+  void _handleNavTap(NavSection section) {
     setState(() => _isMobileMenuOpen = false);
     widget.onNavTap(section);
   }
@@ -61,15 +70,15 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
               padding: EdgeInsets.symmetric(horizontal: isMobile ? 24 : 40),
               decoration: BoxDecoration(
                 color: Palette.primary,
-                border: Border(
+                border: const Border(
                   bottom: BorderSide(color: Palette.dark, width: 1),
                 ),
                 boxShadow: _isScrolled
                     ? [
-                        BoxShadow(
+                        const BoxShadow(
                           color: Colors.black,
                           blurRadius: 30,
-                          offset: const Offset(0, 4),
+                          offset: Offset(0, 4),
                         ),
                       ]
                     : [],
@@ -81,16 +90,16 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                   MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
-                      onTap: () => _handleNavTap('inicio'),
+                      onTap: () => _handleNavTap(NavSection.inicio),
                       child: RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                           style: TextStyle(
                             fontFamily: Fonts.brand,
                             fontSize: 38,
                             color: Palette.background,
                             letterSpacing: -0.5,
                           ),
-                          children: const [TextSpan(text: 'inspirare.app')],
+                          children: [TextSpan(text: 'inspirare.app')],
                         ),
                       ),
                     ),
@@ -100,23 +109,22 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                     Row(
                       children: [
                         _NavLink(
-                          text: 'Productos',
-                          onTap: () => _handleNavTap('productos'),
+                          text: NavSection.productos.label,
+                          onTap: () => _handleNavTap(NavSection.productos),
                         ),
                         const SizedBox(width: 32),
                         _NavLink(
-                          text: 'Nosotros',
-                          onTap: () => _handleNavTap('nosotros'),
+                          text: NavSection.nosotros.label,
+                          onTap: () => _handleNavTap(NavSection.nosotros),
                         ),
                         const SizedBox(width: 32),
                         _NavLink(
-                          text: 'Precios',
-                          onTap: () => _handleNavTap('precios'),
+                          text: NavSection.precios.label,
+                          onTap: () => _handleNavTap(NavSection.precios),
                         ),
                         const SizedBox(width: 32),
                         _NavCTA(
-                          onTap: () =>
-                              launchUrl(Uri.parse('https://wa.me/50379336960')),
+                          onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
                         ),
                       ],
                     ),
@@ -164,32 +172,31 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _MobileNavItem(
-                      text: 'Productos',
-                      onTap: () => _handleNavTap('productos'),
+                      text: NavSection.productos.label,
+                      onTap: () => _handleNavTap(NavSection.productos),
                     ),
                     const SizedBox(height: 16),
                     _MobileNavItem(
-                      text: 'Nosotros',
-                      onTap: () => _handleNavTap('nosotros'),
+                      text: NavSection.nosotros.label,
+                      onTap: () => _handleNavTap(NavSection.nosotros),
                     ),
                     const SizedBox(height: 16),
                     _MobileNavItem(
-                      text: 'Precios',
-                      onTap: () => _handleNavTap('precios'),
+                      text: NavSection.precios.label,
+                      onTap: () => _handleNavTap(NavSection.precios),
                     ),
                     const SizedBox(height: 24),
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
-                        onTap: () =>
-                            launchUrl(Uri.parse('https://wa.me/50379336960')),
+                        onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           decoration: BoxDecoration(
                             color: Palette.dark,
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Contactar',
                               style: TextStyle(
@@ -289,7 +296,7 @@ class _NavCTAState extends State<_NavCTA> {
                   ]
                 : [],
           ),
-          child: Text(
+          child: const Text(
             'Contactar',
             style: TextStyle(
               fontFamily: Fonts.body,
@@ -319,7 +326,7 @@ class _MobileNavItem extends StatelessWidget {
         onTap: onTap,
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontFamily: Fonts.body,
             fontSize: 16,
             fontWeight: FontWeight.w500,

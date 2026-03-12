@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inspirare/theme/web_theme.dart';
 
+/// Encabezado reutilizable para secciones con label, título y subtítulo opcional.
+///
+/// Soporta alineación izquierda o centrada, y líneas decorativas opcionales.
 class SectionHeader extends StatelessWidget {
   final String label;
   final String title;
@@ -88,7 +91,7 @@ class SectionHeader extends StatelessWidget {
             child: Text(
               subtitle!,
               textAlign: isLeftAligned ? TextAlign.left : TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: Fonts.body,
                 fontSize: 17,
                 color: Palette.textSecondary,

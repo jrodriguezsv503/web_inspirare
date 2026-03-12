@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:inspirare/core/constants/app_constants.dart';
+import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
 
+/// Sección de llamada a la acción con botones de WhatsApp y email.
 class CTASection extends StatelessWidget {
   final bool isMobile;
 
@@ -50,13 +52,12 @@ class CTASection extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 1280),
                 child: Column(
                   children: [
-                    AnimatedSection(
+                    const AnimatedSection(
                       child: SectionHeader(
                         label: 'Comienza Hoy',
-                        title:
-                            'Deja de perder tiempo\ncon procesos manuales',
+                        title: 'Deja de perder tiempo\ncon procesos manuales',
                         subtitle:
-                            '\u00danete a las empresas salvadore\u00f1as que ya automatizan su gesti\u00f3n tributaria y contable con INSPIRARE.',
+                            'Únete a las empresas salvadoreñas que ya automatizan su gestión tributaria y contable con INSPIRARE.',
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -69,16 +70,13 @@ class CTASection extends StatelessWidget {
                         children: [
                           _CTAPrimaryButton(
                             label: 'Agendar una Demo',
-                            onTap: () => launchUrl(
-                              Uri.parse('https://wa.me/50379336960'),
-                            ),
+                            onTap: () =>
+                                safeLaunchUrl(context, AppUrls.whatsapp),
                             fullWidth: isSmall,
                           ),
                           _CTASecondaryButton(
                             label: 'info@inspirare.app',
-                            onTap: () => launchUrl(
-                              Uri.parse('mailto:info@inspirare.app'),
-                            ),
+                            onTap: () => safeLaunchUrl(context, AppUrls.email),
                             fullWidth: isSmall,
                           ),
                         ],
@@ -142,13 +140,14 @@ class _CTAPrimaryButtonState extends State<_CTAPrimaryButton> {
                 : [],
           ),
           child: Row(
-            mainAxisSize:
-                widget.fullWidth ? MainAxisSize.max : MainAxisSize.min,
+            mainAxisSize: widget.fullWidth
+                ? MainAxisSize.max
+                : MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 widget.label,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: Fonts.body,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -211,7 +210,7 @@ class _CTASecondaryButtonState extends State<_CTASecondaryButton> {
           child: Text(
             widget.label,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: Fonts.body,
               fontSize: 15,
               fontWeight: FontWeight.w600,

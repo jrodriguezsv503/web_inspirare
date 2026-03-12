@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:inspirare/theme/web_theme.dart';
 
+/// Widget que anima su hijo con fade-up al hacerse visible en el viewport.
+///
+/// Utiliza [VisibilityDetector] para detectar cuándo el widget entra en
+/// pantalla y ejecuta una animación de opacidad + traslación.
 class AnimatedSection extends StatefulWidget {
   final Widget child;
   final Duration delay;
@@ -30,19 +34,13 @@ class _AnimatedSectionState extends State<AnimatedSection>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.duration,
-    );
+    _controller = AnimationController(vsync: this, duration: widget.duration);
 
     _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: AppTransitions.smooth),
     );
 
-    _slide = Tween<Offset>(
-      begin: widget.slideOffset,
-      end: Offset.zero,
-    ).animate(
+    _slide = Tween<Offset>(begin: widget.slideOffset, end: Offset.zero).animate(
       CurvedAnimation(parent: _controller, curve: AppTransitions.smooth),
     );
   }
@@ -74,10 +72,7 @@ class _AnimatedSectionState extends State<AnimatedSection>
         builder: (context, child) {
           return Transform.translate(
             offset: _slide.value,
-            child: Opacity(
-              opacity: _opacity.value,
-              child: widget.child,
-            ),
+            child: Opacity(opacity: _opacity.value, child: widget.child),
           );
         },
       ),

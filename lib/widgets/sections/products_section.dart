@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:inspirare/core/constants/app_constants.dart';
+import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
 
+/// Sección de productos mostrando Factura Fácil DTE y ContaSAS.ia.
 class ProductsSection extends StatelessWidget {
   final bool isMobile;
 
@@ -29,12 +31,12 @@ class ProductsSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AnimatedSection(
+              const AnimatedSection(
                 child: SectionHeader(
                   label: 'Nuestros Productos',
                   title: 'Dos plataformas.\nUn ecosistema.',
                   subtitle:
-                      'Cada producto resuelve un problema real del mercado salvadore\u00f1o, con tecnolog\u00eda de clase mundial y precios accesibles.',
+                      'Cada producto resuelve un problema real del mercado salvadoreño, con tecnología de clase mundial y precios accesibles.',
                   isLeftAligned: true,
                 ),
               ),
@@ -135,8 +137,8 @@ class _ProductTagState extends State<_ProductTag>
             ),
           ),
           const SizedBox(width: 6),
-          Text(
-            'EN PRODUCCI\u00d3N',
+          const Text(
+            'EN PRODUCCIÓN',
             style: TextStyle(
               fontFamily: Fonts.body,
               fontSize: 12,
@@ -166,7 +168,7 @@ class _FeatureTag extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(
+        style: const TextStyle(
           fontFamily: Fonts.body,
           fontSize: 12,
           fontWeight: FontWeight.w600,
@@ -202,7 +204,7 @@ class _ProductLinkState extends State<_ProductLink> {
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
-        onTap: () => launchUrl(Uri.parse(widget.url)),
+        onTap: () => safeLaunchUrl(context, widget.url),
         child: AnimatedContainer(
           duration: AppTransitions.fast,
           child: Row(
@@ -282,7 +284,7 @@ class _DTEProductCardState extends State<_DTEProductCard> {
                     _ProductTag(),
                     const SizedBox(height: 20),
                     Text(
-                      'Factura F\u00e1cil DTE',
+                      'Factura Fácil DTE',
                       style: TextStyle(
                         fontFamily: Fonts.title,
                         fontSize: isSmall ? 26 : 32,
@@ -291,8 +293,8 @@ class _DTEProductCardState extends State<_DTEProductCard> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Text(
-                      'Plataforma de facturaci\u00f3n electr\u00f3nica que te certifica como emisor DTE . Emite Facturas, Cr\u00e9ditos Fiscales y Notas de Cr\u00e9dito y más en segundos.',
+                    const Text(
+                      'Plataforma de facturación electrónica que te certifica como emisor DTE . Emite Facturas, Créditos Fiscales y Notas de Crédito y más en segundos.',
                       style: TextStyle(
                         fontFamily: Fonts.body,
                         fontSize: 15,
@@ -301,28 +303,27 @@ class _DTEProductCardState extends State<_DTEProductCard> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Wrap(
+                    const Wrap(
                       spacing: 8,
                       runSpacing: 8,
-                      children: const [
-                        _FeatureTag('Factura Electr\u00f3nica'),
-                        _FeatureTag('Cr\u00e9dito Fiscal'),
-                        _FeatureTag('Nota de Cr\u00e9dito'),
+                      children: [
+                        _FeatureTag('Factura Electrónica'),
+                        _FeatureTag('Crédito Fiscal'),
+                        _FeatureTag('Nota de Crédito'),
                         _FeatureTag('En la Nube'),
                         _FeatureTag('Disponible 24/7'),
                       ],
                     ),
                     const SizedBox(height: 32),
-                    _ProductLink(
+                    const _ProductLink(
                       text: 'Visitar dte.inspirare.app',
                       color: Palette.dtePrimary,
-                      url: 'https://dte.inspirare.app',
+                      url: AppUrls.dteApp,
                     ),
                     const SizedBox(height: 32),
                   ],
                 ),
               ),
-              // Mockup area
               _DTEMockup(isMobile: isSmall),
             ],
           ),
@@ -412,8 +413,8 @@ class _ContaSASProductCardState extends State<_ContaSASProductCard> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Text(
-                      'Gesti\u00f3n contable y tributaria inteligente para contribuyente en El Salvador. Con asistente legal de IA basado en legislaci\u00f3n salvadore\u00f1a.',
+                    const Text(
+                      'Gestión contable y tributaria inteligente para contribuyente en El Salvador. Con asistente legal de IA basado en legislación salvadoreña.',
                       style: TextStyle(
                         fontFamily: Fonts.body,
                         fontSize: 15,
@@ -422,11 +423,11 @@ class _ContaSASProductCardState extends State<_ContaSASProductCard> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Wrap(
+                    const Wrap(
                       spacing: 8,
                       runSpacing: 8,
-                      children: const [
-                        _FeatureTag('Declaraci\u00f3n IVA F-07'),
+                      children: [
+                        _FeatureTag('Declaración IVA F-07'),
                         _FeatureTag('Pago a Cuenta F-14'),
                         _FeatureTag('Libros Contables'),
                         _FeatureTag('Asistente IA'),
@@ -434,10 +435,10 @@ class _ContaSASProductCardState extends State<_ContaSASProductCard> {
                       ],
                     ),
                     const SizedBox(height: 32),
-                    _ProductLink(
+                    const _ProductLink(
                       text: 'Visitar contasas.inspirare.app',
                       color: Palette.contasasPrimary,
-                      url: 'https://contasas.inspirare.app',
+                      url: AppUrls.contasasApp,
                     ),
                     const SizedBox(height: 32),
                   ],

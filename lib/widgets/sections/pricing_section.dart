@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:inspirare/core/constants/app_constants.dart';
+import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
 
+/// Sección de precios con tarjetas para Factura Fácil DTE y ContaSAS.ia.
 class PricingSection extends StatelessWidget {
   final bool isMobile;
 
@@ -28,7 +30,7 @@ class PricingSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AnimatedSection(
+              const AnimatedSection(
                 child: SectionHeader(
                   label: 'Precios',
                   title: 'Simple. Transparente.\nSin sorpresas.',
@@ -43,86 +45,87 @@ class PricingSection extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 840),
                   child: isSmall
-                      ? Column(
+                      ? const Column(
                           children: [
                             _PriceCard(
-                              productName: 'Factura F\u00e1cil DTE',
+                              productName: 'Factura Fácil DTE',
                               description:
-                                  'Facturaci\u00f3n electr\u00f3nica certificada para empresas en El Salvador.',
+                                  'Facturación electrónica certificada para empresas en El Salvador.',
                               price: '\$15',
                               priceSuffix: ' /mes',
-                              trialText: 'Implementaci\u00f3n en menos de 24 horas',
-                              features: const [
-                                'Facturas electr\u00f3nicas ilimitadas',
-                                'Cr\u00e9ditos Fiscales y Notas de Cr\u00e9dito',
+                              trialText: 'Implementación en menos de 24 horas',
+                              features: [
+                                'Facturas electrónicas ilimitadas',
+                                'Créditos Fiscales y Notas de Crédito',
                                 'Certificado por Ministerio de Hacienda',
                                 'Panel de control y reportes',
-                                'Soporte v\u00eda WhatsApp',
+                                'Soporte vía WhatsApp',
                               ],
                               buttonLabel: 'Empezar Gratis',
                               buttonColor: Palette.dtePrimary,
                               buttonHoverColor: Palette.dteSecondary,
-                              accentGradient: const [
+                              accentGradient: [
                                 Palette.dtePrimary,
                                 Color(0xFF1A237E),
                               ],
-                              url: 'https://dte.inspirare.app',
+                              url: AppUrls.dteApp,
                             ),
-                            const SizedBox(height: 32),
+                            SizedBox(height: 32),
                             _PriceCard(
                               productName: 'ContaSAS.ia',
                               description:
                                   'Contabilidad inteligente con asistente legal de IA para S.A.S.',
                               price: '\$19',
                               priceSuffix: '.99 /mes',
-                              trialText: '3 d\u00edas gratis para probar',
-                              features: const [
-                                'Declaraciones IVA F-07 autom\u00e1ticas',
+                              trialText: '3 días gratis para probar',
+                              features: [
+                                'Declaraciones IVA F-07 automáticas',
                                 'Pago a Cuenta F-14',
                                 'Libros contables con validez legal',
                                 'Asistente legal con IA',
-                                'Sem\u00e1foro de cumplimiento tributario',
+                                'Semáforo de cumplimiento tributario',
                               ],
                               buttonLabel: 'Empezar Gratis',
                               buttonColor: Palette.contasasPrimary,
-                              buttonHoverColor: const Color(0xFF0891B2),
-                              accentGradient: const [
+                              buttonHoverColor: Color(0xFF0891B2),
+                              accentGradient: [
                                 Palette.contasasPrimary,
                                 Color(0xFF06B6D4),
                               ],
-                              url: 'https://contasas.inspirare.app',
+                              url: AppUrls.contasasApp,
                             ),
                           ],
                         )
-                      : Row(
+                      : const Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                               child: _PriceCard(
-                                productName: 'Factura F\u00e1cil DTE',
+                                productName: 'Factura Fácil DTE',
                                 description:
-                                    'Facturaci\u00f3n electr\u00f3nica certificada para empresas en El Salvador.',
+                                    'Facturación electrónica certificada para empresas en El Salvador.',
                                 price: '\$15',
                                 priceSuffix: ' /mes',
-                                trialText: 'Implementaci\u00f3n en menos de 24 horas',
-                                features: const [
-                                  'Facturas electr\u00f3nicas ilimitadas',
-                                  'Cr\u00e9ditos Fiscales y Notas de Cr\u00e9dito',
+                                trialText:
+                                    'Implementación en menos de 24 horas',
+                                features: [
+                                  'Facturas electrónicas ilimitadas',
+                                  'Créditos Fiscales y Notas de Crédito',
                                   'Certificado por Ministerio de Hacienda',
                                   'Panel de control y reportes',
-                                  'Soporte v\u00eda WhatsApp',
+                                  'Soporte vía WhatsApp',
                                 ],
                                 buttonLabel: 'Empezar Gratis',
                                 buttonColor: Palette.dtePrimary,
                                 buttonHoverColor: Palette.dteSecondary,
-                                accentGradient: const [
+                                accentGradient: [
                                   Palette.dtePrimary,
                                   Color(0xFF1A237E),
                                 ],
-                                url: 'https://dte.inspirare.app',
+                                url: AppUrls.dteApp,
                               ),
                             ),
-                            const SizedBox(width: 32),
+                            SizedBox(width: 32),
                             Expanded(
                               child: _PriceCard(
                                 productName: 'ContaSAS.ia',
@@ -130,22 +133,22 @@ class PricingSection extends StatelessWidget {
                                     'Contabilidad inteligente con asistente legal de IA para S.A.S.',
                                 price: '\$19',
                                 priceSuffix: '.99 /mes',
-                                trialText: '3 d\u00edas gratis para probar',
-                                features: const [
-                                  'Declaraciones IVA F-07 autom\u00e1ticas',
+                                trialText: '3 días gratis para probar',
+                                features: [
+                                  'Declaraciones IVA F-07 automáticas',
                                   'Pago a Cuenta F-14',
                                   'Libros contables con validez legal',
                                   'Asistente legal con IA',
-                                  'Sem\u00e1foro de cumplimiento tributario',
+                                  'Semáforo de cumplimiento tributario',
                                 ],
                                 buttonLabel: 'Empezar Gratis',
                                 buttonColor: Palette.contasasPrimary,
-                                buttonHoverColor: const Color(0xFF0891B2),
-                                accentGradient: const [
+                                buttonHoverColor: Color(0xFF0891B2),
+                                accentGradient: [
                                   Palette.contasasPrimary,
                                   Color(0xFF06B6D4),
                                 ],
-                                url: 'https://contasas.inspirare.app',
+                                url: AppUrls.contasasApp,
                               ),
                             ),
                           ],
@@ -237,7 +240,7 @@ class _PriceCardState extends State<_PriceCard> {
                 children: [
                   Text(
                     widget.productName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: Fonts.title,
                       fontSize: 24,
                       color: Palette.dark,
@@ -246,7 +249,7 @@ class _PriceCardState extends State<_PriceCard> {
                   const SizedBox(height: 8),
                   Text(
                     widget.description,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: Fonts.body,
                       fontSize: 14,
                       color: Palette.textMuted,
@@ -260,7 +263,7 @@ class _PriceCardState extends State<_PriceCard> {
                       children: [
                         TextSpan(
                           text: widget.price,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: Fonts.body,
                             fontSize: 42,
                             fontWeight: FontWeight.w700,
@@ -270,7 +273,7 @@ class _PriceCardState extends State<_PriceCard> {
                         ),
                         TextSpan(
                           text: widget.priceSuffix,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: Fonts.body,
                             fontSize: 16,
                             color: Palette.textMuted,
@@ -283,7 +286,7 @@ class _PriceCardState extends State<_PriceCard> {
                   const SizedBox(height: 8),
                   Text(
                     widget.trialText,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: Fonts.body,
                       fontSize: 13,
                       color: Palette.primary,
@@ -304,8 +307,8 @@ class _PriceCardState extends State<_PriceCard> {
                       ),
                       child: Row(
                         children: [
-                          Text(
-                            '\u2713',
+                          const Text(
+                            '✓',
                             style: TextStyle(
                               color: Palette.primary,
                               fontWeight: FontWeight.w700,
@@ -316,7 +319,7 @@ class _PriceCardState extends State<_PriceCard> {
                           Expanded(
                             child: Text(
                               feature,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: Fonts.body,
                                 fontSize: 14,
                                 color: Palette.textSecondary,
@@ -334,7 +337,7 @@ class _PriceCardState extends State<_PriceCard> {
                     onEnter: (_) => setState(() => _isButtonHovered = true),
                     onExit: (_) => setState(() => _isButtonHovered = false),
                     child: GestureDetector(
-                      onTap: () => launchUrl(Uri.parse(widget.url)),
+                      onTap: () => safeLaunchUrl(context, widget.url),
                       child: AnimatedContainer(
                         duration: AppTransitions.fast,
                         width: double.infinity,
@@ -362,7 +365,7 @@ class _PriceCardState extends State<_PriceCard> {
                         child: Center(
                           child: Text(
                             widget.buttonLabel,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: Fonts.body,
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
