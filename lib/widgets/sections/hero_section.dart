@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:inspirare/core/constants/app_constants.dart';
-import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 
-/// Sección hero principal con badge, headline, botones de acción y barra de métricas.
+/// Hero section with badge, headline, CTAs and metrics bar.
 class HeroSection extends StatelessWidget {
   final bool isMobile;
-  final VoidCallback? onProductsTap;
+  final VoidCallback? onPortfolioTap;
+  final VoidCallback? onContactTap;
 
-  const HeroSection({super.key, this.isMobile = false, this.onProductsTap});
+  const HeroSection({
+    super.key,
+    this.isMobile = false,
+    this.onPortfolioTap,
+    this.onContactTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class HeroSection extends StatelessWidget {
               AnimatedSection(
                 delay: const Duration(milliseconds: 100),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 820),
+                  constraints: const BoxConstraints(maxWidth: 900),
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
@@ -49,16 +53,16 @@ class HeroSection extends StatelessWidget {
                         letterSpacing: -1.5,
                       ),
                       children: const [
-                        TextSpan(text: 'Software que '),
+                        TextSpan(text: 'We Build Software\nThat '),
                         TextSpan(
-                          text: 'transforma',
+                          text: 'Drives',
                           style: TextStyle(
                             fontFamily: Fonts.brand,
                             fontStyle: FontStyle.italic,
                             color: Palette.primary,
                           ),
                         ),
-                        TextSpan(text: ' negocios en El Salvador'),
+                        TextSpan(text: ' Revenue'),
                       ],
                     ),
                   ),
@@ -69,9 +73,11 @@ class HeroSection extends StatelessWidget {
               AnimatedSection(
                 delay: const Duration(milliseconds: 200),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 540),
+                  constraints: const BoxConstraints(maxWidth: 600),
                   child: Text(
-                    'Creamos plataformas SaaS con inteligencia artificial para automatizar la gestión tributaria, contable y financiera de empresas salvadoreñas.',
+                    'INSPIRARE is a nearshore development agency in El Salvador. '
+                    'We design, build, and scale custom web & mobile applications '
+                    'for growing US and Canadian businesses.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: Fonts.body,
@@ -93,13 +99,13 @@ class HeroSection extends StatelessWidget {
                   runSpacing: 16,
                   children: [
                     _PrimaryButton(
-                      label: 'Conocer Productos',
-                      onTap: onProductsTap,
+                      label: 'Get Your Free Estimate',
+                      onTap: onContactTap,
                       fullWidth: isSmall,
                     ),
                     _SecondaryButton(
-                      label: 'Hablar con el equipo',
-                      onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
+                      label: 'See Our Work',
+                      onTap: onPortfolioTap,
                       fullWidth: isSmall,
                     ),
                   ],
@@ -191,7 +197,7 @@ class _HeroBadgeState extends State<_HeroBadge>
           const SizedBox(width: 8),
           Flexible(
             child: Text(
-              '2 Productos en Producción y más en desarrollo',
+              'Nearshore Development Agency \u2022 Central America',
               style: TextStyle(
                 fontFamily: Fonts.body,
                 fontSize: isMobile ? 11 : 13,
@@ -215,10 +221,10 @@ class _MetricsBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const metrics = [
-      ('2', 'Productos en Producción'),
-      ('SaaS', 'Modelo de Negocio'),
-      ('IA', 'Integrada en Productos'),
-      ('24/7', 'Plataforma Cloud'),
+      ('20+', 'Years Experience'),
+      ('50+', 'Projects Delivered'),
+      ('CST', 'Same Timezone'),
+      ('40-60%', 'Cost Savings'),
     ];
 
     return ConstrainedBox(

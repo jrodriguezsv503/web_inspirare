@@ -12,10 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Inspirare.app',
+      title: 'INSPIRARE — Nearshore Software Development',
       debugShowCheckedModeBanner: false,
-      // Usa tu LandingPage como la pantalla de inicio
-      home: LandingPage(), //LandingPage(),
+      home: LandingPage(),
     );
   }
 }

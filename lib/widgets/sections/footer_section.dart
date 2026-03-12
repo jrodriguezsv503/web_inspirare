@@ -3,13 +3,11 @@ import 'package:inspirare/core/constants/app_constants.dart';
 import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 
-/// Pie de página con columnas de marca, productos, empresa y contacto.
-///
-/// Incluye información legal y enlaces a recursos externos.
+/// Footer with brand, services, company, and contact columns.
 class FooterSection extends StatelessWidget {
   final bool isMobile;
 
-  /// Callback de navegación interna usando [NavSection].
+  /// Internal navigation callback using [NavSection].
   final void Function(NavSection)? onNavTap;
 
   const FooterSection({super.key, this.isMobile = false, this.onNavTap});
@@ -50,9 +48,9 @@ class FooterSection extends StatelessWidget {
         children: [
           _buildBrandColumn(),
           const SizedBox(height: 32),
-          _buildProductsColumn(context),
+          _buildServicesColumn(),
           const SizedBox(height: 32),
-          _buildCompanyColumn(context),
+          _buildCompanyColumn(),
           const SizedBox(height: 32),
           _buildContactColumn(context),
         ],
@@ -67,14 +65,14 @@ class FooterSection extends StatelessWidget {
             children: [
               Expanded(flex: 2, child: _buildBrandColumn()),
               const SizedBox(width: 48),
-              Expanded(child: _buildProductsColumn(context)),
+              Expanded(child: _buildServicesColumn()),
             ],
           ),
           const SizedBox(height: 32),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(child: _buildCompanyColumn(context)),
+              Expanded(child: _buildCompanyColumn()),
               const SizedBox(width: 48),
               Expanded(child: _buildContactColumn(context)),
             ],
@@ -88,9 +86,9 @@ class FooterSection extends StatelessWidget {
       children: [
         Expanded(flex: 2, child: _buildBrandColumn()),
         const SizedBox(width: 48),
-        Expanded(child: _buildProductsColumn(context)),
+        Expanded(child: _buildServicesColumn()),
         const SizedBox(width: 48),
-        Expanded(child: _buildCompanyColumn(context)),
+        Expanded(child: _buildCompanyColumn()),
         const SizedBox(width: 48),
         Expanded(child: _buildContactColumn(context)),
       ],
@@ -110,7 +108,7 @@ class FooterSection extends StatelessWidget {
             ),
             children: [
               TextSpan(
-                text: 'inspirare.pp',
+                text: 'inspirare.app',
                 style: TextStyle(color: Palette.background),
               ),
             ],
@@ -120,7 +118,8 @@ class FooterSection extends StatelessWidget {
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 300),
           child: Text(
-            'Creamos experiencias digitales que inspiran. Somos una empresa de software salvadoreña construyendo el futuro de la gestión empresarial con IA.',
+            'Nearshore software development agency from El Salvador. '
+            'We build custom web & mobile applications for US and Canadian businesses.',
             style: TextStyle(
               fontFamily: Fonts.body,
               fontSize: 14,
@@ -133,37 +132,49 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildProductsColumn(BuildContext context) {
+  Widget _buildServicesColumn() {
     return _FooterColumn(
-      title: 'PRODUCTOS',
+      title: 'SERVICES',
       links: [
         _FooterLink(
-          text: 'Factura Fácil DTE',
-          onTap: () => safeLaunchUrl(context, AppUrls.dteApp),
+          text: 'Web Applications',
+          onTap: () => onNavTap?.call(NavSection.services),
         ),
         _FooterLink(
-          text: 'ContaSAS.ia',
-          onTap: () => safeLaunchUrl(context, AppUrls.contasasApp),
+          text: 'Mobile Apps',
+          onTap: () => onNavTap?.call(NavSection.services),
+        ),
+        _FooterLink(
+          text: 'MVP Development',
+          onTap: () => onNavTap?.call(NavSection.services),
+        ),
+        _FooterLink(
+          text: 'AI Integration',
+          onTap: () => onNavTap?.call(NavSection.services),
         ),
       ],
     );
   }
 
-  Widget _buildCompanyColumn(BuildContext context) {
+  Widget _buildCompanyColumn() {
     return _FooterColumn(
-      title: 'EMPRESA',
+      title: 'COMPANY',
       links: [
         _FooterLink(
-          text: 'Nosotros',
-          onTap: () => onNavTap?.call(NavSection.nosotros),
+          text: 'Why Us',
+          onTap: () => onNavTap?.call(NavSection.whyUs),
         ),
         _FooterLink(
-          text: 'Precios',
-          onTap: () => onNavTap?.call(NavSection.precios),
+          text: 'Portfolio',
+          onTap: () => onNavTap?.call(NavSection.portfolio),
         ),
         _FooterLink(
-          text: 'Contacto',
-          onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
+          text: 'Pricing',
+          onTap: () => onNavTap?.call(NavSection.pricing),
+        ),
+        _FooterLink(
+          text: 'Contact',
+          onTap: () => onNavTap?.call(NavSection.contact),
         ),
       ],
     );
@@ -171,17 +182,21 @@ class FooterSection extends StatelessWidget {
 
   Widget _buildContactColumn(BuildContext context) {
     return _FooterColumn(
-      title: 'CONTACTO',
+      title: 'CONTACT',
       links: [
         _FooterLink(
-          text: 'info@inspirare.app',
+          text: 'hello@inspirare.app',
           onTap: () => safeLaunchUrl(context, AppUrls.email),
         ),
         _FooterLink(
           text: '+503 7933-6960',
           onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
         ),
-        const _FooterLink(text: 'Soyapango, El Salvador'),
+        const _FooterLink(text: 'El Salvador, Central America'),
+        _FooterLink(
+          text: 'LinkedIn',
+          onTap: () => safeLaunchUrl(context, AppUrls.linkedin),
+        ),
       ],
     );
   }
@@ -198,7 +213,7 @@ class FooterSection extends StatelessWidget {
           ? Column(
               children: [
                 Text(
-                  '© 2026 INSPIRARE, S.A.S. — NIT: 0622-151025-101-4',
+                  '\u00a9 2026 INSPIRARE, S.A.S. \u2014 El Salvador',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: Fonts.body,
@@ -210,9 +225,9 @@ class FooterSection extends StatelessWidget {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _FooterLegalLink(text: 'Términos'),
+                    _FooterLegalLink(text: 'Terms'),
                     SizedBox(width: 24),
-                    _FooterLegalLink(text: 'Privacidad'),
+                    _FooterLegalLink(text: 'Privacy'),
                   ],
                 ),
               ],
@@ -221,7 +236,7 @@ class FooterSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '© 2026 INSPIRARE S.A.S.',
+                  '\u00a9 2026 INSPIRARE S.A.S.',
                   style: TextStyle(
                     fontFamily: Fonts.body,
                     fontSize: 13,
@@ -230,9 +245,9 @@ class FooterSection extends StatelessWidget {
                 ),
                 const Row(
                   children: [
-                    _FooterLegalLink(text: 'Términos'),
+                    _FooterLegalLink(text: 'Terms'),
                     SizedBox(width: 24),
-                    _FooterLegalLink(text: 'Privacidad'),
+                    _FooterLegalLink(text: 'Privacy'),
                   ],
                 ),
               ],

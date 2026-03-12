@@ -15,7 +15,7 @@ void main() {
   }
 
   group('HeroSection', () {
-    testWidgets('renderiza botones de acción', (tester) async {
+    testWidgets('renders action buttons', (tester) async {
       tester.view.physicalSize = const Size(1200, 1200);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -23,11 +23,11 @@ void main() {
       await tester.pumpWidget(buildHero());
       await tester.pump(const Duration(seconds: 1));
 
-      expect(find.text('Conocer Productos'), findsOneWidget);
-      expect(find.text('Hablar con el equipo'), findsOneWidget);
+      expect(find.text('Get Your Free Estimate'), findsOneWidget);
+      expect(find.text('See Our Work'), findsOneWidget);
     });
 
-    testWidgets('muestra las 4 métricas', (tester) async {
+    testWidgets('shows 4 metrics', (tester) async {
       tester.view.physicalSize = const Size(1200, 1200);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -35,12 +35,12 @@ void main() {
       await tester.pumpWidget(buildHero());
       await tester.pump(const Duration(seconds: 1));
 
-      expect(find.text('SaaS'), findsOneWidget);
-      expect(find.text('IA'), findsOneWidget);
-      expect(find.text('24/7'), findsOneWidget);
+      expect(find.text('20+'), findsOneWidget);
+      expect(find.text('CST'), findsOneWidget);
+      expect(find.text('40-60%'), findsOneWidget);
     });
 
-    testWidgets('se construye correctamente', (tester) async {
+    testWidgets('builds correctly', (tester) async {
       tester.view.physicalSize = const Size(1200, 1200);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);

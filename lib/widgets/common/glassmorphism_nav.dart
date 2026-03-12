@@ -2,18 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:inspirare/core/constants/app_constants.dart';
-import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 
-/// Barra de navegación fija con efecto glassmorphism (backdrop blur).
+/// Fixed navigation bar with glassmorphism effect (backdrop blur).
 ///
-/// Cambia su apariencia al hacer scroll y muestra un menú hamburguesa
-/// en pantallas móviles.
+/// Changes appearance on scroll and shows a hamburger menu on mobile.
 class GlassmorphismNav extends StatefulWidget {
-  /// Callback invocado al tocar un item de navegación.
+  /// Callback invoked when a nav item is tapped.
   final void Function(NavSection) onNavTap;
 
-  /// Controller del scroll principal para detectar offset.
+  /// Main scroll controller to detect offset.
   final ScrollController scrollController;
 
   const GlassmorphismNav({
@@ -90,7 +88,7 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                   MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
-                      onTap: () => _handleNavTap(NavSection.inicio),
+                      onTap: () => _handleNavTap(NavSection.home),
                       child: RichText(
                         text: const TextSpan(
                           style: TextStyle(
@@ -109,22 +107,22 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                     Row(
                       children: [
                         _NavLink(
-                          text: NavSection.productos.label,
-                          onTap: () => _handleNavTap(NavSection.productos),
+                          text: NavSection.services.label,
+                          onTap: () => _handleNavTap(NavSection.services),
                         ),
                         const SizedBox(width: 32),
                         _NavLink(
-                          text: NavSection.nosotros.label,
-                          onTap: () => _handleNavTap(NavSection.nosotros),
+                          text: NavSection.portfolio.label,
+                          onTap: () => _handleNavTap(NavSection.portfolio),
                         ),
                         const SizedBox(width: 32),
                         _NavLink(
-                          text: NavSection.precios.label,
-                          onTap: () => _handleNavTap(NavSection.precios),
+                          text: NavSection.pricing.label,
+                          onTap: () => _handleNavTap(NavSection.pricing),
                         ),
                         const SizedBox(width: 32),
                         _NavCTA(
-                          onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
+                          onTap: () => _handleNavTap(NavSection.contact),
                         ),
                       ],
                     ),
@@ -172,24 +170,34 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _MobileNavItem(
-                      text: NavSection.productos.label,
-                      onTap: () => _handleNavTap(NavSection.productos),
+                      text: NavSection.services.label,
+                      onTap: () => _handleNavTap(NavSection.services),
                     ),
                     const SizedBox(height: 16),
                     _MobileNavItem(
-                      text: NavSection.nosotros.label,
-                      onTap: () => _handleNavTap(NavSection.nosotros),
+                      text: NavSection.whyUs.label,
+                      onTap: () => _handleNavTap(NavSection.whyUs),
                     ),
                     const SizedBox(height: 16),
                     _MobileNavItem(
-                      text: NavSection.precios.label,
-                      onTap: () => _handleNavTap(NavSection.precios),
+                      text: NavSection.portfolio.label,
+                      onTap: () => _handleNavTap(NavSection.portfolio),
+                    ),
+                    const SizedBox(height: 16),
+                    _MobileNavItem(
+                      text: NavSection.pricing.label,
+                      onTap: () => _handleNavTap(NavSection.pricing),
+                    ),
+                    const SizedBox(height: 16),
+                    _MobileNavItem(
+                      text: NavSection.faq.label,
+                      onTap: () => _handleNavTap(NavSection.faq),
                     ),
                     const SizedBox(height: 24),
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
-                        onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
+                        onTap: () => _handleNavTap(NavSection.contact),
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           decoration: BoxDecoration(
@@ -198,7 +206,7 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                           ),
                           child: const Center(
                             child: Text(
-                              'Contactar',
+                              'Get Free Estimate',
                               style: TextStyle(
                                 fontFamily: Fonts.body,
                                 fontSize: 14,
@@ -297,7 +305,7 @@ class _NavCTAState extends State<_NavCTA> {
                 : [],
           ),
           child: const Text(
-            'Contactar',
+            'Get Free Estimate',
             style: TextStyle(
               fontFamily: Fonts.body,
               fontSize: 13,

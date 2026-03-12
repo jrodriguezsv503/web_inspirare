@@ -3,7 +3,7 @@ import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
 
-/// Sección oscura "Por Qué INSPIRARE" con 6 tarjetas de beneficios y ribbon tecnológico.
+/// Dark section "Why INSPIRARE" with 6 benefit cards and tech stack ribbon.
 class WhySection extends StatelessWidget {
   final bool isMobile;
 
@@ -53,10 +53,11 @@ class WhySection extends StatelessWidget {
                   children: [
                     AnimatedSection(
                       child: SectionHeader(
-                        label: 'Por Qu\u00e9 INSPIRARE',
-                        title: 'Construido para\nel mercado salvadore\u00f1o',
+                        label: 'Why INSPIRARE',
+                        title: 'Your Nearshore\nAdvantage',
                         subtitle:
-                            'No somos una adaptaci\u00f3n de software extranjero. Cada l\u00ednea de c\u00f3digo est\u00e1 dise\u00f1ada para la realidad de El Salvador.',
+                            'We combine US-level engineering quality with Central American '
+                            'cost efficiency. No middlemen, no timezone headaches.',
                         isLeftAligned: true,
                         labelColor: Palette.primary.withValues(alpha: 0.8),
                         titleColor: Colors.white,
@@ -65,7 +66,6 @@ class WhySection extends StatelessWidget {
                     SizedBox(height: isSmall ? 40 : 64),
                     _buildGrid(isSmall, isTablet),
                     SizedBox(height: isSmall ? 48 : 80),
-                    // Tech stack ribbon
                     AnimatedSection(child: _TechStackRibbon(isMobile: isSmall)),
                   ],
                 ),
@@ -80,45 +80,51 @@ class WhySection extends StatelessWidget {
   Widget _buildGrid(bool isSmall, bool isTablet) {
     final cards = [
       _WhyCardData(
-        emoji: '\ud83e\udd16',
-        title: 'IA Especializada',
+        emoji: '\u{1F30E}',
+        title: 'Same Timezone',
         description:
-            'Asistente legal entrenado con el C\u00f3digo de Comercio, C\u00f3digo Tributario y leyes salvadore\u00f1as. No es un chatbot gen\u00e9rico.',
-        iconBg: Palette.contasasPrimary.withValues(alpha: 0.15),
-      ),
-      _WhyCardData(
-        emoji: '\ud83c\uddf8\ud83c\uddfb',
-        title: '100% Local',
-        description:
-            'Conocemos Hacienda, los formularios F-07 y F-14, el CNR, y cada particularidad del sistema tributario salvadore\u00f1o.',
-        iconBg: Palette.accentWarm.withValues(alpha: 0.15),
-      ),
-      _WhyCardData(
-        emoji: '\u2601\ufe0f',
-        title: 'Cloud Native',
-        description:
-            'Infraestructura en Google Cloud y Firebase. Escalable, segura y disponible 24/7 sin necesidad de instalar nada.',
+            'We work in CST — the same timezone as Chicago, Dallas, and Houston. '
+            'Real-time collaboration with zero delays.',
         iconBg: Palette.primary.withValues(alpha: 0.15),
       ),
       _WhyCardData(
-        emoji: '\ud83d\udcf1',
-        title: 'Mobile First',
+        emoji: '\u{1F4BC}',
+        title: '20+ Years Experience',
         description:
-            'Apps construidas con Flutter para rendimiento nativo en iOS y Android. Tu negocio en tu bolsillo.',
+            'Senior engineers with Apple certifications, Cisco CCNA, and decades '
+            'of enterprise IT experience.',
+        iconBg: Palette.accentWarm.withValues(alpha: 0.15),
+      ),
+      _WhyCardData(
+        emoji: '\u{1F680}',
+        title: 'Flutter & Firebase Experts',
+        description:
+            'Deep specialization in the Flutter ecosystem. We build cross-platform '
+            'apps 40% faster than traditional native development.',
         iconBg: const Color(0xFF8B5CF6).withValues(alpha: 0.15),
       ),
       _WhyCardData(
-        emoji: '\ud83d\udcb0',
-        title: 'Precio Justo',
+        emoji: '\u{1F3AF}',
+        title: 'End-to-End Delivery',
         description:
-            'Planes desde \$15.00/mes. Tecnolog\u00eda de primer nivel a precios accesibles para la realidad Salvadore\u00f1a.',
+            'From design to deployment and ongoing support. One team handles '
+            'everything — no vendor juggling.',
+        iconBg: const Color(0xFF06B6D4).withValues(alpha: 0.15),
+      ),
+      _WhyCardData(
+        emoji: '\u{1F4B0}',
+        title: '40-60% Cost Savings',
+        description:
+            'Senior-level talent at nearshore rates. Get more value per dollar '
+            'compared to US or Canadian agencies.',
         iconBg: Palette.success.withValues(alpha: 0.15),
       ),
       _WhyCardData(
-        emoji: '\ud83d\udee1\ufe0f',
-        title: 'Soporte Directo',
+        emoji: '\u{1F91D}',
+        title: 'Direct Communication',
         description:
-            'Habla directamente con los ingenieros que construyen el producto. Sin tickets, sin esperas, sin bots.',
+            'Talk directly to the engineers building your product. No project '
+            'managers, no lost-in-translation moments.',
         iconBg: const Color(0xFFEF4444).withValues(alpha: 0.15),
       ),
     ];
@@ -148,7 +154,6 @@ class WhySection extends StatelessWidget {
           rowCards.add(const SizedBox(width: 24));
         }
       }
-      // Fill remaining space if row is not full
       while (rowCards.length < crossAxisCount * 2 - 1) {
         rowCards.add(const SizedBox(width: 24));
         rowCards.add(const Expanded(child: SizedBox()));
@@ -214,7 +219,6 @@ class _WhyCardState extends State<_WhyCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Icon
             Container(
               width: 48,
               height: 48,

@@ -4,13 +4,16 @@ import 'package:inspirare/pages/landing/scroll_navigation_mixin.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/glassmorphism_nav.dart';
 import 'package:inspirare/widgets/sections/hero_section.dart';
-import 'package:inspirare/widgets/sections/products_section.dart';
+import 'package:inspirare/widgets/sections/services_section.dart';
 import 'package:inspirare/widgets/sections/why_section.dart';
+import 'package:inspirare/widgets/sections/portfolio_section.dart';
+import 'package:inspirare/widgets/sections/process_section.dart';
 import 'package:inspirare/widgets/sections/pricing_section.dart';
+import 'package:inspirare/widgets/sections/faq_section.dart';
 import 'package:inspirare/widgets/sections/cta_section.dart';
 import 'package:inspirare/widgets/sections/footer_section.dart';
 
-/// Layout móvil de la landing page (pantallas <= 768px).
+/// Mobile layout for the landing page (screens <= 768px).
 class MobileLayout extends StatefulWidget {
   const MobileLayout({super.key});
 
@@ -34,19 +37,44 @@ class _MobileLayoutState extends State<MobileLayout>
                   key: heroKey,
                   child: HeroSection(
                     isMobile: true,
-                    onProductsTap: () => scrollToSection(NavSection.productos),
+                    onPortfolioTap: () =>
+                        scrollToSection(NavSection.portfolio),
+                    onContactTap: () =>
+                        scrollToSection(NavSection.contact),
                   ),
                 ),
                 Container(
-                  key: productsKey,
-                  child: const ProductsSection(isMobile: true),
+                  key: servicesKey,
+                  child: const ServicesSection(isMobile: true),
                 ),
-                Container(key: whyKey, child: const WhySection(isMobile: true)),
+                Container(
+                  key: whyUsKey,
+                  child: const WhySection(isMobile: true),
+                ),
+                Container(
+                  key: portfolioKey,
+                  child: const PortfolioSection(isMobile: true),
+                ),
+                Container(
+                  key: processKey,
+                  child: const ProcessSection(isMobile: true),
+                ),
                 Container(
                   key: pricingKey,
-                  child: const PricingSection(isMobile: true),
+                  child: PricingSection(
+                    isMobile: true,
+                    onContactTap: () =>
+                        scrollToSection(NavSection.contact),
+                  ),
                 ),
-                const CTASection(isMobile: true),
+                Container(
+                  key: faqKey,
+                  child: const FAQSection(isMobile: true),
+                ),
+                Container(
+                  key: contactKey,
+                  child: const CTASection(isMobile: true),
+                ),
                 FooterSection(isMobile: true, onNavTap: scrollToSection),
               ],
             ),

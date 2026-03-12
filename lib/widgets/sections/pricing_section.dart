@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:inspirare/core/constants/app_constants.dart';
-import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
 
-/// Sección de precios con tarjetas para Factura Fácil DTE y ContaSAS.ia.
+/// Pricing section with engagement model cards.
 class PricingSection extends StatelessWidget {
   final bool isMobile;
+  final VoidCallback? onContactTap;
 
-  const PricingSection({super.key, this.isMobile = false});
+  const PricingSection({
+    super.key,
+    this.isMobile = false,
+    this.onContactTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class PricingSection extends StatelessWidget {
         left: isSmall ? 24 : 40,
         right: isSmall ? 24 : 40,
         top: isSmall ? 80 : 120,
-        bottom: isSmall ? 32 : 48,
+        bottom: isSmall ? 80 : 120,
       ),
       child: Center(
         child: ConstrainedBox(
@@ -32,128 +35,153 @@ class PricingSection extends StatelessWidget {
             children: [
               const AnimatedSection(
                 child: SectionHeader(
-                  label: 'Precios',
-                  title: 'Simple. Transparente.\nSin sorpresas.',
+                  label: 'Pricing',
+                  title: 'Flexible Engagement\nModels',
                   subtitle:
-                      'Un plan por producto. Todo incluido. Cancela cuando quieras.',
+                      'Choose the model that fits your project. '
+                      'All models include direct communication with senior engineers.',
                   isLeftAligned: true,
                 ),
               ),
               SizedBox(height: isSmall ? 40 : 64),
               AnimatedSection(
                 delay: const Duration(milliseconds: 300),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 840),
-                  child: isSmall
-                      ? const Column(
-                          children: [
-                            _PriceCard(
-                              productName: 'Factura Fácil DTE',
+                child: isSmall
+                    ? Column(
+                        children: [
+                          _PricingCard(
+                            title: 'Fixed-Price',
+                            description:
+                                'Best for well-defined projects with clear scope '
+                                'and deliverables.',
+                            idealFor: 'MVPs, landing pages, specific features',
+                            features: const [
+                              'Defined scope & timeline',
+                              'Predictable budget',
+                              'Milestone-based payments',
+                              'Change requests via CR process',
+                              'Full documentation included',
+                            ],
+                            accentGradient: const [
+                              Color(0xFF0D1753),
+                              Color(0xFF1A237E),
+                            ],
+                            onContactTap: onContactTap,
+                          ),
+                          const SizedBox(height: 24),
+                          _PricingCard(
+                            title: 'Time & Materials',
+                            description:
+                                'Best for evolving projects where requirements '
+                                'may change during development.',
+                            idealFor: 'Ongoing development, complex projects',
+                            features: const [
+                              'Pay for actual hours worked',
+                              'Flexible scope adjustments',
+                              'Weekly progress reports',
+                              'Sprint-based delivery',
+                              'Transparent time tracking',
+                            ],
+                            accentGradient: const [
+                              Color(0xFF08C4D4),
+                              Color(0xFF06B6D4),
+                            ],
+                            isFeatured: true,
+                            onContactTap: onContactTap,
+                          ),
+                          const SizedBox(height: 24),
+                          _PricingCard(
+                            title: 'Dedicated Team',
+                            description:
+                                'Best for long-term projects that need '
+                                'consistent, full-time engineering capacity.',
+                            idealFor: 'Staff augmentation, product teams',
+                            features: const [
+                              'Full-time dedicated engineers',
+                              'Fully integrated with your team',
+                              'Monthly retainer pricing',
+                              'Direct management access',
+                              'Scale up or down as needed',
+                            ],
+                            accentGradient: const [
+                              Color(0xFF2DB764),
+                              Color(0xFF16A34A),
+                            ],
+                            onContactTap: onContactTap,
+                          ),
+                        ],
+                      )
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: _PricingCard(
+                              title: 'Fixed-Price',
                               description:
-                                  'Facturación electrónica certificada para empresas en El Salvador.',
-                              price: '\$15',
-                              priceSuffix: ' /mes',
-                              trialText: 'Implementación en menos de 24 horas',
-                              features: [
-                                'Facturas electrónicas ilimitadas',
-                                'Créditos Fiscales y Notas de Crédito',
-                                'Certificado por Ministerio de Hacienda',
-                                'Panel de control y reportes',
-                                'Soporte vía WhatsApp',
+                                  'Best for well-defined projects with clear scope '
+                                  'and deliverables.',
+                              idealFor: 'MVPs, landing pages, specific features',
+                              features: const [
+                                'Defined scope & timeline',
+                                'Predictable budget',
+                                'Milestone-based payments',
+                                'Change requests via CR process',
+                                'Full documentation included',
                               ],
-                              buttonLabel: 'Empezar Gratis',
-                              buttonColor: Palette.dtePrimary,
-                              buttonHoverColor: Palette.dteSecondary,
-                              accentGradient: [
-                                Palette.dtePrimary,
+                              accentGradient: const [
+                                Color(0xFF0D1753),
                                 Color(0xFF1A237E),
                               ],
-                              url: AppUrls.dteApp,
+                              onContactTap: onContactTap,
                             ),
-                            SizedBox(height: 32),
-                            _PriceCard(
-                              productName: 'ContaSAS.ia',
+                          ),
+                          const SizedBox(width: 24),
+                          Expanded(
+                            child: _PricingCard(
+                              title: 'Time & Materials',
                               description:
-                                  'Contabilidad inteligente con asistente legal de IA para S.A.S.',
-                              price: '\$19',
-                              priceSuffix: '.99 /mes',
-                              trialText: '3 días gratis para probar',
-                              features: [
-                                'Declaraciones IVA F-07 automáticas',
-                                'Pago a Cuenta F-14',
-                                'Libros contables con validez legal',
-                                'Asistente legal con IA',
-                                'Semáforo de cumplimiento tributario',
+                                  'Best for evolving projects where requirements '
+                                  'may change during development.',
+                              idealFor: 'Ongoing development, complex projects',
+                              features: const [
+                                'Pay for actual hours worked',
+                                'Flexible scope adjustments',
+                                'Weekly progress reports',
+                                'Sprint-based delivery',
+                                'Transparent time tracking',
                               ],
-                              buttonLabel: 'Empezar Gratis',
-                              buttonColor: Palette.contasasPrimary,
-                              buttonHoverColor: Color(0xFF0891B2),
-                              accentGradient: [
-                                Palette.contasasPrimary,
+                              accentGradient: const [
+                                Color(0xFF08C4D4),
                                 Color(0xFF06B6D4),
                               ],
-                              url: AppUrls.contasasApp,
+                              isFeatured: true,
+                              onContactTap: onContactTap,
                             ),
-                          ],
-                        )
-                      : const Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: _PriceCard(
-                                productName: 'Factura Fácil DTE',
-                                description:
-                                    'Facturación electrónica certificada para empresas en El Salvador.',
-                                price: '\$15',
-                                priceSuffix: ' /mes',
-                                trialText:
-                                    'Implementación en menos de 24 horas',
-                                features: [
-                                  'Facturas electrónicas ilimitadas',
-                                  'Créditos Fiscales y Notas de Crédito',
-                                  'Certificado por Ministerio de Hacienda',
-                                  'Panel de control y reportes',
-                                  'Soporte vía WhatsApp',
-                                ],
-                                buttonLabel: 'Empezar Gratis',
-                                buttonColor: Palette.dtePrimary,
-                                buttonHoverColor: Palette.dteSecondary,
-                                accentGradient: [
-                                  Palette.dtePrimary,
-                                  Color(0xFF1A237E),
-                                ],
-                                url: AppUrls.dteApp,
-                              ),
+                          ),
+                          const SizedBox(width: 24),
+                          Expanded(
+                            child: _PricingCard(
+                              title: 'Dedicated Team',
+                              description:
+                                  'Best for long-term projects that need '
+                                  'consistent, full-time engineering capacity.',
+                              idealFor: 'Staff augmentation, product teams',
+                              features: const [
+                                'Full-time dedicated engineers',
+                                'Fully integrated with your team',
+                                'Monthly retainer pricing',
+                                'Direct management access',
+                                'Scale up or down as needed',
+                              ],
+                              accentGradient: const [
+                                Color(0xFF2DB764),
+                                Color(0xFF16A34A),
+                              ],
+                              onContactTap: onContactTap,
                             ),
-                            SizedBox(width: 32),
-                            Expanded(
-                              child: _PriceCard(
-                                productName: 'ContaSAS.ia',
-                                description:
-                                    'Contabilidad inteligente con asistente legal de IA para S.A.S.',
-                                price: '\$19',
-                                priceSuffix: '.99 /mes',
-                                trialText: '3 días gratis para probar',
-                                features: [
-                                  'Declaraciones IVA F-07 automáticas',
-                                  'Pago a Cuenta F-14',
-                                  'Libros contables con validez legal',
-                                  'Asistente legal con IA',
-                                  'Semáforo de cumplimiento tributario',
-                                ],
-                                buttonLabel: 'Empezar Gratis',
-                                buttonColor: Palette.contasasPrimary,
-                                buttonHoverColor: Color(0xFF0891B2),
-                                accentGradient: [
-                                  Palette.contasasPrimary,
-                                  Color(0xFF06B6D4),
-                                ],
-                                url: AppUrls.contasasApp,
-                              ),
-                            ),
-                          ],
-                        ),
-                ),
+                          ),
+                        ],
+                      ),
               ),
             ],
           ),
@@ -163,38 +191,30 @@ class PricingSection extends StatelessWidget {
   }
 }
 
-class _PriceCard extends StatefulWidget {
-  final String productName;
+class _PricingCard extends StatefulWidget {
+  final String title;
   final String description;
-  final String price;
-  final String priceSuffix;
-  final String trialText;
+  final String idealFor;
   final List<String> features;
-  final String buttonLabel;
-  final Color buttonColor;
-  final Color buttonHoverColor;
   final List<Color> accentGradient;
-  final String url;
+  final bool isFeatured;
+  final VoidCallback? onContactTap;
 
-  const _PriceCard({
-    required this.productName,
+  const _PricingCard({
+    required this.title,
     required this.description,
-    required this.price,
-    required this.priceSuffix,
-    required this.trialText,
+    required this.idealFor,
     required this.features,
-    required this.buttonLabel,
-    required this.buttonColor,
-    required this.buttonHoverColor,
     required this.accentGradient,
-    required this.url,
+    this.isFeatured = false,
+    this.onContactTap,
   });
 
   @override
-  State<_PriceCard> createState() => _PriceCardState();
+  State<_PricingCard> createState() => _PricingCardState();
 }
 
-class _PriceCardState extends State<_PriceCard> {
+class _PricingCardState extends State<_PricingCard> {
   bool _isHovered = false;
   bool _isButtonHovered = false;
 
@@ -210,8 +230,12 @@ class _PriceCardState extends State<_PriceCard> {
             : Matrix4.identity(),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(32),
-          border: Border.all(color: Colors.black.withValues(alpha: 0.06)),
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: widget.isFeatured
+                ? Palette.primary.withValues(alpha: 0.3)
+                : Colors.black.withValues(alpha: 0.06),
+          ),
           boxShadow: _isHovered
               ? [
                   BoxShadow(
@@ -234,12 +258,34 @@ class _PriceCardState extends State<_PriceCard> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(40),
+              padding: const EdgeInsets.all(32),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (widget.isFeatured)
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Palette.primary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: const Text(
+                        'MOST POPULAR',
+                        style: TextStyle(
+                          fontFamily: Fonts.body,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1,
+                          color: Palette.primaryDark,
+                        ),
+                      ),
+                    ),
                   Text(
-                    widget.productName,
+                    widget.title,
                     style: const TextStyle(
                       fontFamily: Fonts.title,
                       fontSize: 24,
@@ -256,41 +302,24 @@ class _PriceCardState extends State<_PriceCard> {
                       height: 1.6,
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  // Price
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: widget.price,
-                          style: const TextStyle(
-                            fontFamily: Fonts.body,
-                            fontSize: 42,
-                            fontWeight: FontWeight.w700,
-                            color: Palette.dark,
-                            letterSpacing: -1,
-                          ),
-                        ),
-                        TextSpan(
-                          text: widget.priceSuffix,
-                          style: const TextStyle(
-                            fontFamily: Fonts.body,
-                            fontSize: 16,
-                            color: Palette.textMuted,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.trialText,
-                    style: const TextStyle(
-                      fontFamily: Fonts.body,
-                      fontSize: 13,
-                      color: Palette.primary,
-                      fontWeight: FontWeight.w600,
+                    decoration: BoxDecoration(
+                      color: Palette.dark.withValues(alpha: 0.04),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      'Ideal for: ${widget.idealFor}',
+                      style: const TextStyle(
+                        fontFamily: Fonts.body,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Palette.textSecondary,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -308,7 +337,7 @@ class _PriceCardState extends State<_PriceCard> {
                       child: Row(
                         children: [
                           const Text(
-                            '✓',
+                            '\u2713',
                             style: TextStyle(
                               color: Palette.primary,
                               fontWeight: FontWeight.w700,
@@ -337,7 +366,7 @@ class _PriceCardState extends State<_PriceCard> {
                     onEnter: (_) => setState(() => _isButtonHovered = true),
                     onExit: (_) => setState(() => _isButtonHovered = false),
                     child: GestureDetector(
-                      onTap: () => safeLaunchUrl(context, widget.url),
+                      onTap: widget.onContactTap,
                       child: AnimatedContainer(
                         duration: AppTransitions.fast,
                         width: double.infinity,
@@ -347,25 +376,23 @@ class _PriceCardState extends State<_PriceCard> {
                             : Matrix4.identity(),
                         decoration: BoxDecoration(
                           color: _isButtonHovered
-                              ? widget.buttonHoverColor
-                              : widget.buttonColor,
+                              ? Palette.dark
+                              : Palette.dark.withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(100),
                           boxShadow: _isButtonHovered
                               ? [
                                   BoxShadow(
-                                    color: widget.buttonColor.withValues(
-                                      alpha: 0.3,
-                                    ),
+                                    color: Palette.dark.withValues(alpha: 0.3),
                                     blurRadius: 24,
                                     offset: const Offset(0, 8),
                                   ),
                                 ]
                               : [],
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
-                            widget.buttonLabel,
-                            style: const TextStyle(
+                            'Discuss Your Project',
+                            style: TextStyle(
                               fontFamily: Fonts.body,
                               fontSize: 14,
                               fontWeight: FontWeight.w600,

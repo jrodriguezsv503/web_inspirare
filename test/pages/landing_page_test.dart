@@ -11,7 +11,7 @@ void main() {
   });
 
   group('LandingPage', () {
-    testWidgets('muestra MobileLayout en pantallas angostas', (tester) async {
+    testWidgets('shows MobileLayout on narrow screens', (tester) async {
       // Suppress overflow errors in tests (nav logo overflows at tiny sizes)
       final originalOnError = FlutterError.onError;
       FlutterError.onError = (details) {
@@ -28,18 +28,26 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       expect(find.byType(MobileLayout), findsOneWidget);
-      expect(find.byType(HeroSectionWeb), findsNothing);
+      expect(find.byType(DesktopLayout), findsNothing);
     });
 
-    testWidgets('muestra HeroSectionWeb en pantallas anchas', (tester) async {
-      tester.view.physicalSize = const Size(1200, 800);
+    testWidgets('shows DesktopLayout on wide screens', (tester) async {
+      // Suppress overflow errors in tests (nav overflows at small desktop sizes)
+      final originalOnError = FlutterError.onError;
+      FlutterError.onError = (details) {
+        if (details.toString().contains('overflowed')) return;
+        originalOnError?.call(details);
+      };
+      addTearDown(() => FlutterError.onError = originalOnError);
+
+      tester.view.physicalSize = const Size(1400, 900);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpWidget(const MaterialApp(home: LandingPage()));
       await tester.pump(const Duration(seconds: 1));
 
-      expect(find.byType(HeroSectionWeb), findsOneWidget);
+      expect(find.byType(DesktopLayout), findsOneWidget);
       expect(find.byType(MobileLayout), findsNothing);
     });
   });

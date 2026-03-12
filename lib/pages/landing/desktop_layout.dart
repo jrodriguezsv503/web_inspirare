@@ -4,21 +4,24 @@ import 'package:inspirare/pages/landing/scroll_navigation_mixin.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/glassmorphism_nav.dart';
 import 'package:inspirare/widgets/sections/hero_section.dart';
-import 'package:inspirare/widgets/sections/products_section.dart';
+import 'package:inspirare/widgets/sections/services_section.dart';
 import 'package:inspirare/widgets/sections/why_section.dart';
+import 'package:inspirare/widgets/sections/portfolio_section.dart';
+import 'package:inspirare/widgets/sections/process_section.dart';
 import 'package:inspirare/widgets/sections/pricing_section.dart';
+import 'package:inspirare/widgets/sections/faq_section.dart';
 import 'package:inspirare/widgets/sections/cta_section.dart';
 import 'package:inspirare/widgets/sections/footer_section.dart';
 
-/// Layout de escritorio de la landing page (pantallas > 768px).
-class HeroSectionWeb extends StatefulWidget {
-  const HeroSectionWeb({super.key});
+/// Desktop layout for the landing page (screens > 768px).
+class DesktopLayout extends StatefulWidget {
+  const DesktopLayout({super.key});
 
   @override
-  State<HeroSectionWeb> createState() => _HeroSectionWebState();
+  State<DesktopLayout> createState() => _DesktopLayoutState();
 }
 
-class _HeroSectionWebState extends State<HeroSectionWeb>
+class _DesktopLayoutState extends State<DesktopLayout>
     with ScrollNavigationMixin {
   @override
   Widget build(BuildContext context) {
@@ -33,13 +36,31 @@ class _HeroSectionWebState extends State<HeroSectionWeb>
                 Container(
                   key: heroKey,
                   child: HeroSection(
-                    onProductsTap: () => scrollToSection(NavSection.productos),
+                    onPortfolioTap: () =>
+                        scrollToSection(NavSection.portfolio),
+                    onContactTap: () =>
+                        scrollToSection(NavSection.contact),
                   ),
                 ),
-                Container(key: productsKey, child: const ProductsSection()),
-                Container(key: whyKey, child: const WhySection()),
-                Container(key: pricingKey, child: const PricingSection()),
-                const CTASection(),
+                Container(
+                  key: servicesKey,
+                  child: const ServicesSection(),
+                ),
+                Container(key: whyUsKey, child: const WhySection()),
+                Container(
+                  key: portfolioKey,
+                  child: const PortfolioSection(),
+                ),
+                Container(key: processKey, child: const ProcessSection()),
+                Container(
+                  key: pricingKey,
+                  child: PricingSection(
+                    onContactTap: () =>
+                        scrollToSection(NavSection.contact),
+                  ),
+                ),
+                Container(key: faqKey, child: const FAQSection()),
+                Container(key: contactKey, child: const CTASection()),
                 FooterSection(onNavTap: scrollToSection),
               ],
             ),

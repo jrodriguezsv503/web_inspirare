@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Color palette for Inspirare landing page.
+/// Color palette for INSPIRARE landing page.
 class Palette {
   static const Color primary = Color(0xFF75CCCC);
   static const Color primaryLight = Color(0xFF7EEAF4);
@@ -10,11 +10,6 @@ class Palette {
   static const Color background = Color(0xFFFFF9F5);
   static const Color accentWarm = Color(0xFFF4A259);
   static const Color footerDark = Color(0xFF212630);
-
-  // Product-specific colors
-  static const Color contasasPrimary = Color(0xFF08C4D4);
-  static const Color dtePrimary = Color(0xFF0D1753);
-  static const Color dteSecondary = Color(0xFF0A1140);
 
   // Text colors
   static const Color textSecondary = Color(0xFF555555);
