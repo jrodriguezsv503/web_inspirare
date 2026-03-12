@@ -79,52 +79,61 @@ class WhySection extends StatelessWidget {
 
   Widget _buildGrid(bool isSmall, bool isTablet) {
     final cards = [
+      // Pillar 1: Business Credibility
       _WhyCardData(
-        emoji: '\u{1F30E}',
-        title: 'Same Timezone',
+        emoji: '\u{1F6E1}\uFE0F',
+        title: 'D-U-N-S\u00ae Verified Business',
         description:
-            'We work in CST — the same timezone as Chicago, Dallas, and Houston. '
-            'Real-time collaboration with zero delays.',
+            'Independently verified by Dun & Bradstreet (No. 816056716). '
+            'We meet the same credibility standards required by Apple, Google, '
+            'and Fortune 500 procurement departments.',
         iconBg: Palette.primary.withValues(alpha: 0.15),
       ),
       _WhyCardData(
-        emoji: '\u{1F4BC}',
-        title: '20+ Years Experience',
+        emoji: '\u{1F512}',
+        title: 'You Own 100% of Your IP',
         description:
-            'Senior engineers with Apple certifications, Cisco CCNA, and decades '
-            'of enterprise IT experience.',
+            'Your source code and intellectual property belong to you from '
+            'day one. We sign NDAs as standard practice and work with your '
+            'legal team on any requirements.',
         iconBg: Palette.accentWarm.withValues(alpha: 0.15),
       ),
+      // Pillar 2: Proven Track Record
       _WhyCardData(
         emoji: '\u{1F680}',
-        title: 'Flutter & Firebase Experts',
+        title: '4 SaaS Products in Production',
         description:
-            'Deep specialization in the Flutter ecosystem. We build cross-platform '
-            'apps 40% faster than traditional native development.',
+            'We don\'t just do outsourcing \u2014 we build, deploy, and maintain '
+            'our own SaaS products with real users and real revenue.',
         iconBg: const Color(0xFF8B5CF6).withValues(alpha: 0.15),
       ),
       _WhyCardData(
-        emoji: '\u{1F3AF}',
-        title: 'End-to-End Delivery',
+        emoji: '\u{1F4BC}',
+        title: '20+ Years & End-to-End Delivery',
         description:
-            'From design to deployment and ongoing support. One team handles '
-            'everything — no vendor juggling.',
+            'Senior engineers with Apple & Cisco certifications. '
+            'Design \u2192 code \u2192 deploy \u2192 support \u2014 one team '
+            'handles everything, no vendor juggling.',
         iconBg: const Color(0xFF06B6D4).withValues(alpha: 0.15),
       ),
+      // Pillar 3: Technical Excellence
       _WhyCardData(
-        emoji: '\u{1F4B0}',
-        title: '40-60% Cost Savings',
+        emoji: '\u{2601}\uFE0F',
+        title: 'Google Cloud Native',
         description:
-            'Senior-level talent at nearshore rates. Get more value per dollar '
-            'compared to US or Canadian agencies.',
+            'Flutter single-codebase for web + mobile, AI/ML in production '
+            '(not just prototypes), and security-first: 2FA, encryption, '
+            'and compliance frameworks.',
         iconBg: Palette.success.withValues(alpha: 0.15),
       ),
+      // Pillar 4: Client-Centered Approach
       _WhyCardData(
-        emoji: '\u{1F91D}',
-        title: 'Direct Communication',
+        emoji: '\u{1F30E}',
+        title: 'Same Timezone, Direct Access',
         description:
-            'Talk directly to the engineers building your product. No project '
-            'managers, no lost-in-translation moments.',
+            'CST timezone \u2014 same as Chicago, Dallas, and Houston. '
+            'Talk directly to the engineers building your product via Slack, '
+            'Zoom, and Linear. No middlemen.',
         iconBg: const Color(0xFFEF4444).withValues(alpha: 0.15),
       ),
     ];
@@ -267,7 +276,13 @@ class _TechStackRibbon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = ['Flutter', 'Firebase', 'Google Cloud', 'Dart', 'AI/ML'];
+    final items = [
+      'Flutter',
+      'Firebase',
+      'Google Cloud',
+      'Vertex AI',
+      'Stripe',
+    ];
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -319,10 +334,10 @@ class _TechStackRibbon extends StatelessWidget {
         return Icons.local_fire_department;
       case 'Google Cloud':
         return Icons.cloud;
-      case 'Dart':
-        return Icons.code;
-      case 'AI/ML':
+      case 'Vertex AI':
         return Icons.auto_awesome;
+      case 'Stripe':
+        return Icons.payment;
       default:
         return Icons.circle;
     }

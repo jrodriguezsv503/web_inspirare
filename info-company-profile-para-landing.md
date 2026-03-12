@@ -105,7 +105,7 @@ Integrations:  SendGrid, Twilio, DocuSign, Google Maps
 
 ---
 
-## 5. Portfolio / Active Products — Tu Prueba Viviente
+## 4. Portfolio / Active Products — Tu Prueba Viviente
 
 Esta es **la sección más valiosa** del Company Profile para la landing page. Tener productos en producción es tu mayor diferenciador vs. competidores que solo hacen outsourcing/staff augmentation.
 
@@ -185,7 +185,6 @@ Tu Company Profile tiene 4 pilares. Para la landing, reordénalos por lo que má
 
 - D-U-N-S® verified business (No. 816056716) — verified by Dun & Bradstreet
 - Legally incorporated S.A.S. with full tax registration
-- Apple Certified + Cisco CCNA + MBA in Financial Management
 - Google for Startups Cloud Program participant
 - **NUEVO:** "You own 100% of your source code and IP from day one"
 
@@ -220,18 +219,18 @@ El footer de la landing page debe incluir credenciales verificables:
 INSPIRARE, S.A.S.
 Software Development & Digital Solutions
 
-Soyapango, San Salvador, El Salvador
+San Salvador, El Salvador
 D-U-N-S® 81-605-6716
 NIT: 0622-151025-101-4
 
-info@inspirare.app  |  +503 7933-6960
+hello@inspirare.app  |  +503 7933-6960
 ```
 
 Además, crear un email alias más "enterprise-friendly" para el mercado US:
 
 - **hello@inspirare.app** — para el formulario de contacto general
-- **projects@inspirare.app** — para cotizaciones de proyectos
-- **joel@inspirare.app** — para comunicación directa con el CEO
+- **info@inspirare.app** — para cotizaciones de proyectos
+- **joel.rodriguez@inspirare.app** — para comunicación directa con el CEO
 
 ---
 
@@ -299,11 +298,6 @@ Con toda la información del Company Profile integrada:
 │  Support                                        │
 └─────────────────────────────────────────────────┘
 ┌─────────────────────────────────────────────────┐
-│  ABOUT / LEADERSHIP                             │
-│  Joel: 20+ yrs, Apple, Cisco, MBA, Google       │
-│  "We're a strategic partner, not just a vendor"  │
-└─────────────────────────────────────────────────┘
-┌─────────────────────────────────────────────────┐
 │  FAQ (6-8 preguntas clave)                      │
 │  Location, timezone, NDA, timeline, pricing,    │
 │  IP ownership, communication                    │
@@ -330,7 +324,6 @@ Si solo pudieras agregar 5 cosas del Company Profile a tu landing, estas son las
 
 2. **4 Productos Propios en Producción** — Screenshots + links de ContaSAS.ia, DTE, El Bicho IA, TRAMA. Prueba que construyes cosas reales, no solo haces outsourcing.
 
-3. **Apple + Cisco + Google for Startups** — Logos/badges de tres marcas que cualquier buyer de US reconoce instantáneamente como señales de calidad.
 
 4. **"You own 100% of your code and IP from day one"** — Esta frase sola reduce la ansiedad #1 de cualquier cliente que contrata desarrollo externo.
 

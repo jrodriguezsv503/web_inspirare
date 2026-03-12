@@ -112,9 +112,15 @@ class HeroSection extends StatelessWidget {
                 ),
               ),
               SizedBox(height: isSmall ? 60 : 80),
-              // Metrics bar
+              // Trust badges
               AnimatedSection(
                 delay: const Duration(milliseconds: 400),
+                child: _TrustBadgesRow(isMobile: isSmall),
+              ),
+              SizedBox(height: isSmall ? 24 : 32),
+              // Metrics bar
+              AnimatedSection(
+                delay: const Duration(milliseconds: 500),
                 child: _MetricsBar(isMobile: isSmall),
               ),
             ],
@@ -213,6 +219,65 @@ class _HeroBadgeState extends State<_HeroBadge>
   }
 }
 
+class _TrustBadgesRow extends StatelessWidget {
+  final bool isMobile;
+
+  const _TrustBadgesRow({this.isMobile = false});
+
+  @override
+  Widget build(BuildContext context) {
+    final badges = [
+      ('D-U-N-S\u00ae Verified', Icons.verified_outlined),
+     //('Google for Startups', Icons.cloud_outlined),
+     //('Apple Certified', Icons.laptop_mac),
+      ('100% IP Ownership', Icons.lock_outline),
+    ];
+
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: isMobile ? 12 : 20,
+      runSpacing: 10,
+      children: badges
+          .map(
+            (b) => Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 10 : 14,
+                vertical: 6,
+              ),
+              decoration: BoxDecoration(
+                color: Palette.dark.withValues(alpha: 0.04),
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(
+                  color: Palette.dark.withValues(alpha: 0.08),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    b.$2,
+                    size: isMobile ? 13 : 15,
+                    color: Palette.primary,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    b.$1,
+                    style: TextStyle(
+                      fontFamily: Fonts.body,
+                      fontSize: isMobile ? 10 : 12,
+                      fontWeight: FontWeight.w600,
+                      color: Palette.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
 class _MetricsBar extends StatelessWidget {
   final bool isMobile;
 
@@ -220,11 +285,11 @@ class _MetricsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const metrics = [
+    final metrics = [
       ('20+', 'Years Experience'),
-      ('50+', 'Projects Delivered'),
+      ('4', 'SaaS Products Live'),
       ('CST', 'Same Timezone'),
-      ('40-60%', 'Cost Savings'),
+      ('\u{1F6E1}\uFE0F', 'D-U-N-S\u00ae Verified'),
     ];
 
     return ConstrainedBox(

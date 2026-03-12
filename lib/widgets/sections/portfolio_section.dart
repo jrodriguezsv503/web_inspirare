@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
@@ -51,72 +52,82 @@ class PortfolioSection extends StatelessWidget {
   Widget _buildProjects(bool isSmall, bool isTablet) {
     final projects = [
       const _ProjectData(
-        name: 'Factura F\u00e1cil DTE',
+        name: 'ContaSAS.ia',
+        subtitle: 'AI-Powered SaaS for Accounting & Tax Compliance',
         challenge:
-            'Salvadoran businesses needed an affordable, government-certified '
-            'electronic invoicing platform.',
+            'Small businesses needed affordable, AI-assisted accounting '
+            'that understands local tax law.',
         solution:
-            'Built a cloud-native invoicing SaaS with real-time government API '
-            'integration, automated tax calculations, and multi-document support.',
+            'Built a full SaaS platform with automated bookkeeping, IVA '
+            'calculations, and an AI legal assistant trained on Salvadoran '
+            'commercial law.',
+        results: [
+          'Production SaaS serving real businesses',
+          'AI legal assistant for compliance queries',
+          'Automated IVA & income tax declarations',
+        ],
+        tags: ['Flutter Web', 'Firebase', 'Vertex AI', 'RAG'],
+        accentColor: Color(0xFF08C4D4),
+        status: 'Live \u2022 Paying Subscribers',
+        liveUrl: 'https://contasas.inspirare.app',
+      ),
+      const _ProjectData(
+        name: 'Factura F\u00e1cil DTE',
+        subtitle: 'Government-Compliant Electronic Invoicing',
+        challenge:
+            'Businesses needed a compliant electronic invoicing system '
+            'integrated with El Salvador\'s Ministry of Finance.',
+        solution:
+            'Built a real-time invoicing platform handling multiple document '
+            'types with government API validation.',
         results: [
           'Certified by Ministry of Finance',
-          'Unlimited invoices at \$15/mo',
+          'Processing real invoices for paying clients',
           'Sub-second invoice generation',
         ],
         tags: ['Flutter Web', 'Firebase', 'Government API', 'SaaS'],
         accentColor: Color(0xFF0D1753),
-        status: 'Live in Production',
+        status: 'Live \u2022 Paying Clients',
+        liveUrl: 'https://dte.inspirare.app',
       ),
       const _ProjectData(
-        name: 'ContaSAS.ia',
+        name: 'El Bicho IA',
+        subtitle: 'Hyperlocal AI Chatbot with Custom Fine-Tuned Model',
         challenge:
-            'Small businesses in El Salvador struggled with complex tax declarations '
-            'and accounting compliance.',
+            'No AI assistant understood Salvadoran context, slang, or '
+            'local regulations.',
         solution:
-            'Created an AI-powered accounting platform with a legal assistant '
-            'trained on Salvadoran tax law.',
+            'Fine-tuned Gemma 3 on Vertex AI using QLoRA, built RAG pipeline '
+            'with legal documents, and created a "caliche normalizer" for '
+            'local dialect.',
         results: [
-          'Automated IVA & income tax declarations',
-          'AI legal assistant for compliance',
-          'Real-time tax compliance dashboard',
+          'Custom fine-tuned AI model in production',
+          'B2B monetization model',
+          '770+ national bus routes in database',
         ],
-        tags: ['Flutter', 'AI/ML', 'Firebase', 'Gemini'],
-        accentColor: Color(0xFF08C4D4),
-        status: 'Live in Production',
-      ),
-      const _ProjectData(
-        name: 'Rent & Ride SV',
-        challenge:
-            'A vehicle rental company needed a digital platform to manage their '
-            'fleet, bookings, and customer relationships.',
-        solution:
-            'Developed a full-stack rental management system with online booking, '
-            'fleet tracking, and automated billing.',
-        results: [
-          'Digital booking flow',
-          'Fleet management dashboard',
-          'Automated invoicing',
-        ],
-        tags: ['Flutter', 'Firebase', 'Cloud Functions'],
+        tags: ['Vertex AI', 'Gemma 3', 'QLoRA', 'RAG', 'Flutter Web'],
         accentColor: Color(0xFF2DB764),
-        status: 'Delivered',
+        status: 'Live \u2022 B2B Model',
+        liveUrl: 'https://elbichoia.com',
       ),
       const _ProjectData(
         name: 'TRAMA Store',
+        subtitle: 'E-Commerce Platform from Scratch',
         challenge:
-            'An e-commerce brand needed a modern, fast online store with '
-            'inventory management and payment processing.',
+            'A men\'s clothing brand needed a complete online store with '
+            'brand identity and payment processing.',
         solution:
-            'Built a responsive e-commerce platform with real-time inventory, '
-            'secure payments, and order tracking.',
+            'Designed and built a complete e-commerce experience including '
+            'product catalog, checkout flow, and brand system.',
         results: [
+          'Live e-commerce store',
           'Mobile-first shopping experience',
-          'Real-time inventory sync',
           'Integrated payment gateway',
         ],
-        tags: ['Flutter Web', 'Firebase', 'Payments'],
+        tags: ['Flutter Web', 'Firebase', 'E-Commerce'],
         accentColor: Color(0xFFF4A259),
-        status: 'Delivered',
+        status: 'Live \u2022 trama.store',
+        liveUrl: 'https://trama.store',
       ),
     ];
 
@@ -170,21 +181,25 @@ class PortfolioSection extends StatelessWidget {
 
 class _ProjectData {
   final String name;
+  final String subtitle;
   final String challenge;
   final String solution;
   final List<String> results;
   final List<String> tags;
   final Color accentColor;
   final String status;
+  final String? liveUrl;
 
   const _ProjectData({
     required this.name,
+    this.subtitle = '',
     required this.challenge,
     required this.solution,
     required this.results,
     required this.tags,
     required this.accentColor,
     required this.status,
+    this.liveUrl,
   });
 }
 
@@ -280,6 +295,18 @@ class _ProjectCardState extends State<_ProjectCard> {
                       letterSpacing: -0.3,
                     ),
                   ),
+                  if (widget.data.subtitle.isNotEmpty) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      widget.data.subtitle,
+                      style: TextStyle(
+                        fontFamily: Fonts.body,
+                        fontSize: 13,
+                        fontStyle: FontStyle.italic,
+                        color: Palette.textMuted.withValues(alpha: 0.8),
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 20),
                   // Challenge
                   const _SectionLabel(label: 'CHALLENGE'),
@@ -369,7 +396,56 @@ class _ProjectCardState extends State<_ProjectCard> {
                         )
                         .toList(),
                   ),
+                  if (widget.data.liveUrl != null) ...[
+                    const SizedBox(height: 20),
+                    _ViewLiveButton(url: widget.data.liveUrl!),
+                  ],
                 ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ViewLiveButton extends StatefulWidget {
+  final String url;
+
+  const _ViewLiveButton({required this.url});
+
+  @override
+  State<_ViewLiveButton> createState() => _ViewLiveButtonState();
+}
+
+class _ViewLiveButtonState extends State<_ViewLiveButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: () => safeLaunchUrl(context, widget.url),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.open_in_new,
+              size: 14,
+              color: _isHovered ? Palette.primary : Palette.textMuted,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              'View Live',
+              style: TextStyle(
+                fontFamily: Fonts.body,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: _isHovered ? Palette.primary : Palette.textMuted,
               ),
             ),
           ],

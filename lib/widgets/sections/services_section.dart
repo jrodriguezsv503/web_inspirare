@@ -52,55 +52,56 @@ class ServicesSection extends StatelessWidget {
     final cards = [
       _ServiceCardData(
         icon: Icons.web,
-        title: 'Custom Web Applications',
+        title: 'Web Apps That Scale With Your Business',
         description:
-            'Scalable, responsive web apps built with modern frameworks. '
-            'From dashboards to SaaS platforms.',
+            'SaaS dashboards, client portals, and admin systems that grow '
+            'with you \u2014 built for performance from day one.',
         tags: ['Flutter Web', 'Firebase', 'Cloud Run'],
         iconBg: Palette.primary.withValues(alpha: 0.15),
       ),
       _ServiceCardData(
         icon: Icons.phone_iphone,
-        title: 'Mobile App Development',
+        title: 'One Codebase, Two Platforms',
         description:
-            'Native-quality iOS & Android apps from a single codebase. '
-            'Faster delivery, lower cost.',
+            'Launch your app on iPhone and Android at the same time \u2014 '
+            'with a single codebase that cuts your development cost and '
+            'timeline in half.',
         tags: ['Flutter', 'iOS', 'Android'],
         iconBg: const Color(0xFF8B5CF6).withValues(alpha: 0.15),
       ),
       _ServiceCardData(
         icon: Icons.rocket_launch,
-        title: 'MVP & Startup Development',
+        title: 'From Idea to Market in Weeks',
         description:
-            'Go from idea to market in weeks. We help startups validate, '
-            'build, and launch their first product.',
+            'Validate your concept fast. We help startups build, test, '
+            'and launch their MVP so you can start getting real feedback.',
         tags: ['Rapid Prototyping', 'Lean MVP'],
         iconBg: Palette.accentWarm.withValues(alpha: 0.15),
       ),
       _ServiceCardData(
         icon: Icons.auto_awesome,
-        title: 'AI & ML Integration',
+        title: 'AI-Powered Features, Not AI Hype',
         description:
-            'Add intelligent features to your apps — chatbots, document '
-            'processing, predictive analytics, and more.',
-        tags: ['Gemini', 'OpenAI', 'Custom Models'],
+            'Chatbots, document processing, RAG pipelines, and workflow '
+            'automation \u2014 AI features in production, not just prototypes.',
+        tags: ['Vertex AI', 'RAG', 'Fine-tuned Models'],
         iconBg: const Color(0xFF06B6D4).withValues(alpha: 0.15),
       ),
       _ServiceCardData(
         icon: Icons.cloud,
-        title: 'Cloud Architecture',
+        title: 'Built on Google Cloud',
         description:
-            'Design and deploy on Google Cloud Platform and Firebase. '
-            'Serverless, scalable, cost-optimized.',
+            'Serverless, auto-scaling, cost-optimized infrastructure. '
+            'Your app stays fast and reliable as you grow.',
         tags: ['GCP', 'Firebase', 'Cloud Functions'],
         iconBg: Palette.success.withValues(alpha: 0.15),
       ),
       _ServiceCardData(
         icon: Icons.palette,
-        title: 'UI/UX Design',
+        title: 'Design That Converts',
         description:
-            'User-centered design that converts. Research, wireframes, '
-            'prototypes, and polished interfaces.',
+            'User-centered interfaces that look great and drive results. '
+            'From wireframes to polished, production-ready designs.',
         tags: ['Figma', 'User Research', 'Prototyping'],
         iconBg: const Color(0xFFEF4444).withValues(alpha: 0.15),
       ),

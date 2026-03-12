@@ -128,6 +128,16 @@ class FooterSection extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(height: 16),
+        Text(
+          'D-U-N-S\u00ae 81-605-6716\nNIT: 0622-151025-101-4',
+          style: TextStyle(
+            fontFamily: Fonts.body,
+            fontSize: 12,
+            color: Colors.white.withValues(alpha: 0.25),
+            height: 1.6,
+          ),
+        ),
       ],
     );
   }

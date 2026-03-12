@@ -105,6 +105,22 @@ const _faqs = [
         '(for ongoing work). We provide detailed estimates during discovery and '
         'our rates are 40\u201360% lower than comparable US agencies.',
   ),
+  _FAQData(
+    question: 'Who owns the code and intellectual property?',
+    answer:
+        'You own 100% of your source code and intellectual property from day one. '
+        'We sign NDAs as standard practice and can work with your legal team on '
+        'any specific IP requirements. You\'re working with a D-U-N-S\u00ae '
+        'verified, legally incorporated business.',
+  ),
+  _FAQData(
+    question: 'How do you handle security and data privacy?',
+    answer:
+        'Security is built into everything we do: 2FA authentication, data '
+        'encryption at rest and in transit, and compliance-ready architecture. '
+        'We follow OWASP security best practices and can accommodate GDPR/CCPA '
+        'requirements for your project.',
+  ),
 ];
 
 class _FAQItem extends StatefulWidget {

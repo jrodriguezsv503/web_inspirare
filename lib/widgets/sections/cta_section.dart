@@ -113,7 +113,43 @@ class CTASection extends StatelessWidget {
               height: 1.7,
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 32),
+          // Trust signal
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              color: Palette.primary.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Palette.primary.withValues(alpha: 0.15),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.verified_outlined,
+                  size: 18,
+                  color: Palette.primary.withValues(alpha: 0.8),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    'D-U-N-S\u00ae verified, legally incorporated business. '
+                    'You own 100% of your code and IP.',
+                    style: TextStyle(
+                      fontFamily: Fonts.body,
+                      fontSize: 13,
+                      color: Palette.primary.withValues(alpha: 0.8),
+                      fontWeight: FontWeight.w500,
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 32),
           // Contact methods
           _ContactMethod(
             icon: Icons.email_outlined,
