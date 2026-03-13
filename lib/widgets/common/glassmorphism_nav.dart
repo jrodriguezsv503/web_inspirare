@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:inspirare/core/constants/app_constants.dart';
+import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
+import 'package:inspirare/widgets/common/language_toggle.dart';
 
 /// Fixed navigation bar with glassmorphism effect (backdrop blur).
 ///
@@ -55,6 +57,7 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < Breakpoints.mobile;
+    final s = AppStrings.of(context);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -107,21 +110,24 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                     Row(
                       children: [
                         _NavLink(
-                          text: NavSection.services.label,
+                          text: NavSection.services.localizedLabel(s),
                           onTap: () => _handleNavTap(NavSection.services),
                         ),
                         const SizedBox(width: 32),
                         _NavLink(
-                          text: NavSection.portfolio.label,
+                          text: NavSection.portfolio.localizedLabel(s),
                           onTap: () => _handleNavTap(NavSection.portfolio),
                         ),
                         const SizedBox(width: 32),
                         _NavLink(
-                          text: NavSection.pricing.label,
+                          text: NavSection.pricing.localizedLabel(s),
                           onTap: () => _handleNavTap(NavSection.pricing),
                         ),
-                        const SizedBox(width: 32),
+                        const SizedBox(width: 24),
+                        const LanguageToggle(),
+                        const SizedBox(width: 24),
                         _NavCTA(
+                          label: s.navGetFreeEstimate,
                           onTap: () => _handleNavTap(NavSection.contact),
                         ),
                       ],
@@ -170,30 +176,32 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _MobileNavItem(
-                      text: NavSection.services.label,
+                      text: NavSection.services.localizedLabel(s),
                       onTap: () => _handleNavTap(NavSection.services),
                     ),
                     const SizedBox(height: 16),
                     _MobileNavItem(
-                      text: NavSection.whyUs.label,
+                      text: NavSection.whyUs.localizedLabel(s),
                       onTap: () => _handleNavTap(NavSection.whyUs),
                     ),
                     const SizedBox(height: 16),
                     _MobileNavItem(
-                      text: NavSection.portfolio.label,
+                      text: NavSection.portfolio.localizedLabel(s),
                       onTap: () => _handleNavTap(NavSection.portfolio),
                     ),
                     const SizedBox(height: 16),
                     _MobileNavItem(
-                      text: NavSection.pricing.label,
+                      text: NavSection.pricing.localizedLabel(s),
                       onTap: () => _handleNavTap(NavSection.pricing),
                     ),
                     const SizedBox(height: 16),
                     _MobileNavItem(
-                      text: NavSection.faq.label,
+                      text: NavSection.faq.localizedLabel(s),
                       onTap: () => _handleNavTap(NavSection.faq),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
+                    const Center(child: LanguageToggle()),
+                    const SizedBox(height: 20),
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
@@ -204,10 +212,10 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                             color: Palette.dark,
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              'Get Free Estimate',
-                              style: TextStyle(
+                              s.navGetFreeEstimate,
+                              style: const TextStyle(
                                 fontFamily: Fonts.body,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -266,9 +274,10 @@ class _NavLinkState extends State<_NavLink> {
 }
 
 class _NavCTA extends StatefulWidget {
+  final String label;
   final VoidCallback onTap;
 
-  const _NavCTA({required this.onTap});
+  const _NavCTA({required this.label, required this.onTap});
 
   @override
   State<_NavCTA> createState() => _NavCTAState();
@@ -304,9 +313,9 @@ class _NavCTAState extends State<_NavCTA> {
                   ]
                 : [],
           ),
-          child: const Text(
-            'Get Free Estimate',
-            style: TextStyle(
+          child: Text(
+            widget.label,
+            style: const TextStyle(
               fontFamily: Fonts.body,
               fontSize: 13,
               fontWeight: FontWeight.w600,

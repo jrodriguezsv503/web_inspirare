@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:inspirare/core/l10n/locale_provider.dart';
 import 'package:inspirare/pages/landing_page.dart';
 
 void main() {
@@ -11,10 +12,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'INSPIRARE — Nearshore Software Development',
-      debugShowCheckedModeBanner: false,
-      home: LandingPage(),
+    return const LocaleScope(
+      child: MaterialApp(
+        title: 'INSPIRARE \u2014 Nearshore Software Development',
+        debugShowCheckedModeBanner: false,
+        home: LandingPage(),
+      ),
     );
   }
 }

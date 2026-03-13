@@ -1,3 +1,5 @@
+import 'package:inspirare/core/l10n/app_strings.dart';
+
 /// External URLs and application constants for INSPIRARE.
 class AppUrls {
   AppUrls._();
@@ -21,25 +23,25 @@ enum NavSection {
   faq,
   contact;
 
-  /// Returns the user-facing label.
-  String get label {
+  /// Returns the localized user-facing label.
+  String localizedLabel(AppStrings s) {
     switch (this) {
       case NavSection.home:
-        return 'Home';
+        return s.navHome;
       case NavSection.services:
-        return 'Services';
+        return s.navServices;
       case NavSection.whyUs:
-        return 'Why Us';
+        return s.navWhyUs;
       case NavSection.portfolio:
-        return 'Portfolio';
+        return s.navPortfolio;
       case NavSection.process:
-        return 'Process';
+        return s.navProcess;
       case NavSection.pricing:
-        return 'Pricing';
+        return s.navPricing;
       case NavSection.faq:
-        return 'FAQ';
+        return s.navFaq;
       case NavSection.contact:
-        return 'Contact';
+        return s.navContact;
     }
   }
 }

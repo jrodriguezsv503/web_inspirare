@@ -7,7 +7,8 @@
 |-------|-------|
 | Package | `inspirare` |
 | Framework | Flutter Web |
-| Language | English (primary), Spanish (secondary) |
+| Language | Bilingual EN/ES via InheritedWidget (manual l10n) |
+| i18n URL | `?lang=es` for Spanish, default English |
 | Status | In production |
 | Backend | None (static landing) |
 | Breakpoints | Mobile: 768px, Desktop: 1024px |
@@ -41,6 +42,11 @@ flutter test
 |------|---------|
 | `lib/theme/web_theme.dart` | Palette, Fonts, Breakpoints, AppTransitions |
 | `lib/core/constants/app_constants.dart` | NavSection enum, AppUrls |
+| `lib/core/l10n/app_strings.dart` | Abstract class with all translatable string keys |
+| `lib/core/l10n/strings_en.dart` | English string implementations |
+| `lib/core/l10n/strings_es.dart` | Spanish string implementations |
+| `lib/core/l10n/locale_provider.dart` | LocaleScope + LocaleProvider (InheritedWidget) |
+| `lib/widgets/common/language_toggle.dart` | EN/ES toggle widget for navbar |
 | `lib/pages/landing_page.dart` | LayoutBuilder responsive switch |
 | `lib/pages/landing/desktop_layout.dart` | Desktop layout with 10 sections |
 | `lib/pages/landing/mobile_layout.dart` | Mobile layout with 10 sections |

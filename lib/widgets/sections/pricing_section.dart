@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
@@ -14,10 +15,18 @@ class PricingSection extends StatelessWidget {
     this.onContactTap,
   });
 
+  static const _accentGradients = [
+    [Color(0xFF0D1753), Color(0xFF1A237E)],
+    [Color(0xFF08C4D4), Color(0xFF06B6D4)],
+    [Color(0xFF2DB764), Color(0xFF16A34A)],
+  ];
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < Breakpoints.mobile;
+    final s = AppStrings.of(context);
+    final cards = s.pricingCards;
 
     return Container(
       color: Palette.background,
@@ -33,155 +42,18 @@ class PricingSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AnimatedSection(
+              AnimatedSection(
                 child: SectionHeader(
-                  label: 'Pricing',
-                  title: 'Flexible Engagement\nModels',
-                  subtitle:
-                      'Choose the model that fits your project. '
-                      'All models include direct communication with senior engineers.',
+                  label: s.pricingLabel,
+                  title: s.pricingTitle,
+                  subtitle: s.pricingSubtitle,
                   isLeftAligned: true,
                 ),
               ),
               SizedBox(height: isSmall ? 40 : 64),
               AnimatedSection(
                 delay: const Duration(milliseconds: 300),
-                child: isSmall
-                    ? Column(
-                        children: [
-                          _PricingCard(
-                            title: 'Fixed-Price',
-                            description:
-                                'Best for well-defined projects with clear scope '
-                                'and deliverables.',
-                            idealFor: 'MVPs, landing pages, specific features',
-                            features: const [
-                              'Defined scope & timeline',
-                              'Predictable budget',
-                              'Milestone-based payments',
-                              'Change requests via CR process',
-                              'Full documentation included',
-                            ],
-                            accentGradient: const [
-                              Color(0xFF0D1753),
-                              Color(0xFF1A237E),
-                            ],
-                            onContactTap: onContactTap,
-                          ),
-                          const SizedBox(height: 24),
-                          _PricingCard(
-                            title: 'Time & Materials',
-                            description:
-                                'Best for evolving projects where requirements '
-                                'may change during development.',
-                            idealFor: 'Ongoing development, complex projects',
-                            features: const [
-                              'Pay for actual hours worked',
-                              'Flexible scope adjustments',
-                              'Weekly progress reports',
-                              'Sprint-based delivery',
-                              'Transparent time tracking',
-                            ],
-                            accentGradient: const [
-                              Color(0xFF08C4D4),
-                              Color(0xFF06B6D4),
-                            ],
-                            isFeatured: true,
-                            onContactTap: onContactTap,
-                          ),
-                          const SizedBox(height: 24),
-                          _PricingCard(
-                            title: 'Dedicated Team',
-                            description:
-                                'Best for long-term projects that need '
-                                'consistent, full-time engineering capacity.',
-                            idealFor: 'Staff augmentation, product teams',
-                            features: const [
-                              'Full-time dedicated engineers',
-                              'Fully integrated with your team',
-                              'Monthly retainer pricing',
-                              'Direct management access',
-                              'Scale up or down as needed',
-                            ],
-                            accentGradient: const [
-                              Color(0xFF2DB764),
-                              Color(0xFF16A34A),
-                            ],
-                            onContactTap: onContactTap,
-                          ),
-                        ],
-                      )
-                    : Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: _PricingCard(
-                              title: 'Fixed-Price',
-                              description:
-                                  'Best for well-defined projects with clear scope '
-                                  'and deliverables.',
-                              idealFor: 'MVPs, landing pages, specific features',
-                              features: const [
-                                'Defined scope & timeline',
-                                'Predictable budget',
-                                'Milestone-based payments',
-                                'Change requests via CR process',
-                                'Full documentation included',
-                              ],
-                              accentGradient: const [
-                                Color(0xFF0D1753),
-                                Color(0xFF1A237E),
-                              ],
-                              onContactTap: onContactTap,
-                            ),
-                          ),
-                          const SizedBox(width: 24),
-                          Expanded(
-                            child: _PricingCard(
-                              title: 'Time & Materials',
-                              description:
-                                  'Best for evolving projects where requirements '
-                                  'may change during development.',
-                              idealFor: 'Ongoing development, complex projects',
-                              features: const [
-                                'Pay for actual hours worked',
-                                'Flexible scope adjustments',
-                                'Weekly progress reports',
-                                'Sprint-based delivery',
-                                'Transparent time tracking',
-                              ],
-                              accentGradient: const [
-                                Color(0xFF08C4D4),
-                                Color(0xFF06B6D4),
-                              ],
-                              isFeatured: true,
-                              onContactTap: onContactTap,
-                            ),
-                          ),
-                          const SizedBox(width: 24),
-                          Expanded(
-                            child: _PricingCard(
-                              title: 'Dedicated Team',
-                              description:
-                                  'Best for long-term projects that need '
-                                  'consistent, full-time engineering capacity.',
-                              idealFor: 'Staff augmentation, product teams',
-                              features: const [
-                                'Full-time dedicated engineers',
-                                'Fully integrated with your team',
-                                'Monthly retainer pricing',
-                                'Direct management access',
-                                'Scale up or down as needed',
-                              ],
-                              accentGradient: const [
-                                Color(0xFF2DB764),
-                                Color(0xFF16A34A),
-                              ],
-                              onContactTap: onContactTap,
-                            ),
-                          ),
-                        ],
-                      ),
+                child: _buildCards(s, cards, isSmall),
               ),
             ],
           ),
@@ -189,24 +61,70 @@ class PricingSection extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildCards(
+      AppStrings s, List<PricingCardStrings> cards, bool isSmall) {
+    final cardWidgets = List.generate(
+      cards.length,
+      (i) => _PricingCard(
+        title: cards[i].title,
+        description: cards[i].description,
+        idealForLabel: s.pricingIdealFor,
+        idealFor: cards[i].idealFor,
+        features: cards[i].features,
+        accentGradient: _accentGradients[i],
+        isFeatured: i == 1,
+        mostPopularLabel: s.pricingMostPopular,
+        ctaLabel: s.pricingCta,
+        onContactTap: onContactTap,
+      ),
+    );
+
+    if (isSmall) {
+      return Column(
+        children: [
+          for (int i = 0; i < cardWidgets.length; i++) ...[
+            cardWidgets[i],
+            if (i < cardWidgets.length - 1) const SizedBox(height: 24),
+          ],
+        ],
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (int i = 0; i < cardWidgets.length; i++) ...[
+          Expanded(child: cardWidgets[i]),
+          if (i < cardWidgets.length - 1) const SizedBox(width: 24),
+        ],
+      ],
+    );
+  }
 }
 
 class _PricingCard extends StatefulWidget {
   final String title;
   final String description;
+  final String idealForLabel;
   final String idealFor;
   final List<String> features;
   final List<Color> accentGradient;
   final bool isFeatured;
+  final String mostPopularLabel;
+  final String ctaLabel;
   final VoidCallback? onContactTap;
 
   const _PricingCard({
     required this.title,
     required this.description,
+    required this.idealForLabel,
     required this.idealFor,
     required this.features,
     required this.accentGradient,
     this.isFeatured = false,
+    required this.mostPopularLabel,
+    required this.ctaLabel,
     this.onContactTap,
   });
 
@@ -273,9 +191,9 @@ class _PricingCardState extends State<_PricingCard> {
                         color: Palette.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(100),
                       ),
-                      child: const Text(
-                        'MOST POPULAR',
-                        style: TextStyle(
+                      child: Text(
+                        widget.mostPopularLabel,
+                        style: const TextStyle(
                           fontFamily: Fonts.body,
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
@@ -313,7 +231,7 @@ class _PricingCardState extends State<_PricingCard> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      'Ideal for: ${widget.idealFor}',
+                      '${widget.idealForLabel} ${widget.idealFor}',
                       style: const TextStyle(
                         fontFamily: Fonts.body,
                         fontSize: 12,
@@ -389,10 +307,10 @@ class _PricingCardState extends State<_PricingCard> {
                                 ]
                               : [],
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            'Discuss Your Project',
-                            style: TextStyle(
+                            widget.ctaLabel,
+                            style: const TextStyle(
                               fontFamily: Fonts.body,
                               fontSize: 14,
                               fontWeight: FontWeight.w600,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 
@@ -20,6 +21,7 @@ class HeroSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < Breakpoints.mobile;
     final heroFontSize = (screenWidth * 0.055).clamp(42.0, 72.0);
+    final s = AppStrings.of(context);
 
     return Container(
       color: Palette.background,
@@ -52,17 +54,17 @@ class HeroSection extends StatelessWidget {
                         color: Palette.dark,
                         letterSpacing: -1.5,
                       ),
-                      children: const [
-                        TextSpan(text: 'We Build Software\nThat '),
+                      children: [
+                        TextSpan(text: s.heroHeadlinePart1),
                         TextSpan(
-                          text: 'Drives',
-                          style: TextStyle(
+                          text: s.heroHeadlineAccent,
+                          style: const TextStyle(
                             fontFamily: Fonts.brand,
                             fontStyle: FontStyle.italic,
                             color: Palette.primary,
                           ),
                         ),
-                        TextSpan(text: ' Revenue'),
+                        TextSpan(text: s.heroHeadlinePart2),
                       ],
                     ),
                   ),
@@ -75,9 +77,7 @@ class HeroSection extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 600),
                   child: Text(
-                    'INSPIRARE is a nearshore development agency in El Salvador. '
-                    'We design, build, and scale custom web & mobile applications '
-                    'for growing US and Canadian businesses.',
+                    s.heroSubtitle,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: Fonts.body,
@@ -99,12 +99,12 @@ class HeroSection extends StatelessWidget {
                   runSpacing: 16,
                   children: [
                     _PrimaryButton(
-                      label: 'Get Your Free Estimate',
+                      label: s.heroCtaPrimary,
                       onTap: onContactTap,
                       fullWidth: isSmall,
                     ),
                     _SecondaryButton(
-                      label: 'See Our Work',
+                      label: s.heroCtaSecondary,
                       onTap: onPortfolioTap,
                       fullWidth: isSmall,
                     ),
@@ -166,6 +166,7 @@ class _HeroBadgeState extends State<_HeroBadge>
   @override
   Widget build(BuildContext context) {
     final isMobile = widget.isMobile;
+    final s = AppStrings.of(context);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -203,7 +204,7 @@ class _HeroBadgeState extends State<_HeroBadge>
           const SizedBox(width: 8),
           Flexible(
             child: Text(
-              'Nearshore Development Agency \u2022 Central America',
+              s.heroBadge,
               style: TextStyle(
                 fontFamily: Fonts.body,
                 fontSize: isMobile ? 11 : 13,
@@ -226,11 +227,10 @@ class _TrustBadgesRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
     final badges = [
-      ('D-U-N-S\u00ae Verified', Icons.verified_outlined),
-     //('Google for Startups', Icons.cloud_outlined),
-     //('Apple Certified', Icons.laptop_mac),
-      ('100% IP Ownership', Icons.lock_outline),
+      (s.heroBadgeDuns, Icons.verified_outlined),
+      (s.heroBadgeIp, Icons.lock_outline),
     ];
 
     return Wrap(
@@ -285,11 +285,12 @@ class _MetricsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
     final metrics = [
-      ('20+', 'Years Experience'),
-      ('4', 'SaaS Products Live'),
-      ('CST', 'Same Timezone'),
-      ('\u{1F6E1}\uFE0F', 'D-U-N-S\u00ae Verified'),
+      (s.heroMetric1Value, s.heroMetric1Label),
+      (s.heroMetric2Value, s.heroMetric2Label),
+      (s.heroMetric3Value, s.heroMetric3Label),
+      (s.heroMetric4Value, s.heroMetric4Label),
     ];
 
     return ConstrainedBox(

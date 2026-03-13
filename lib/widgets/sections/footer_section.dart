@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspirare/core/constants/app_constants.dart';
+import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 
@@ -33,7 +34,7 @@ class FooterSection extends StatelessWidget {
             children: [
               _buildColumns(context, isSmall, isTablet),
               SizedBox(height: isSmall ? 32 : 48),
-              _buildBottomBar(isSmall),
+              _buildBottomBar(context, isSmall),
             ],
           ),
         ),
@@ -46,11 +47,11 @@ class FooterSection extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildBrandColumn(),
+          _buildBrandColumn(context),
           const SizedBox(height: 32),
-          _buildServicesColumn(),
+          _buildServicesColumn(context),
           const SizedBox(height: 32),
-          _buildCompanyColumn(),
+          _buildCompanyColumn(context),
           const SizedBox(height: 32),
           _buildContactColumn(context),
         ],
@@ -63,16 +64,16 @@ class FooterSection extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(flex: 2, child: _buildBrandColumn()),
+              Expanded(flex: 2, child: _buildBrandColumn(context)),
               const SizedBox(width: 48),
-              Expanded(child: _buildServicesColumn()),
+              Expanded(child: _buildServicesColumn(context)),
             ],
           ),
           const SizedBox(height: 32),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(child: _buildCompanyColumn()),
+              Expanded(child: _buildCompanyColumn(context)),
               const SizedBox(width: 48),
               Expanded(child: _buildContactColumn(context)),
             ],
@@ -84,18 +85,20 @@ class FooterSection extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 2, child: _buildBrandColumn()),
+        Expanded(flex: 2, child: _buildBrandColumn(context)),
         const SizedBox(width: 48),
-        Expanded(child: _buildServicesColumn()),
+        Expanded(child: _buildServicesColumn(context)),
         const SizedBox(width: 48),
-        Expanded(child: _buildCompanyColumn()),
+        Expanded(child: _buildCompanyColumn(context)),
         const SizedBox(width: 48),
         Expanded(child: _buildContactColumn(context)),
       ],
     );
   }
 
-  Widget _buildBrandColumn() {
+  Widget _buildBrandColumn(BuildContext context) {
+    final s = AppStrings.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -118,8 +121,7 @@ class FooterSection extends StatelessWidget {
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 300),
           child: Text(
-            'Nearshore software development agency from El Salvador. '
-            'We build custom web & mobile applications for US and Canadian businesses.',
+            s.footerDescription,
             style: TextStyle(
               fontFamily: Fonts.body,
               fontSize: 14,
@@ -130,7 +132,7 @@ class FooterSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          'D-U-N-S\u00ae 81-605-6716\nNIT: 0622-151025-101-4',
+          s.footerDuns,
           style: TextStyle(
             fontFamily: Fonts.body,
             fontSize: 12,
@@ -142,57 +144,49 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildServicesColumn() {
+  Widget _buildServicesColumn(BuildContext context) {
+    final s = AppStrings.of(context);
+    final links = s.footerServicesLinks;
+
     return _FooterColumn(
-      title: 'SERVICES',
+      title: s.footerServicesTitle,
       links: [
-        _FooterLink(
-          text: 'Web Applications',
-          onTap: () => onNavTap?.call(NavSection.services),
-        ),
-        _FooterLink(
-          text: 'Mobile Apps',
-          onTap: () => onNavTap?.call(NavSection.services),
-        ),
-        _FooterLink(
-          text: 'MVP Development',
-          onTap: () => onNavTap?.call(NavSection.services),
-        ),
-        _FooterLink(
-          text: 'AI Integration',
-          onTap: () => onNavTap?.call(NavSection.services),
-        ),
+        for (final link in links)
+          _FooterLink(
+            text: link,
+            onTap: () => onNavTap?.call(NavSection.services),
+          ),
       ],
     );
   }
 
-  Widget _buildCompanyColumn() {
+  Widget _buildCompanyColumn(BuildContext context) {
+    final s = AppStrings.of(context);
+    final links = s.footerCompanyLinks;
+    final sections = [
+      NavSection.whyUs,
+      NavSection.portfolio,
+      NavSection.pricing,
+      NavSection.contact,
+    ];
+
     return _FooterColumn(
-      title: 'COMPANY',
+      title: s.footerCompanyTitle,
       links: [
-        _FooterLink(
-          text: 'Why Us',
-          onTap: () => onNavTap?.call(NavSection.whyUs),
-        ),
-        _FooterLink(
-          text: 'Portfolio',
-          onTap: () => onNavTap?.call(NavSection.portfolio),
-        ),
-        _FooterLink(
-          text: 'Pricing',
-          onTap: () => onNavTap?.call(NavSection.pricing),
-        ),
-        _FooterLink(
-          text: 'Contact',
-          onTap: () => onNavTap?.call(NavSection.contact),
-        ),
+        for (int i = 0; i < links.length; i++)
+          _FooterLink(
+            text: links[i],
+            onTap: () => onNavTap?.call(sections[i]),
+          ),
       ],
     );
   }
 
   Widget _buildContactColumn(BuildContext context) {
+    final s = AppStrings.of(context);
+
     return _FooterColumn(
-      title: 'CONTACT',
+      title: s.footerContactTitle,
       links: [
         _FooterLink(
           text: 'hello@inspirare.app',
@@ -202,7 +196,7 @@ class FooterSection extends StatelessWidget {
           text: '+503 7933-6960',
           onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
         ),
-        const _FooterLink(text: 'El Salvador, Central America'),
+        _FooterLink(text: s.ctaLocation),
         _FooterLink(
           text: 'LinkedIn',
           onTap: () => safeLaunchUrl(context, AppUrls.linkedin),
@@ -211,7 +205,9 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomBar(bool isSmall) {
+  Widget _buildBottomBar(BuildContext context, bool isSmall) {
+    final s = AppStrings.of(context);
+
     return Container(
       padding: const EdgeInsets.only(top: 32),
       decoration: BoxDecoration(
@@ -223,7 +219,7 @@ class FooterSection extends StatelessWidget {
           ? Column(
               children: [
                 Text(
-                  '\u00a9 2026 INSPIRARE, S.A.S. \u2014 El Salvador',
+                  s.footerCopyrightMobile,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: Fonts.body,
@@ -232,12 +228,12 @@ class FooterSection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _FooterLegalLink(text: 'Terms'),
-                    SizedBox(width: 24),
-                    _FooterLegalLink(text: 'Privacy'),
+                    _FooterLegalLink(text: s.footerTerms),
+                    const SizedBox(width: 24),
+                    _FooterLegalLink(text: s.footerPrivacy),
                   ],
                 ),
               ],
@@ -246,18 +242,18 @@ class FooterSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '\u00a9 2026 INSPIRARE S.A.S.',
+                  s.footerCopyright,
                   style: TextStyle(
                     fontFamily: Fonts.body,
                     fontSize: 13,
                     color: Colors.white.withValues(alpha: 0.25),
                   ),
                 ),
-                const Row(
+                Row(
                   children: [
-                    _FooterLegalLink(text: 'Terms'),
-                    SizedBox(width: 24),
-                    _FooterLegalLink(text: 'Privacy'),
+                    _FooterLegalLink(text: s.footerTerms),
+                    const SizedBox(width: 24),
+                    _FooterLegalLink(text: s.footerPrivacy),
                   ],
                 ),
               ],

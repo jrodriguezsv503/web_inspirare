@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
@@ -9,10 +10,21 @@ class ProcessSection extends StatelessWidget {
 
   const ProcessSection({super.key, this.isMobile = false});
 
+  static const _stepIcons = [
+    Icons.search,
+    Icons.palette,
+    Icons.code,
+    Icons.rocket_launch,
+    Icons.support_agent,
+  ];
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < Breakpoints.mobile;
+    final s = AppStrings.of(context);
+
+    final steps = s.processSteps;
 
     return Container(
       width: double.infinity,
@@ -29,19 +41,17 @@ class ProcessSection extends StatelessWidget {
               children: [
                 AnimatedSection(
                   child: SectionHeader(
-                    label: 'How We Work',
-                    title: 'From Idea to Launch\nin 5 Steps',
-                    subtitle:
-                        'A proven process that reduces risk and delivers results. '
-                        'Transparent, predictable, and collaborative.',
+                    label: s.processLabel,
+                    title: s.processTitle,
+                    subtitle: s.processSubtitle,
                     labelColor: Palette.primary.withValues(alpha: 0.8),
                     titleColor: Colors.white,
                   ),
                 ),
                 SizedBox(height: isSmall ? 48 : 80),
                 isSmall
-                    ? _buildVerticalTimeline()
-                    : _buildHorizontalTimeline(),
+                    ? _buildVerticalTimeline(steps)
+                    : _buildHorizontalTimeline(steps),
               ],
             ),
           ),
@@ -50,15 +60,22 @@ class ProcessSection extends StatelessWidget {
     );
   }
 
-  Widget _buildHorizontalTimeline() {
+  Widget _buildHorizontalTimeline(List<StepStrings> steps) {
     return AnimatedSection(
       delay: const Duration(milliseconds: 200),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (int i = 0; i < _steps.length; i++) ...[
-            Expanded(child: _StepCard(step: _steps[i], index: i)),
-            if (i < _steps.length - 1)
+          for (int i = 0; i < steps.length; i++) ...[
+            Expanded(
+              child: _StepCard(
+                title: steps[i].title,
+                description: steps[i].description,
+                icon: _stepIcons[i],
+                index: i,
+              ),
+            ),
+            if (i < steps.length - 1)
               Padding(
                 padding: const EdgeInsets.only(top: 32),
                 child: Icon(
@@ -73,15 +90,20 @@ class ProcessSection extends StatelessWidget {
     );
   }
 
-  Widget _buildVerticalTimeline() {
+  Widget _buildVerticalTimeline(List<StepStrings> steps) {
     return Column(
       children: [
-        for (int i = 0; i < _steps.length; i++) ...[
+        for (int i = 0; i < steps.length; i++) ...[
           AnimatedSection(
             delay: Duration(milliseconds: 100 * (i + 1)),
-            child: _StepCard(step: _steps[i], index: i),
+            child: _StepCard(
+              title: steps[i].title,
+              description: steps[i].description,
+              icon: _stepIcons[i],
+              index: i,
+            ),
           ),
-          if (i < _steps.length - 1)
+          if (i < steps.length - 1)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Icon(
@@ -96,51 +118,18 @@ class ProcessSection extends StatelessWidget {
   }
 }
 
-class _StepData {
-  final IconData icon;
+class _StepCard extends StatelessWidget {
   final String title;
   final String description;
-
-  const _StepData({
-    required this.icon,
-    required this.title,
-    required this.description,
-  });
-}
-
-const _steps = [
-  _StepData(
-    icon: Icons.search,
-    title: 'Discovery',
-    description: 'We learn your business, goals, and requirements. Define scope and roadmap.',
-  ),
-  _StepData(
-    icon: Icons.palette,
-    title: 'Design',
-    description: 'Wireframes, prototypes, and UI/UX design. You approve before we code.',
-  ),
-  _StepData(
-    icon: Icons.code,
-    title: 'Develop',
-    description: 'Agile sprints with weekly demos. You see progress in real time.',
-  ),
-  _StepData(
-    icon: Icons.rocket_launch,
-    title: 'Deploy',
-    description: 'Testing, QA, and launch. We handle infrastructure and go-live.',
-  ),
-  _StepData(
-    icon: Icons.support_agent,
-    title: 'Support',
-    description: 'Ongoing maintenance, updates, and scaling as your business grows.',
-  ),
-];
-
-class _StepCard extends StatelessWidget {
-  final _StepData step;
+  final IconData icon;
   final int index;
 
-  const _StepCard({required this.step, required this.index});
+  const _StepCard({
+    required this.title,
+    required this.description,
+    required this.icon,
+    required this.index,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +150,7 @@ class _StepCard extends StatelessWidget {
             ),
             child: Center(
               child: Icon(
-                step.icon,
+                icon,
                 size: 24,
                 color: Palette.primary,
               ),
@@ -181,7 +170,7 @@ class _StepCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            step.title,
+            title,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontFamily: Fonts.title,
@@ -192,7 +181,7 @@ class _StepCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            step.description,
+            description,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: Fonts.body,

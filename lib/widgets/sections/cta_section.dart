@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inspirare/core/constants/app_constants.dart';
+import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
@@ -76,12 +77,14 @@ class CTASection extends StatelessWidget {
   }
 
   Widget _buildInfoSide(BuildContext context, bool isSmall) {
+    final s = AppStrings.of(context);
+
     return AnimatedSection(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'READY TO START?',
+            s.ctaReadyLabel,
             style: TextStyle(
               fontFamily: Fonts.body,
               fontSize: 12,
@@ -92,7 +95,7 @@ class CTASection extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Let\'s Build\nSomething Great',
+            s.ctaHeadline,
             style: TextStyle(
               fontFamily: Fonts.title,
               fontSize: isSmall ? 36 : 44,
@@ -104,8 +107,7 @@ class CTASection extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            'Tell us about your project and we\'ll get back to you within '
-            '24 hours with a free estimate and timeline.',
+            s.ctaSubtitle,
             style: TextStyle(
               fontFamily: Fonts.body,
               fontSize: isSmall ? 15 : 17,
@@ -135,8 +137,7 @@ class CTASection extends StatelessWidget {
                 const SizedBox(width: 10),
                 Flexible(
                   child: Text(
-                    'D-U-N-S\u00ae verified, legally incorporated business. '
-                    'You own 100% of your code and IP.',
+                    s.ctaTrustSignal,
                     style: TextStyle(
                       fontFamily: Fonts.body,
                       fontSize: 13,
@@ -153,24 +154,24 @@ class CTASection extends StatelessWidget {
           // Contact methods
           _ContactMethod(
             icon: Icons.email_outlined,
-            label: 'hello@inspirare.app',
+            label: s.ctaEmail,
             onTap: () => safeLaunchUrl(context, AppUrls.email),
           ),
           const SizedBox(height: 16),
           _ContactMethod(
             icon: Icons.chat_outlined,
-            label: 'WhatsApp: +503 7933-6960',
+            label: s.ctaWhatsapp,
             onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
           ),
           const SizedBox(height: 16),
-          const _ContactMethod(
+          _ContactMethod(
             icon: Icons.schedule,
-            label: 'CST (UTC-6) \u2022 Same as Chicago',
+            label: s.ctaTimezone,
           ),
           const SizedBox(height: 16),
-          const _ContactMethod(
+          _ContactMethod(
             icon: Icons.location_on_outlined,
-            label: 'El Salvador, Central America',
+            label: s.ctaLocation,
           ),
         ],
       ),
@@ -275,6 +276,8 @@ class _ContactFormState extends State<_ContactForm> {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
+
     if (_submitted) {
       return AnimatedSection(
         child: Container(
@@ -302,20 +305,19 @@ class _ContactFormState extends State<_ContactForm> {
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
-                'Thank You!',
-                style: TextStyle(
+              Text(
+                s.ctaSuccessTitle,
+                style: const TextStyle(
                   fontFamily: Fonts.title,
                   fontSize: 28,
                   color: Palette.dark,
                 ),
               ),
               const SizedBox(height: 12),
-              const Text(
-                'Your email client should open with the pre-filled message. '
-                'We\'ll get back to you within 24 hours.',
+              Text(
+                s.ctaSuccessMessage,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: Fonts.body,
                   fontSize: 15,
                   color: Palette.textSecondary,
@@ -327,9 +329,9 @@ class _ContactFormState extends State<_ContactForm> {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () => setState(() => _submitted = false),
-                  child: const Text(
-                    'Send another message',
-                    style: TextStyle(
+                  child: Text(
+                    s.ctaSuccessSendAnother,
+                    style: const TextStyle(
                       fontFamily: Fonts.body,
                       fontSize: 14,
                       color: Palette.primary,
@@ -343,6 +345,8 @@ class _ContactFormState extends State<_ContactForm> {
         ),
       );
     }
+
+    final budgetOptions = s.ctaFormBudgetOptions;
 
     return AnimatedSection(
       delay: const Duration(milliseconds: 200),
@@ -363,18 +367,18 @@ class _ContactFormState extends State<_ContactForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Get Your Free Estimate',
-              style: TextStyle(
+            Text(
+              s.ctaFormTitle,
+              style: const TextStyle(
                 fontFamily: Fonts.title,
                 fontSize: 24,
                 color: Palette.dark,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Fill out the form and we\'ll respond within 24 hours.',
-              style: TextStyle(
+            Text(
+              s.ctaFormSubtitle,
+              style: const TextStyle(
                 fontFamily: Fonts.body,
                 fontSize: 14,
                 color: Palette.textMuted,
@@ -382,31 +386,31 @@ class _ContactFormState extends State<_ContactForm> {
             ),
             const SizedBox(height: 32),
             _FormField(
-              label: 'Full Name *',
+              label: s.ctaFormName,
               controller: _nameController,
-              hintText: 'John Smith',
+              hintText: s.ctaFormNameHint,
             ),
             const SizedBox(height: 20),
             _FormField(
-              label: 'Work Email *',
+              label: s.ctaFormEmail,
               controller: _emailController,
-              hintText: 'john@company.com',
+              hintText: s.ctaFormEmailHint,
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 20),
             _FormField(
-              label: 'Company',
+              label: s.ctaFormCompany,
               controller: _companyController,
-              hintText: 'Company Inc.',
+              hintText: s.ctaFormCompanyHint,
             ),
             const SizedBox(height: 20),
             // Budget dropdown
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Budget Range',
-                  style: TextStyle(
+                Text(
+                  s.ctaFormBudget,
+                  style: const TextStyle(
                     fontFamily: Fonts.body,
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -427,7 +431,7 @@ class _ContactFormState extends State<_ContactForm> {
                     child: DropdownButton<String>(
                       value: _budget.isEmpty ? null : _budget,
                       hint: Text(
-                        'Select a range',
+                        s.ctaFormBudgetHint,
                         style: TextStyle(
                           fontFamily: Fonts.body,
                           fontSize: 14,
@@ -440,28 +444,14 @@ class _ContactFormState extends State<_ContactForm> {
                         fontSize: 14,
                         color: Palette.dark,
                       ),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 'Under \$10K',
-                          child: Text('Under \$10K'),
-                        ),
-                        DropdownMenuItem(
-                          value: '\$10K - \$25K',
-                          child: Text('\$10K - \$25K'),
-                        ),
-                        DropdownMenuItem(
-                          value: '\$25K - \$50K',
-                          child: Text('\$25K - \$50K'),
-                        ),
-                        DropdownMenuItem(
-                          value: '\$50K+',
-                          child: Text('\$50K+'),
-                        ),
-                        DropdownMenuItem(
-                          value: 'Not sure yet',
-                          child: Text('Not sure yet'),
-                        ),
-                      ],
+                      items: budgetOptions
+                          .map(
+                            (option) => DropdownMenuItem(
+                              value: option,
+                              child: Text(option),
+                            ),
+                          )
+                          .toList(),
                       onChanged: (value) {
                         if (value != null) setState(() => _budget = value);
                       },
@@ -472,9 +462,9 @@ class _ContactFormState extends State<_ContactForm> {
             ),
             const SizedBox(height: 20),
             _FormField(
-              label: 'Project Description *',
+              label: s.ctaFormMessage,
               controller: _messageController,
-              hintText: 'Tell us about your project, goals, and timeline...',
+              hintText: s.ctaFormMessageHint,
               maxLines: 4,
             ),
             const SizedBox(height: 32),
@@ -505,20 +495,21 @@ class _ContactFormState extends State<_ContactForm> {
                           ]
                         : [],
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Send Message',
-                        style: TextStyle(
+                        s.ctaFormSubmit,
+                        style: const TextStyle(
                           fontFamily: Fonts.body,
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.arrow_forward, size: 16, color: Colors.white),
+                      const SizedBox(width: 8),
+                      const Icon(
+                          Icons.arrow_forward, size: 16, color: Colors.white),
                     ],
                   ),
                 ),

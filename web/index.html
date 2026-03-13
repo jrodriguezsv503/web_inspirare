@@ -24,8 +24,11 @@
   <meta name="twitter:description" content="Build your app with senior Flutter & Cloud engineers in your timezone. Custom software, mobile apps, AI solutions.">
   <meta name="twitter:image" content="https://inspirare.app/og-image.png">
 
-  <!-- Canonical -->
+  <!-- Canonical & Hreflang -->
   <link rel="canonical" href="https://inspirare.app">
+  <link rel="alternate" hreflang="en" href="https://inspirare.app">
+  <link rel="alternate" hreflang="es" href="https://inspirare.app?lang=es">
+  <link rel="alternate" hreflang="x-default" href="https://inspirare.app">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -67,6 +70,16 @@
   </script>
 </head>
 <body>
+  <script>
+    // Set <html lang> from ?lang= query param before Flutter loads
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var lang = params.get('lang');
+      if (lang === 'es') {
+        document.documentElement.setAttribute('lang', 'es');
+      }
+    })();
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

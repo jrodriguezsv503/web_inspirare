@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
@@ -14,6 +15,7 @@ class ServicesSection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < Breakpoints.mobile;
     final isTablet = screenWidth < Breakpoints.tablet;
+    final s = AppStrings.of(context);
 
     return Container(
       color: Palette.background,
@@ -29,18 +31,16 @@ class ServicesSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AnimatedSection(
+              AnimatedSection(
                 child: SectionHeader(
-                  label: 'What We Do',
-                  title: 'End-to-End Software\nDevelopment',
-                  subtitle:
-                      'From idea to launch and beyond. We handle design, development, '
-                      'and deployment so you can focus on growing your business.',
+                  label: s.servicesLabel,
+                  title: s.servicesTitle,
+                  subtitle: s.servicesSubtitle,
                   isLeftAligned: true,
                 ),
               ),
               SizedBox(height: isSmall ? 40 : 64),
-              _buildGrid(isSmall, isTablet),
+              _buildGrid(context, isSmall, isTablet),
             ],
           ),
         ),
@@ -48,64 +48,47 @@ class ServicesSection extends StatelessWidget {
     );
   }
 
-  Widget _buildGrid(bool isSmall, bool isTablet) {
-    final cards = [
-      _ServiceCardData(
-        icon: Icons.web,
-        title: 'Web Apps That Scale With Your Business',
-        description:
-            'SaaS dashboards, client portals, and admin systems that grow '
-            'with you \u2014 built for performance from day one.',
-        tags: ['Flutter Web', 'Firebase', 'Cloud Run'],
-        iconBg: Palette.primary.withValues(alpha: 0.15),
-      ),
-      _ServiceCardData(
-        icon: Icons.phone_iphone,
-        title: 'One Codebase, Two Platforms',
-        description:
-            'Launch your app on iPhone and Android at the same time \u2014 '
-            'with a single codebase that cuts your development cost and '
-            'timeline in half.',
-        tags: ['Flutter', 'iOS', 'Android'],
-        iconBg: const Color(0xFF8B5CF6).withValues(alpha: 0.15),
-      ),
-      _ServiceCardData(
-        icon: Icons.rocket_launch,
-        title: 'From Idea to Market in Weeks',
-        description:
-            'Validate your concept fast. We help startups build, test, '
-            'and launch their MVP so you can start getting real feedback.',
-        tags: ['Rapid Prototyping', 'Lean MVP'],
-        iconBg: Palette.accentWarm.withValues(alpha: 0.15),
-      ),
-      _ServiceCardData(
-        icon: Icons.auto_awesome,
-        title: 'AI-Powered Features, Not AI Hype',
-        description:
-            'Chatbots, document processing, RAG pipelines, and workflow '
-            'automation \u2014 AI features in production, not just prototypes.',
-        tags: ['Vertex AI', 'RAG', 'Fine-tuned Models'],
-        iconBg: const Color(0xFF06B6D4).withValues(alpha: 0.15),
-      ),
-      _ServiceCardData(
-        icon: Icons.cloud,
-        title: 'Built on Google Cloud',
-        description:
-            'Serverless, auto-scaling, cost-optimized infrastructure. '
-            'Your app stays fast and reliable as you grow.',
-        tags: ['GCP', 'Firebase', 'Cloud Functions'],
-        iconBg: Palette.success.withValues(alpha: 0.15),
-      ),
-      _ServiceCardData(
-        icon: Icons.palette,
-        title: 'Design That Converts',
-        description:
-            'User-centered interfaces that look great and drive results. '
-            'From wireframes to polished, production-ready designs.',
-        tags: ['Figma', 'User Research', 'Prototyping'],
-        iconBg: const Color(0xFFEF4444).withValues(alpha: 0.15),
-      ),
+  Widget _buildGrid(BuildContext context, bool isSmall, bool isTablet) {
+    final s = AppStrings.of(context);
+    final cardStrings = s.serviceCards;
+
+    final tags = [
+      ['Flutter Web', 'Firebase', 'Cloud Run'],
+      ['Flutter', 'iOS', 'Android'],
+      ['Rapid Prototyping', 'Lean MVP'],
+      ['Vertex AI', 'RAG', 'Fine-tuned Models'],
+      ['GCP', 'Firebase', 'Cloud Functions'],
+      ['Figma', 'User Research', 'Prototyping'],
     ];
+
+    final iconBgColors = [
+      Palette.primary.withValues(alpha: 0.15),
+      const Color(0xFF8B5CF6).withValues(alpha: 0.15),
+      Palette.accentWarm.withValues(alpha: 0.15),
+      const Color(0xFF06B6D4).withValues(alpha: 0.15),
+      Palette.success.withValues(alpha: 0.15),
+      const Color(0xFFEF4444).withValues(alpha: 0.15),
+    ];
+
+    final icons = [
+      Icons.web,
+      Icons.phone_iphone,
+      Icons.rocket_launch,
+      Icons.auto_awesome,
+      Icons.cloud,
+      Icons.palette,
+    ];
+
+    final cards = List.generate(
+      cardStrings.length,
+      (i) => _ServiceCardData(
+        icon: icons[i],
+        title: cardStrings[i].title,
+        description: cardStrings[i].description,
+        tags: tags[i],
+        iconBg: iconBgColors[i],
+      ),
+    );
 
     int crossAxisCount;
     if (isSmall) {

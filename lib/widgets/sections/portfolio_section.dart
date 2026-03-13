@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
@@ -10,11 +11,33 @@ class PortfolioSection extends StatelessWidget {
 
   const PortfolioSection({super.key, this.isMobile = false});
 
+  static const _liveUrls = [
+    'https://contasas.inspirare.app',
+    'https://dte.inspirare.app',
+    'https://elbichoia.com',
+    'https://trama.store',
+  ];
+
+  static const _accentColors = [
+    Color(0xFF08C4D4),
+    Color(0xFF0D1753),
+    Color(0xFF2DB764),
+    Color(0xFFF4A259),
+  ];
+
+  static const _projectTags = [
+    ['Flutter Web', 'Firebase', 'Vertex AI', 'RAG'],
+    ['Flutter Web', 'Firebase', 'Government API', 'SaaS'],
+    ['Vertex AI', 'Gemma 3', 'QLoRA', 'RAG', 'Flutter Web'],
+    ['Flutter Web', 'Firebase', 'E-Commerce'],
+  ];
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < Breakpoints.mobile;
     final isTablet = screenWidth < Breakpoints.tablet;
+    final s = AppStrings.of(context);
 
     return Container(
       color: Palette.background,
@@ -30,18 +53,16 @@ class PortfolioSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AnimatedSection(
+              AnimatedSection(
                 child: SectionHeader(
-                  label: 'Our Work',
-                  title: 'Projects That\nDeliver Results',
-                  subtitle:
-                      'Real products built for real businesses. '
-                      'Here\'s what we\'ve shipped.',
+                  label: s.portfolioLabel,
+                  title: s.portfolioTitle,
+                  subtitle: s.portfolioSubtitle,
                   isLeftAligned: true,
                 ),
               ),
               SizedBox(height: isSmall ? 40 : 64),
-              _buildProjects(isSmall, isTablet),
+              _buildProjects(context, isSmall, isTablet),
             ],
           ),
         ),
@@ -49,87 +70,24 @@ class PortfolioSection extends StatelessWidget {
     );
   }
 
-  Widget _buildProjects(bool isSmall, bool isTablet) {
-    final projects = [
-      const _ProjectData(
-        name: 'ContaSAS.ia',
-        subtitle: 'AI-Powered SaaS for Accounting & Tax Compliance',
-        challenge:
-            'Small businesses needed affordable, AI-assisted accounting '
-            'that understands local tax law.',
-        solution:
-            'Built a full SaaS platform with automated bookkeeping, IVA '
-            'calculations, and an AI legal assistant trained on Salvadoran '
-            'commercial law.',
-        results: [
-          'Production SaaS serving real businesses',
-          'AI legal assistant for compliance queries',
-          'Automated IVA & income tax declarations',
-        ],
-        tags: ['Flutter Web', 'Firebase', 'Vertex AI', 'RAG'],
-        accentColor: Color(0xFF08C4D4),
-        status: 'Live \u2022 Paying Subscribers',
-        liveUrl: 'https://contasas.inspirare.app',
+  Widget _buildProjects(BuildContext context, bool isSmall, bool isTablet) {
+    final s = AppStrings.of(context);
+    final projectStrings = s.projects;
+
+    final projects = List.generate(
+      projectStrings.length,
+      (i) => _ProjectData(
+        name: projectStrings[i].name,
+        subtitle: projectStrings[i].subtitle,
+        challenge: projectStrings[i].challenge,
+        solution: projectStrings[i].solution,
+        results: projectStrings[i].results,
+        tags: _projectTags[i],
+        accentColor: _accentColors[i],
+        status: projectStrings[i].status,
+        liveUrl: _liveUrls[i],
       ),
-      const _ProjectData(
-        name: 'Factura F\u00e1cil DTE',
-        subtitle: 'Government-Compliant Electronic Invoicing',
-        challenge:
-            'Businesses needed a compliant electronic invoicing system '
-            'integrated with El Salvador\'s Ministry of Finance.',
-        solution:
-            'Built a real-time invoicing platform handling multiple document '
-            'types with government API validation.',
-        results: [
-          'Certified by Ministry of Finance',
-          'Processing real invoices for paying clients',
-          'Sub-second invoice generation',
-        ],
-        tags: ['Flutter Web', 'Firebase', 'Government API', 'SaaS'],
-        accentColor: Color(0xFF0D1753),
-        status: 'Live \u2022 Paying Clients',
-        liveUrl: 'https://dte.inspirare.app',
-      ),
-      const _ProjectData(
-        name: 'El Bicho IA',
-        subtitle: 'Hyperlocal AI Chatbot with Custom Fine-Tuned Model',
-        challenge:
-            'No AI assistant understood Salvadoran context, slang, or '
-            'local regulations.',
-        solution:
-            'Fine-tuned Gemma 3 on Vertex AI using QLoRA, built RAG pipeline '
-            'with legal documents, and created a "caliche normalizer" for '
-            'local dialect.',
-        results: [
-          'Custom fine-tuned AI model in production',
-          'B2B monetization model',
-          '770+ national bus routes in database',
-        ],
-        tags: ['Vertex AI', 'Gemma 3', 'QLoRA', 'RAG', 'Flutter Web'],
-        accentColor: Color(0xFF2DB764),
-        status: 'Live \u2022 B2B Model',
-        liveUrl: 'https://elbichoia.com',
-      ),
-      const _ProjectData(
-        name: 'TRAMA Store',
-        subtitle: 'E-Commerce Platform from Scratch',
-        challenge:
-            'A men\'s clothing brand needed a complete online store with '
-            'brand identity and payment processing.',
-        solution:
-            'Designed and built a complete e-commerce experience including '
-            'product catalog, checkout flow, and brand system.',
-        results: [
-          'Live e-commerce store',
-          'Mobile-first shopping experience',
-          'Integrated payment gateway',
-        ],
-        tags: ['Flutter Web', 'Firebase', 'E-Commerce'],
-        accentColor: Color(0xFFF4A259),
-        status: 'Live \u2022 trama.store',
-        liveUrl: 'https://trama.store',
-      ),
-    ];
+    );
 
     if (isSmall) {
       return Column(
@@ -217,6 +175,8 @@ class _ProjectCardState extends State<_ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppStrings.of(context);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
@@ -309,7 +269,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                   ],
                   const SizedBox(height: 20),
                   // Challenge
-                  const _SectionLabel(label: 'CHALLENGE'),
+                  _SectionLabel(label: s.portfolioChallenge),
                   const SizedBox(height: 6),
                   Text(
                     widget.data.challenge,
@@ -322,7 +282,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                   ),
                   const SizedBox(height: 16),
                   // Solution
-                  const _SectionLabel(label: 'SOLUTION'),
+                  _SectionLabel(label: s.portfolioSolution),
                   const SizedBox(height: 6),
                   Text(
                     widget.data.solution,
@@ -335,7 +295,7 @@ class _ProjectCardState extends State<_ProjectCard> {
                   ),
                   const SizedBox(height: 16),
                   // Results
-                  const _SectionLabel(label: 'RESULTS'),
+                  _SectionLabel(label: s.portfolioResults),
                   const SizedBox(height: 6),
                   ...widget.data.results.map(
                     (result) => Padding(
@@ -398,7 +358,10 @@ class _ProjectCardState extends State<_ProjectCard> {
                   ),
                   if (widget.data.liveUrl != null) ...[
                     const SizedBox(height: 20),
-                    _ViewLiveButton(url: widget.data.liveUrl!),
+                    _ViewLiveButton(
+                      url: widget.data.liveUrl!,
+                      label: s.portfolioViewLive,
+                    ),
                   ],
                 ],
               ),
@@ -412,8 +375,9 @@ class _ProjectCardState extends State<_ProjectCard> {
 
 class _ViewLiveButton extends StatefulWidget {
   final String url;
+  final String label;
 
-  const _ViewLiveButton({required this.url});
+  const _ViewLiveButton({required this.url, required this.label});
 
   @override
   State<_ViewLiveButton> createState() => _ViewLiveButtonState();
@@ -440,7 +404,7 @@ class _ViewLiveButtonState extends State<_ViewLiveButton> {
             ),
             const SizedBox(width: 6),
             Text(
-              'View Live',
+              widget.label,
               style: TextStyle(
                 fontFamily: Fonts.body,
                 fontSize: 13,
