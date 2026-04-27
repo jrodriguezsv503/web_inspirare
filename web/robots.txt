@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Disallow common non-content paths
+Disallow: /assets/fonts/
+Disallow: /canvaskit/
+
+Sitemap: https://inspirare.app/sitemap.xml

@@ -7,7 +7,7 @@ class AppUrls {
   static const String whatsapp = 'https://wa.me/50379336960';
   static const String email = 'mailto:hello@inspirare.app';
   static const String calendly = 'https://calendly.com/inspirare';
-  static const String linkedin = 'https://linkedin.com/company/inspirare-sas';
+  static const String linkedin = 'https://www.linkedin.com/in/joel-rodriguez-inspirare';
   static const String dteApp = 'https://dte.inspirare.app';
   static const String contasasApp = 'https://contasas.inspirare.app';
 }

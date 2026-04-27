@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/analytics/analytics_events.dart';
+import 'package:inspirare/core/analytics/analytics_service.dart';
 import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
@@ -100,12 +102,24 @@ class HeroSection extends StatelessWidget {
                   children: [
                     _PrimaryButton(
                       label: s.heroCtaPrimary,
-                      onTap: onContactTap,
+                      onTap: () {
+                        AnalyticsService.instance.logLeadGenerated(
+                          source: 'hero',
+                          extra: {'cta_id': CtaIds.heroPrimary},
+                        );
+                        onContactTap?.call();
+                      },
                       fullWidth: isSmall,
                     ),
                     _SecondaryButton(
                       label: s.heroCtaSecondary,
-                      onTap: onPortfolioTap,
+                      onTap: () {
+                        AnalyticsService.instance.logSelectContent(
+                          contentType: 'portfolio',
+                          itemId: CtaIds.heroSecondary,
+                        );
+                        onPortfolioTap?.call();
+                      },
                       fullWidth: isSmall,
                     ),
                   ],

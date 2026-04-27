@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/analytics/analytics_events.dart';
+import 'package:inspirare/core/analytics/analytics_service.dart';
 import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
@@ -64,6 +66,11 @@ class PricingSection extends StatelessWidget {
 
   Widget _buildCards(
       AppStrings s, List<PricingCardStrings> cards, bool isSmall) {
+    const tierIds = [
+      CtaIds.pricingFixed,
+      CtaIds.pricingTimeMaterials,
+      CtaIds.pricingDedicated,
+    ];
     final cardWidgets = List.generate(
       cards.length,
       (i) => _PricingCard(
@@ -76,7 +83,10 @@ class PricingSection extends StatelessWidget {
         isFeatured: i == 1,
         mostPopularLabel: s.pricingMostPopular,
         ctaLabel: s.pricingCta,
-        onContactTap: onContactTap,
+        onContactTap: () {
+          AnalyticsService.instance.logPricingSelect(tierId: tierIds[i]);
+          onContactTap?.call();
+        },
       ),
     );
 

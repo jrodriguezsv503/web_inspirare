@@ -1,6 +1,7 @@
 import 'dart:js_interop';
 
 import 'package:flutter/widgets.dart';
+import 'package:inspirare/core/analytics/analytics_service.dart';
 import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/core/l10n/strings_en.dart';
 import 'package:inspirare/core/l10n/strings_es.dart';
@@ -78,6 +79,11 @@ class _LocaleScopeState extends State<LocaleScope> {
     super.initState();
     _locale = _detectInitialLocale();
     _updateHtmlLang(_locale);
+    // Set the initial app_locale user property once analytics is ready.
+    AnalyticsService.instance.setLocale(
+      _locale,
+      pageLocation: web.window.location.href,
+    );
   }
 
   /// Detects initial locale from URL query param, then browser language.
@@ -95,9 +101,18 @@ class _LocaleScopeState extends State<LocaleScope> {
 
   void _setLocale(AppLocale newLocale) {
     if (newLocale == _locale) return;
+    final previous = _locale;
     setState(() => _locale = newLocale);
     _updateHtmlLang(newLocale);
     _updateUrl(newLocale);
+
+    // Analytics: language toggle + manual page_view (history.replaceState
+    // does not fire GA4 auto page_view in SPA mode).
+    AnalyticsService.instance.logLanguageChange(from: previous, to: newLocale);
+    AnalyticsService.instance.setLocale(
+      newLocale,
+      pageLocation: web.window.location.href,
+    );
   }
 
   void _updateHtmlLang(AppLocale locale) {

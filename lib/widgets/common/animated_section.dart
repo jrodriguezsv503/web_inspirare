@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import 'package:inspirare/core/analytics/analytics_service.dart';
 import 'package:inspirare/theme/web_theme.dart';
 
 /// Widget que anima su hijo con fade-up al hacerse visible en el viewport.
 ///
 /// Utiliza [VisibilityDetector] para detectar cuándo el widget entra en
-/// pantalla y ejecuta una animación de opacidad + traslación.
+/// pantalla y ejecuta una animación de opacidad + traslación. Si se
+/// proporciona [sectionId], también registra un evento `view_section` en
+/// Analytics la primera vez que la sección se vuelve visible (dedup
+/// gestionado por [AnalyticsService]).
 class AnimatedSection extends StatefulWidget {
   final Widget child;
   final Duration delay;
   final Duration duration;
   final Offset slideOffset;
+  final String? sectionId;
 
   const AnimatedSection({
     super.key,
@@ -18,6 +23,7 @@ class AnimatedSection extends StatefulWidget {
     this.delay = Duration.zero,
     this.duration = const Duration(milliseconds: 600),
     this.slideOffset = const Offset(0, 40),
+    this.sectionId,
   });
 
   @override
@@ -59,13 +65,16 @@ class _AnimatedSectionState extends State<AnimatedSection>
           _controller.forward();
         }
       });
+      if (widget.sectionId != null) {
+        AnalyticsService.instance.logSectionView(widget.sectionId!);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
-      key: Key('animated_section_${widget.hashCode}'),
+      key: Key('animated_section_${widget.sectionId ?? widget.hashCode}'),
       onVisibilityChanged: _onVisibilityChanged,
       child: AnimatedBuilder(
         animation: _controller,

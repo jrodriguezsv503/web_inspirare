@@ -6,8 +6,11 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0D1753">
   <meta name="description" content="INSPIRARE is a nearshore software development agency in Central America. We build custom web apps, mobile apps, and AI solutions for US & Canadian businesses. Same timezone, senior engineers, competitive rates.">
   <meta name="keywords" content="nearshore software development, custom app development, Flutter development agency, mobile app development, web application development, software outsourcing Latin America, El Salvador software company">
+  <meta name="author" content="INSPIRARE S.A.S.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -15,7 +18,12 @@
   <meta property="og:title" content="INSPIRARE — Nearshore Software Development | Custom Apps & Web Solutions">
   <meta property="og:description" content="Build your app with senior Flutter & Cloud engineers in your timezone. Custom software, mobile apps, AI solutions. Get a free estimate today.">
   <meta property="og:image" content="https://inspirare.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="INSPIRARE — Nearshore Software Development Agency">
   <meta property="og:site_name" content="INSPIRARE">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es_ES">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -39,10 +47,18 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
+  <!-- Performance: preload critical fonts (improves LCP) -->
+  <link rel="preload" as="font" type="font/ttf" href="assets/fonts/PlayfairDisplay-ExtraBold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="assets/fonts/Roboto-Medium.ttf" crossorigin>
+
+  <!-- Preconnect to Firebase / Google services for Analytics latency -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+
   <title>INSPIRARE — Nearshore Software Development | Custom Apps & Web Solutions</title>
   <link rel="manifest" href="manifest.json">
 
-  <!-- Schema.org Structured Data -->
+  <!-- Schema.org: ProfessionalService (primary entity) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -50,6 +66,7 @@
     "name": "INSPIRARE S.A.S.",
     "url": "https://inspirare.app",
     "logo": "https://inspirare.app/icons/Icon-512.png",
+    "image": "https://inspirare.app/og-image.png",
     "description": "Nearshore software development agency specializing in custom web and mobile applications, AI solutions, and cloud architecture for US and Canadian businesses.",
     "address": {
       "@type": "PostalAddress",
@@ -68,8 +85,179 @@
     "priceRange": "$$"
   }
   </script>
+
+  <!-- Schema.org: Organization (complementary, helps Knowledge Panel) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "INSPIRARE S.A.S.",
+    "alternateName": "INSPIRARE",
+    "url": "https://inspirare.app",
+    "logo": "https://inspirare.app/icons/Icon-512.png",
+    "foundingDate": "2025",
+    "founders": [{
+      "@type": "Person",
+      "name": "Joel Mendoza"
+    }],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "hello@inspirare.app",
+      "telephone": "+503-7933-6960",
+      "availableLanguage": ["English", "Spanish"],
+      "areaServed": ["US", "CA", "SV"]
+    }],
+    "sameAs": [
+      "https://linkedin.com/company/inspirare-sas"
+    ]
+  }
+  </script>
+
+  <!-- Schema.org: FAQPage (rich snippets in SERP) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is your team located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We are based in El Salvador, Central America. Our timezone is CST (Central Standard Time) — the same as Chicago, Dallas, and Houston. This means real-time collaboration during US business hours with zero delays."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What technologies do you specialize in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our core stack is Flutter (for cross-platform mobile & web apps), Dart, Firebase, and Google Cloud Platform. We also integrate AI/ML solutions using Gemini and OpenAI APIs. This modern stack allows us to deliver faster and at lower cost than traditional native development."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do we communicate during a project?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We use Slack for daily communication, Zoom for meetings, and Linear or Jira for project management. You'll have direct access to the engineers building your product — no project managers or intermediaries."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you sign NDAs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, absolutely. We sign NDAs as standard practice before every engagement. We take intellectual property protection seriously and can work with your legal team on any specific requirements."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a typical project timeline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An MVP typically takes 4–8 weeks. Larger, more complex projects are delivered in phases, with the first release usually in 6–12 weeks. We provide detailed timelines during the discovery phase so there are no surprises."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does pricing work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We offer three engagement models: Fixed-Price (for well-scoped projects), Time & Materials (for evolving requirements), and Dedicated Team (for ongoing work). We provide detailed estimates during discovery and our rates are 40–60% lower than comparable US agencies."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who owns the code and intellectual property?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You own 100% of your source code and intellectual property from day one. We sign NDAs as standard practice and can work with your legal team on any specific IP requirements. You're working with a D-U-N-S® verified, legally incorporated business."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you handle security and data privacy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Security is built into everything we do: 2FA authentication, data encryption at rest and in transit, and compliance-ready architecture. We follow OWASP security best practices and can accommodate GDPR/CCPA requirements for your project."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Hide static SEO block visually but keep it indexable for crawlers -->
+  <style>
+    .seo-static {
+      position: absolute !important;
+      left: -10000px !important;
+      top: auto !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+    }
+  </style>
 </head>
 <body>
+  <!--
+    SEO_STATIC: keep in sync with strings_en.dart and strings_es.dart.
+    Crawlers without JS execution (Bing, LinkedIn, Slack, Facebook bots) read this
+    block to understand the page. Visible to screen readers and indexed by search
+    engines, but visually hidden via CSS. Update if hero/section headlines change.
+  -->
+  <div class="seo-static" aria-hidden="false">
+    <article lang="en">
+      <h1>INSPIRARE — Nearshore Software Development Agency for US &amp; Canadian Businesses</h1>
+      <p>INSPIRARE is a D-U-N-S&reg; verified nearshore software development agency in El Salvador, Central America. We design, build, and scale custom web and mobile applications for growing US and Canadian businesses, working in CST (same timezone as Chicago, Dallas, and Houston).</p>
+
+      <h2>Services: Custom Web Apps, Mobile Apps, AI/ML, and Cloud</h2>
+      <p>End-to-end software development covering scalable web apps, cross-platform Flutter mobile apps for iOS and Android, AI-powered features (chatbots, RAG pipelines, document processing), Google Cloud serverless infrastructure, and conversion-focused UI/UX design.</p>
+
+      <h2>Why INSPIRARE: Nearshore Advantage</h2>
+      <p>20+ years of senior engineering experience, 4 SaaS products live in production, 100% IP ownership for clients, D-U-N-S&reg; verified business credibility, NDAs as standard practice, and direct Slack/Zoom/Linear access to the engineers building your product — no middlemen.</p>
+
+      <h2>Portfolio: Real Products in Production</h2>
+      <p>ContaSAS.ia (AI-powered SaaS for accounting and tax compliance), Factura Fácil DTE (government-compliant electronic invoicing), El Bicho IA (hyperlocal AI chatbot with custom fine-tuned model), TRAMA Store (e-commerce platform).</p>
+
+      <h2>Engagement Models: Fixed-Price, Time &amp; Materials, Dedicated Team</h2>
+      <p>Three flexible engagement models: Fixed-Price for well-scoped MVPs and landing pages, Time &amp; Materials for evolving projects, and Dedicated Team for staff augmentation and ongoing product work. All models include direct communication with senior engineers and rates 40–60% lower than comparable US agencies.</p>
+
+      <h2>Frequently Asked Questions</h2>
+      <ul>
+        <li><strong>Where is your team located?</strong> El Salvador (CST timezone, same as Chicago).</li>
+        <li><strong>What technologies do you specialize in?</strong> Flutter, Dart, Firebase, Google Cloud, AI/ML (Gemini, OpenAI).</li>
+        <li><strong>Do you sign NDAs?</strong> Yes, as standard practice before every engagement.</li>
+        <li><strong>Who owns the code and IP?</strong> The client owns 100% from day one.</li>
+        <li><strong>Project timeline?</strong> MVPs typically 4–8 weeks; larger projects delivered in phases.</li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:hello@inspirare.app">hello@inspirare.app</a> · WhatsApp: +503 7933-6960 · Location: Soyapango, San Salvador, El Salvador.</p>
+    </article>
+
+    <article lang="es">
+      <h1>INSPIRARE — Agencia de Desarrollo de Software Nearshore para Empresas en EE.UU. y Canadá</h1>
+      <p>INSPIRARE es una agencia de desarrollo de software nearshore con verificación D-U-N-S&reg;, ubicada en El Salvador, Centroamérica. Diseñamos, construimos y escalamos aplicaciones web y móviles personalizadas para empresas en EE.UU. y Canadá, trabajando en zona horaria CST (la misma de Chicago, Dallas y Houston).</p>
+
+      <h2>Servicios: Aplicaciones Web, Móviles, IA/ML y Cloud</h2>
+      <p>Desarrollo de software de extremo a extremo: aplicaciones web escalables, apps móviles multiplataforma con Flutter (iOS y Android), funcionalidades basadas en IA (chatbots, pipelines RAG, procesamiento de documentos), infraestructura serverless en Google Cloud y diseño UI/UX enfocado en conversión.</p>
+
+      <h2>Por qué INSPIRARE: Ventaja Nearshore</h2>
+      <p>20+ años de experiencia en ingeniería senior, 4 productos SaaS en producción, 100% de propiedad intelectual para el cliente, credibilidad de negocio verificada D-U-N-S&reg;, firma de NDAs como práctica estándar y acceso directo vía Slack/Zoom/Linear a los ingenieros que construyen tu producto.</p>
+
+      <h2>Portafolio: Productos Reales en Producción</h2>
+      <p>ContaSAS.ia (SaaS con IA para contabilidad y cumplimiento tributario), Factura Fácil DTE (facturación electrónica con cumplimiento gubernamental), El Bicho IA (chatbot hiperlocal con modelo fine-tuned propio), TRAMA Store (plataforma e-commerce).</p>
+
+      <h2>Modelos de Trabajo: Precio Fijo, Tiempo y Materiales, Equipo Dedicado</h2>
+      <p>Tres modelos flexibles: Precio Fijo para proyectos con alcance definido, Tiempo y Materiales para proyectos evolutivos, y Equipo Dedicado para staff augmentation y desarrollo continuo. Todos incluyen comunicación directa con ingenieros senior y tarifas 40–60% menores que agencias comparables en EE.UU.</p>
+
+      <h2>Contacto</h2>
+      <p>Email: <a href="mailto:hello@inspirare.app">hello@inspirare.app</a> · WhatsApp: +503 7933-6960 · Ubicación: Soyapango, San Salvador, El Salvador.</p>
+    </article>
+  </div>
+
   <script>
     // Set <html lang> from ?lang= query param before Flutter loads
     (function() {

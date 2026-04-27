@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/analytics/analytics_events.dart';
 import 'package:inspirare/core/constants/app_constants.dart';
 import 'package:inspirare/pages/landing/scroll_navigation_mixin.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/glassmorphism_nav.dart';
+import 'package:inspirare/widgets/common/section_tracker.dart';
 import 'package:inspirare/widgets/sections/hero_section.dart';
 import 'package:inspirare/widgets/sections/services_section.dart';
 import 'package:inspirare/widgets/sections/why_section.dart';
@@ -33,8 +35,9 @@ class _MobileLayoutState extends State<MobileLayout>
             controller: scrollController,
             child: Column(
               children: [
-                Container(
-                  key: heroKey,
+                SectionTracker(
+                  scrollKey: heroKey,
+                  sectionId: SectionIds.hero,
                   child: HeroSection(
                     isMobile: true,
                     onPortfolioTap: () =>
@@ -43,36 +46,43 @@ class _MobileLayoutState extends State<MobileLayout>
                         scrollToSection(NavSection.contact),
                   ),
                 ),
-                Container(
-                  key: servicesKey,
+                SectionTracker(
+                  scrollKey: servicesKey,
+                  sectionId: SectionIds.services,
                   child: const ServicesSection(isMobile: true),
                 ),
-                Container(
-                  key: whyUsKey,
+                SectionTracker(
+                  scrollKey: whyUsKey,
+                  sectionId: SectionIds.why,
                   child: const WhySection(isMobile: true),
                 ),
-                Container(
-                  key: portfolioKey,
+                SectionTracker(
+                  scrollKey: portfolioKey,
+                  sectionId: SectionIds.portfolio,
                   child: const PortfolioSection(isMobile: true),
                 ),
-                Container(
-                  key: processKey,
+                SectionTracker(
+                  scrollKey: processKey,
+                  sectionId: SectionIds.process,
                   child: const ProcessSection(isMobile: true),
                 ),
-                Container(
-                  key: pricingKey,
+                SectionTracker(
+                  scrollKey: pricingKey,
+                  sectionId: SectionIds.pricing,
                   child: PricingSection(
                     isMobile: true,
                     onContactTap: () =>
                         scrollToSection(NavSection.contact),
                   ),
                 ),
-                Container(
-                  key: faqKey,
+                SectionTracker(
+                  scrollKey: faqKey,
+                  sectionId: SectionIds.faq,
                   child: const FAQSection(isMobile: true),
                 ),
-                Container(
-                  key: contactKey,
+                SectionTracker(
+                  scrollKey: contactKey,
+                  sectionId: SectionIds.cta,
                   child: const CTASection(isMobile: true),
                 ),
                 FooterSection(isMobile: true, onNavTap: scrollToSection),

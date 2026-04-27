@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/analytics/analytics_service.dart';
 import 'package:inspirare/core/l10n/app_strings.dart';
+import 'package:inspirare/core/l10n/locale_provider.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
@@ -43,6 +45,7 @@ class FAQSection extends StatelessWidget {
                 (index) => AnimatedSection(
                   delay: Duration(milliseconds: 80 * (index + 1)),
                   child: _FAQItem(
+                    index: index,
                     question: faqs[index].question,
                     answer: faqs[index].answer,
                   ),
@@ -57,10 +60,15 @@ class FAQSection extends StatelessWidget {
 }
 
 class _FAQItem extends StatefulWidget {
+  final int index;
   final String question;
   final String answer;
 
-  const _FAQItem({required this.question, required this.answer});
+  const _FAQItem({
+    required this.index,
+    required this.question,
+    required this.answer,
+  });
 
   @override
   State<_FAQItem> createState() => _FAQItemState();
@@ -96,6 +104,12 @@ class _FAQItemState extends State<_FAQItem>
       _isExpanded = !_isExpanded;
       if (_isExpanded) {
         _controller.forward();
+        final locale = LocaleProvider.of(context).locale;
+        AnalyticsService.instance.logFaqExpand(
+          index: widget.index,
+          questionId: 'faq_${widget.index + 1}',
+          locale: locale,
+        );
       } else {
         _controller.reverse();
       }

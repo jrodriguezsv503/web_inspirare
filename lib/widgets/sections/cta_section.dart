@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inspirare/core/analytics/analytics_events.dart';
+import 'package:inspirare/core/analytics/analytics_service.dart';
 import 'package:inspirare/core/constants/app_constants.dart';
 import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/core/utils/url_launcher_helper.dart';
@@ -259,6 +261,15 @@ class _ContactFormState extends State<_ContactForm> {
   void _submitForm() {
     if (_nameController.text.isEmpty || _emailController.text.isEmpty) return;
 
+    AnalyticsService.instance.logLeadGenerated(
+      source: 'contact_form',
+      extra: {
+        'cta_id': CtaIds.contactForm,
+        'budget': _budget.isEmpty ? 'unspecified' : _budget,
+        'has_company': _companyController.text.trim().isNotEmpty,
+      },
+    );
+
     final subject = Uri.encodeComponent(
       'Project Inquiry from ${_nameController.text}',
     );
@@ -270,7 +281,7 @@ class _ContactFormState extends State<_ContactForm> {
       'Message:\n${_messageController.text}',
     );
     final mailtoUrl = 'mailto:hello@inspirare.app?subject=$subject&body=$body';
-    safeLaunchUrl(context, mailtoUrl);
+    safeLaunchUrl(context, mailtoUrl, source: 'contact_form');
     setState(() => _submitted = true);
   }
 
