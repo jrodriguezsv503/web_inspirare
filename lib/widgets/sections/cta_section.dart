@@ -6,6 +6,7 @@ import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/core/utils/url_launcher_helper.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
+import 'package:inspirare/widgets/common/atmospheric_backdrop.dart';
 
 /// Contact/CTA section with form and contact info.
 class CTASection extends StatelessWidget {
@@ -18,62 +19,39 @@ class CTASection extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < Breakpoints.mobile;
 
-    return Container(
-      color: Palette.background,
-      child: Stack(
-        children: [
-          // Decorative radial gradient
-          Positioned.fill(
-            child: Center(
-              child: Container(
-                width: 600,
-                height: 600,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      Palette.primary.withValues(alpha: 0.06),
-                      Colors.transparent,
+    return AtmosphericBackdrop(
+      mood: BackdropMood.sky,
+      cloudCount: 4,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: isSmall ? 24 : 40,
+          right: isSmall ? 24 : 40,
+          top: isSmall ? 88 : 140,
+          bottom: isSmall ? 88 : 140,
+        ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1280),
+            child: isSmall
+                ? Column(
+                    children: [
+                      _buildInfoSide(context, isSmall),
+                      const SizedBox(height: 48),
+                      const _ContactForm(),
                     ],
-                    stops: const [0.0, 0.7],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Content
-          Padding(
-            padding: EdgeInsets.only(
-              left: isSmall ? 24 : 40,
-              right: isSmall ? 24 : 40,
-              top: isSmall ? 80 : 120,
-              bottom: isSmall ? 80 : 120,
-            ),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1280),
-                child: isSmall
-                    ? Column(
-                        children: [
-                          _buildInfoSide(context, isSmall),
-                          const SizedBox(height: 48),
-                          const _ContactForm(),
-                        ],
-                      )
-                    : Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: _buildInfoSide(context, isSmall),
-                          ),
-                          const SizedBox(width: 64),
-                          const Expanded(child: _ContactForm()),
-                        ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _buildInfoSide(context, isSmall),
                       ),
-              ),
-            ),
+                      const SizedBox(width: 72),
+                      const Expanded(child: _ContactForm()),
+                    ],
+                  ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -87,12 +65,12 @@ class CTASection extends StatelessWidget {
         children: [
           Text(
             s.ctaReadyLabel,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: Fonts.body,
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              letterSpacing: 3,
-              color: Palette.primary.withValues(alpha: 0.8),
+              letterSpacing: 2.4,
+              color: Palette.primaryDark,
             ),
           ),
           const SizedBox(height: 16),
@@ -122,29 +100,29 @@ class CTASection extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
-              color: Palette.primary.withValues(alpha: 0.06),
+              color: Palette.primary.withValues(alpha: 0.14),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Palette.primary.withValues(alpha: 0.15),
+                color: Palette.primaryDark.withValues(alpha: 0.28),
               ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
+                const Icon(
                   Icons.verified_outlined,
                   size: 18,
-                  color: Palette.primary.withValues(alpha: 0.8),
+                  color: Palette.primaryDark,
                 ),
                 const SizedBox(width: 10),
                 Flexible(
                   child: Text(
                     s.ctaTrustSignal,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: Fonts.body,
                       fontSize: 13,
-                      color: Palette.primary.withValues(alpha: 0.8),
-                      fontWeight: FontWeight.w500,
+                      color: Palette.primaryDark,
+                      fontWeight: FontWeight.w600,
                       height: 1.4,
                     ),
                   ),
@@ -364,16 +342,10 @@ class _ContactFormState extends State<_ContactForm> {
       child: Container(
         padding: const EdgeInsets.all(40),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Colors.black.withValues(alpha: 0.06)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              blurRadius: 40,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          color: Colors.white.withValues(alpha: 0.92),
+          borderRadius: BorderRadius.circular(AppRadii.xl),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.85)),
+          boxShadow: CloudShadows.floating,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

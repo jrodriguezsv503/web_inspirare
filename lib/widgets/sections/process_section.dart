@@ -44,8 +44,9 @@ class ProcessSection extends StatelessWidget {
                     label: s.processLabel,
                     title: s.processTitle,
                     subtitle: s.processSubtitle,
-                    labelColor: Palette.primary.withValues(alpha: 0.8),
+                    labelColor: Palette.primaryLight.withValues(alpha: 0.9),
                     titleColor: Colors.white,
+                    subtitleColor: Colors.white.withValues(alpha: 0.72),
                   ),
                 ),
                 SizedBox(height: isSmall ? 48 : 80),
@@ -77,11 +78,11 @@ class ProcessSection extends StatelessWidget {
             ),
             if (i < steps.length - 1)
               Padding(
-                padding: const EdgeInsets.only(top: 32),
+                padding: const EdgeInsets.only(top: 44),
                 child: Icon(
                   Icons.arrow_forward,
-                  size: 20,
-                  color: Palette.primary.withValues(alpha: 0.4),
+                  size: 22,
+                  color: Palette.primary.withValues(alpha: 0.7),
                 ),
               ),
           ],
@@ -105,10 +106,10 @@ class ProcessSection extends StatelessWidget {
           ),
           if (i < steps.length - 1)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Icon(
-                Icons.arrow_downward,
-                size: 20,
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Container(
+                width: 1,
+                height: 28,
                 color: Palette.primary.withValues(alpha: 0.4),
               ),
             ),
@@ -142,17 +143,17 @@ class _StepCard extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              color: Palette.primary.withValues(alpha: 0.12),
+              color: Palette.primary.withValues(alpha: 0.16),
               shape: BoxShape.circle,
               border: Border.all(
-                color: Palette.primary.withValues(alpha: 0.2),
+                color: Palette.primary.withValues(alpha: 0.35),
               ),
             ),
             child: Center(
               child: Icon(
                 icon,
                 size: 24,
-                color: Palette.primary,
+                color: Palette.primaryLight,
               ),
             ),
           ),
@@ -164,11 +165,12 @@ class _StepCard extends StatelessWidget {
               fontFamily: Fonts.body,
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              letterSpacing: 2,
-              color: Palette.primary.withValues(alpha: 0.5),
+              letterSpacing: 2.4,
+              color: Palette.primary.withValues(alpha: 0.85),
+              fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           Text(
             title,
             textAlign: TextAlign.center,
@@ -176,17 +178,18 @@ class _StepCard extends StatelessWidget {
               fontFamily: Fonts.title,
               fontSize: 18,
               color: Colors.white,
-              letterSpacing: -0.3,
+              letterSpacing: -0.4,
+              height: 1.2,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           Text(
             description,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: Fonts.body,
-              fontSize: 13,
-              color: Colors.white.withValues(alpha: 0.4),
+              fontSize: 13.5,
+              color: Colors.white.withValues(alpha: 0.72),
               height: 1.6,
             ),
           ),

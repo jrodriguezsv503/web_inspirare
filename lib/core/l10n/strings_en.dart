@@ -145,7 +145,7 @@ class StringsEn extends AppStrings {
         WhyCardStrings(
           title: '20+ Years & End-to-End Delivery',
           description:
-              'Senior engineers with Apple & Cisco certifications. '
+              'Senior engineers.'
               'Design \u2192 code \u2192 deploy \u2192 support \u2014 one team '
               'handles everything, no vendor juggling.',
         ),
@@ -249,6 +249,24 @@ class StringsEn extends AppStrings {
             'Integrated payment gateway',
           ],
           status: 'Live \u2022 trama.store',
+        ),
+        ProjectStrings(
+          name: 'EXVE',
+          subtitle: 'Portable Vehicle Service Dossier',
+          challenge:
+              'Vehicle owners lose paper service records; workshops keep '
+              'siloed data; buying a used car means trusting an '
+              'unverifiable history.',
+          solution:
+              'Mobile-first PWA where the owner logs maintenance, '
+              'authorizes workshops to write to their record, and carries '
+              'the full history into any inspection or resale.',
+          results: [
+            'Owner-controlled service ledger',
+            'Workshop write-authorization flow',
+            'Full vehicle history, portable',
+          ],
+          status: 'Live \u2022 Public Beta',
         ),
       ];
 

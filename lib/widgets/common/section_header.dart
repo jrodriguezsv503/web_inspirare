@@ -10,6 +10,7 @@ class SectionHeader extends StatelessWidget {
   final String? subtitle;
   final Color labelColor;
   final Color titleColor;
+  final Color? subtitleColor;
   final bool showLines;
   final bool isLeftAligned;
 
@@ -20,7 +21,8 @@ class SectionHeader extends StatelessWidget {
     this.subtitle,
     this.labelColor = Palette.primary,
     this.titleColor = Palette.dark,
-    this.showLines = true,
+    this.subtitleColor,
+    this.showLines = false,
     this.isLeftAligned = false,
   });
 
@@ -34,42 +36,17 @@ class SectionHeader extends StatelessWidget {
           ? CrossAxisAlignment.start
           : CrossAxisAlignment.center,
       children: [
-        // Label with optional decorative lines
-        if (isLeftAligned)
-          Text(
-            label.toUpperCase(),
-            style: TextStyle(
-              fontFamily: Fonts.body,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 3,
-              color: labelColor,
-            ),
-          )
-        else
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (showLines) ...[
-                Container(width: 30, height: 1, color: labelColor),
-                const SizedBox(width: 15),
-              ],
-              Text(
-                label.toUpperCase(),
-                style: TextStyle(
-                  fontFamily: Fonts.body,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 3,
-                  color: labelColor,
-                ),
-              ),
-              if (showLines) ...[
-                const SizedBox(width: 15),
-                Container(width: 30, height: 1, color: labelColor),
-              ],
-            ],
+        // Eyebrow label — short, uppercase, tracked.
+        Text(
+          label.toUpperCase(),
+          style: TextStyle(
+            fontFamily: Fonts.body,
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 2.4,
+            color: labelColor,
           ),
+        ),
         const SizedBox(height: 16),
         // Title
         Text(
@@ -91,10 +68,10 @@ class SectionHeader extends StatelessWidget {
             child: Text(
               subtitle!,
               textAlign: isLeftAligned ? TextAlign.left : TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: Fonts.body,
                 fontSize: 17,
-                color: Palette.textSecondary,
+                color: subtitleColor ?? Palette.textSecondary,
                 height: 1.7,
               ),
             ),

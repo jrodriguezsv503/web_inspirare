@@ -21,8 +21,8 @@ class AnimatedSection extends StatefulWidget {
     super.key,
     required this.child,
     this.delay = Duration.zero,
-    this.duration = const Duration(milliseconds: 600),
-    this.slideOffset = const Offset(0, 40),
+    this.duration = AppDurations.ethereal,
+    this.slideOffset = const Offset(0, 24),
     this.sectionId,
   });
 
@@ -43,11 +43,11 @@ class _AnimatedSectionState extends State<AnimatedSection>
     _controller = AnimationController(vsync: this, duration: widget.duration);
 
     _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: AppTransitions.smooth),
+      CurvedAnimation(parent: _controller, curve: AppCurves.cloud),
     );
 
     _slide = Tween<Offset>(begin: widget.slideOffset, end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: AppTransitions.smooth),
+      CurvedAnimation(parent: _controller, curve: AppCurves.cloud),
     );
   }
 
@@ -60,11 +60,16 @@ class _AnimatedSectionState extends State<AnimatedSection>
   void _onVisibilityChanged(VisibilityInfo info) {
     if (!_hasAnimated && info.visibleFraction > 0.2) {
       _hasAnimated = true;
-      Future.delayed(widget.delay, () {
-        if (mounted) {
-          _controller.forward();
-        }
-      });
+      final reduceMotion = MediaQuery.of(context).disableAnimations;
+      if (reduceMotion) {
+        _controller.value = 1.0;
+      } else {
+        Future.delayed(widget.delay, () {
+          if (mounted) {
+            _controller.forward();
+          }
+        });
+      }
       if (widget.sectionId != null) {
         AnalyticsService.instance.logSectionView(widget.sectionId!);
       }
@@ -81,9 +86,10 @@ class _AnimatedSectionState extends State<AnimatedSection>
         builder: (context, child) {
           return Transform.translate(
             offset: _slide.value,
-            child: Opacity(opacity: _opacity.value, child: widget.child),
+            child: Opacity(opacity: _opacity.value, child: child),
           );
         },
+        child: widget.child,
       ),
     );
   }

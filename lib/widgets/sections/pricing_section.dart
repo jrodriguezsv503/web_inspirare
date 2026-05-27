@@ -17,10 +17,12 @@ class PricingSection extends StatelessWidget {
     this.onContactTap,
   });
 
+  // Unified accent — uses the brand teal across all tiers.
+  // Featured card differentiation comes from border + badge, not color noise.
   static const _accentGradients = [
-    [Color(0xFF0D1753), Color(0xFF1A237E)],
-    [Color(0xFF08C4D4), Color(0xFF06B6D4)],
-    [Color(0xFF2DB764), Color(0xFF16A34A)],
+    [Palette.dark, Palette.darkLight],
+    [Palette.primaryDark, Palette.primary],
+    [Palette.dark, Palette.darkLight],
   ];
 
   @override
@@ -101,14 +103,16 @@ class PricingSection extends StatelessWidget {
       );
     }
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (int i = 0; i < cardWidgets.length; i++) ...[
-          Expanded(child: cardWidgets[i]),
-          if (i < cardWidgets.length - 1) const SizedBox(width: 24),
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (int i = 0; i < cardWidgets.length; i++) ...[
+            Expanded(child: cardWidgets[i]),
+            if (i < cardWidgets.length - 1) const SizedBox(width: 24),
+          ],
         ],
-      ],
+      ),
     );
   }
 }
@@ -153,65 +157,67 @@ class _PricingCardState extends State<_PricingCard> {
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: AppTransitions.normal,
+        curve: AppCurves.easeOutStrong,
         transform: _isHovered
             ? Matrix4.translationValues(0, -4, 0)
             : Matrix4.identity(),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: widget.isFeatured
-                ? Palette.primary.withValues(alpha: 0.3)
-                : Colors.black.withValues(alpha: 0.06),
+                ? Palette.primaryDark.withValues(alpha: 0.45)
+                : Palette.hairline,
+            width: widget.isFeatured ? 1.5 : 1,
           ),
-          boxShadow: _isHovered
+          boxShadow: _isHovered || widget.isFeatured
               ? [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
-                    blurRadius: 40,
-                    offset: const Offset(0, 12),
+                    color: widget.isFeatured
+                        ? Palette.primary.withValues(alpha: 0.14)
+                        : Palette.dark.withValues(alpha: 0.06),
+                    blurRadius: widget.isFeatured ? 40 : 32,
+                    offset: const Offset(0, 10),
                   ),
                 ]
               : [],
         ),
         clipBehavior: Clip.antiAlias,
+        // Outer Column uses spaceBetween with two non-flex children so it works
+        // inside IntrinsicHeight without "unbounded constraints" errors.
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Accent bar
-            Container(
-              height: 4,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(colors: widget.accentGradient),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (widget.isFeatured)
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Palette.primary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: Text(
-                        widget.mostPopularLabel,
-                        style: const TextStyle(
-                          fontFamily: Fonts.body,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1,
-                          color: Palette.primaryDark,
-                        ),
-                      ),
-                    ),
+            // Top group: accent bar + content (excludes CTA).
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: widget.isFeatured ? 36 : 4,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: widget.accentGradient),
+                  ),
+                  child: widget.isFeatured
+                      ? Center(
+                          child: Text(
+                            widget.mostPopularLabel.toUpperCase(),
+                            style: const TextStyle(
+                              fontFamily: Fonts.body,
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 2,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      : null,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 32, 32, 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                   Text(
                     widget.title,
                     style: const TextStyle(
@@ -237,8 +243,9 @@ class _PricingCardState extends State<_PricingCard> {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: Palette.dark.withValues(alpha: 0.04),
+                      color: Palette.background,
                       borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Palette.hairline),
                     ),
                     child: Text(
                       '${widget.idealForLabel} ${widget.idealFor}',
@@ -287,51 +294,53 @@ class _PricingCardState extends State<_PricingCard> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  // CTA Button
-                  MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    onEnter: (_) => setState(() => _isButtonHovered = true),
-                    onExit: (_) => setState(() => _isButtonHovered = false),
-                    child: GestureDetector(
-                      onTap: widget.onContactTap,
-                      child: AnimatedContainer(
-                        duration: AppTransitions.fast,
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        transform: _isButtonHovered
-                            ? Matrix4.translationValues(0, -2, 0)
-                            : Matrix4.identity(),
-                        decoration: BoxDecoration(
-                          color: _isButtonHovered
-                              ? Palette.dark
-                              : Palette.dark.withValues(alpha: 0.9),
-                          borderRadius: BorderRadius.circular(100),
-                          boxShadow: _isButtonHovered
-                              ? [
-                                  BoxShadow(
-                                    color: Palette.dark.withValues(alpha: 0.3),
-                                    blurRadius: 24,
-                                    offset: const Offset(0, 8),
-                                  ),
-                                ]
-                              : [],
-                        ),
-                        child: Center(
-                          child: Text(
-                            widget.ctaLabel,
-                            style: const TextStyle(
-                              fontFamily: Fonts.body,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Bottom: CTA — anchored to card bottom via spaceBetween.
+            Padding(
+              padding: const EdgeInsets.fromLTRB(32, 8, 32, 32),
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                onEnter: (_) => setState(() => _isButtonHovered = true),
+                onExit: (_) => setState(() => _isButtonHovered = false),
+                child: GestureDetector(
+                  onTap: widget.onContactTap,
+                  child: AnimatedContainer(
+                    duration: AppTransitions.fast,
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    transform: _isButtonHovered
+                        ? Matrix4.translationValues(0, -2, 0)
+                        : Matrix4.identity(),
+                    decoration: BoxDecoration(
+                      color: Palette.dark,
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: _isButtonHovered
+                          ? [
+                              BoxShadow(
+                                color: Palette.dark.withValues(alpha: 0.3),
+                                blurRadius: 24,
+                                offset: const Offset(0, 8),
+                              ),
+                            ]
+                          : [],
+                    ),
+                    child: Center(
+                      child: Text(
+                        widget.ctaLabel,
+                        style: const TextStyle(
+                          fontFamily: Fonts.body,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ],

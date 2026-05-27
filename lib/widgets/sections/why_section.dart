@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
+import 'package:inspirare/widgets/common/atmospheric_backdrop.dart';
 import 'package:inspirare/widgets/common/section_header.dart';
 
 /// Dark section "Why INSPIRARE" with 6 benefit cards and tech stack ribbon.
@@ -17,62 +18,39 @@ class WhySection extends StatelessWidget {
     final isTablet = screenWidth < Breakpoints.tablet;
     final s = AppStrings.of(context);
 
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(color: Palette.dark),
-      child: Stack(
-        children: [
-          // Decorative radial gradient
-          Positioned(
-            top: -200,
-            right: -200,
-            child: Container(
-              width: 600,
-              height: 600,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    Palette.primary.withValues(alpha: 0.08),
-                    Colors.transparent,
-                  ],
-                  stops: const [0.0, 0.7],
+    return AtmosphericBackdrop(
+      mood: BackdropMood.night,
+      cloudCount: 4,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: isSmall ? 24 : 40,
+          vertical: isSmall ? 88 : 140,
+        ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1280),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AnimatedSection(
+                  child: SectionHeader(
+                    label: s.whyLabel,
+                    title: s.whyTitle,
+                    subtitle: s.whySubtitle,
+                    isLeftAligned: true,
+                    labelColor: Palette.primaryLight.withValues(alpha: 0.9),
+                    titleColor: Colors.white,
+                    subtitleColor: Colors.white.withValues(alpha: 0.72),
+                  ),
                 ),
-              ),
+                SizedBox(height: isSmall ? 48 : 72),
+                _buildGrid(context, isSmall, isTablet),
+                SizedBox(height: isSmall ? 56 : 88),
+                AnimatedSection(child: _TechStackRibbon(isMobile: isSmall)),
+              ],
             ),
           ),
-          // Content
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isSmall ? 24 : 40,
-              vertical: isSmall ? 80 : 120,
-            ),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1280),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AnimatedSection(
-                      child: SectionHeader(
-                        label: s.whyLabel,
-                        title: s.whyTitle,
-                        subtitle: s.whySubtitle,
-                        isLeftAligned: true,
-                        labelColor: Palette.primary.withValues(alpha: 0.8),
-                        titleColor: Colors.white,
-                      ),
-                    ),
-                    SizedBox(height: isSmall ? 40 : 64),
-                    _buildGrid(context, isSmall, isTablet),
-                    SizedBox(height: isSmall ? 48 : 80),
-                    AnimatedSection(child: _TechStackRibbon(isMobile: isSmall)),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -81,31 +59,24 @@ class WhySection extends StatelessWidget {
     final s = AppStrings.of(context);
     final cardStrings = s.whyCards;
 
-    final emojis = [
-      '\u{1F6E1}\uFE0F',
-      '\u{1F512}',
-      '\u{1F680}',
-      '\u{1F4BC}',
-      '\u{2601}\uFE0F',
-      '\u{1F30E}',
-    ];
-
-    final iconBgColors = [
-      Palette.primary.withValues(alpha: 0.15),
-      Palette.accentWarm.withValues(alpha: 0.15),
-      const Color(0xFF8B5CF6).withValues(alpha: 0.15),
-      const Color(0xFF06B6D4).withValues(alpha: 0.15),
-      Palette.success.withValues(alpha: 0.15),
-      const Color(0xFFEF4444).withValues(alpha: 0.15),
+    // Icon mapping by card meaning:
+    // 0 DUNS verified, 1 IP ownership, 2 SaaS in production,
+    // 3 Senior delivery, 4 Cloud-native, 5 Same timezone.
+    const icons = [
+      Icons.verified_outlined,
+      Icons.lock_outline,
+      Icons.trending_up,
+      Icons.business_center_outlined,
+      Icons.cloud_outlined,
+      Icons.access_time,
     ];
 
     final cards = List.generate(
       cardStrings.length,
       (i) => _WhyCardData(
-        emoji: emojis[i],
+        icon: icons[i],
         title: cardStrings[i].title,
         description: cardStrings[i].description,
-        iconBg: iconBgColors[i],
       ),
     );
 
@@ -138,7 +109,14 @@ class WhySection extends StatelessWidget {
         rowCards.add(const SizedBox(width: 24));
         rowCards.add(const Expanded(child: SizedBox()));
       }
-      rows.add(Row(children: rowCards));
+      rows.add(
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: rowCards,
+          ),
+        ),
+      );
       if (i + crossAxisCount < cards.length) {
         rows.add(const SizedBox(height: 24));
       }
@@ -149,16 +127,14 @@ class WhySection extends StatelessWidget {
 }
 
 class _WhyCardData {
-  final String emoji;
+  final IconData icon;
   final String title;
   final String description;
-  final Color iconBg;
 
   const _WhyCardData({
-    required this.emoji,
+    required this.icon,
     required this.title,
     required this.description,
-    required this.iconBg,
   });
 }
 
@@ -177,24 +153,35 @@ class _WhyCardState extends State<_WhyCard> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
-        duration: AppTransitions.normal,
-        padding: const EdgeInsets.all(32),
+        duration: const Duration(milliseconds: 380),
+        curve: AppCurves.cloud,
+        padding: const EdgeInsets.all(28),
         transform: _isHovered
-            ? Matrix4.translationValues(0, -4, 0)
+            ? Matrix4.translationValues(0, -3, 0)
             : Matrix4.identity(),
         decoration: BoxDecoration(
           color: _isHovered
               ? Colors.white.withValues(alpha: 0.07)
-              : Colors.white.withValues(alpha: 0.04),
+              : Colors.white.withValues(alpha: 0.035),
           border: Border.all(
             color: _isHovered
-                ? Palette.primary.withValues(alpha: 0.2)
-                : Colors.white.withValues(alpha: 0.06),
+                ? Palette.primaryLight.withValues(alpha: 0.45)
+                : Colors.white.withValues(alpha: 0.10),
           ),
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(AppRadii.lg),
+          boxShadow: _isHovered
+              ? [
+                  BoxShadow(
+                    color: Palette.primary.withValues(alpha: 0.18),
+                    blurRadius: 48,
+                    offset: const Offset(0, 12),
+                  ),
+                ]
+              : const [],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,13 +190,17 @@ class _WhyCardState extends State<_WhyCard> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: widget.data.iconBg,
-                borderRadius: BorderRadius.circular(14),
+                color: Palette.primary.withValues(alpha: 0.16),
+                borderRadius: BorderRadius.circular(AppRadii.md),
+                border: Border.all(
+                  color: Palette.primary.withValues(alpha: 0.28),
+                ),
               ),
               child: Center(
-                child: Text(
-                  widget.data.emoji,
-                  style: const TextStyle(fontSize: 22),
+                child: Icon(
+                  widget.data.icon,
+                  size: 20,
+                  color: Palette.primaryLight,
                 ),
               ),
             ),
@@ -220,17 +211,21 @@ class _WhyCardState extends State<_WhyCard> {
                 fontFamily: Fonts.title,
                 fontSize: 20,
                 color: Colors.white,
-                letterSpacing: -0.3,
+                letterSpacing: -0.4,
+                height: 1.2,
               ),
             ),
-            const SizedBox(height: 10),
-            Text(
-              widget.data.description,
-              style: TextStyle(
-                fontFamily: Fonts.body,
-                fontSize: 14,
-                color: Colors.white.withValues(alpha: 0.45),
-                height: 1.7,
+            const SizedBox(height: 12),
+            Flexible(
+              child: Text(
+                widget.data.description,
+                overflow: TextOverflow.fade,
+                style: TextStyle(
+                  fontFamily: Fonts.body,
+                  fontSize: 14,
+                  color: Colors.white.withValues(alpha: 0.72),
+                  height: 1.6,
+                ),
               ),
             ),
           ],
@@ -257,12 +252,12 @@ class _TechStackRibbon extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: 48,
+        vertical: 40,
         horizontal: isMobile ? 0 : 40,
       ),
       decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(color: Colors.white.withValues(alpha: 0.06)),
+          top: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
         ),
       ),
       child: Wrap(
@@ -276,8 +271,8 @@ class _TechStackRibbon extends StatelessWidget {
                 children: [
                   Icon(
                     _iconForTech(item),
-                    size: 24,
-                    color: Colors.white.withValues(alpha: 0.4),
+                    size: 20,
+                    color: Colors.white.withValues(alpha: 0.7),
                   ),
                   const SizedBox(width: 10),
                   Text(
@@ -285,8 +280,9 @@ class _TechStackRibbon extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: Fonts.body,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white.withValues(alpha: 0.3),
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.2,
+                      color: Colors.white.withValues(alpha: 0.78),
                     ),
                   ),
                 ],

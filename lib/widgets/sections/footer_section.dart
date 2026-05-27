@@ -125,7 +125,7 @@ class FooterSection extends StatelessWidget {
             style: TextStyle(
               fontFamily: Fonts.body,
               fontSize: 14,
-              color: Colors.white.withValues(alpha: 0.4),
+              color: Colors.white.withValues(alpha: 0.68),
               height: 1.7,
             ),
           ),
@@ -136,7 +136,7 @@ class FooterSection extends StatelessWidget {
           style: TextStyle(
             fontFamily: Fonts.body,
             fontSize: 12,
-            color: Colors.white.withValues(alpha: 0.25),
+            color: Colors.white.withValues(alpha: 0.45),
             height: 1.6,
           ),
         ),
@@ -224,7 +224,7 @@ class FooterSection extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: Fonts.body,
                     fontSize: 13,
-                    color: Colors.white.withValues(alpha: 0.25),
+                    color: Colors.white.withValues(alpha: 0.5),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -246,7 +246,7 @@ class FooterSection extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: Fonts.body,
                     fontSize: 13,
-                    color: Colors.white.withValues(alpha: 0.25),
+                    color: Colors.white.withValues(alpha: 0.5),
                   ),
                 ),
                 Row(
@@ -274,13 +274,13 @@ class _FooterColumn extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
-          style: TextStyle(
+          title.toUpperCase(),
+          style: const TextStyle(
             fontFamily: Fonts.body,
-            fontSize: 13,
+            fontSize: 11.5,
             fontWeight: FontWeight.w700,
-            color: Colors.white.withValues(alpha: 0.5),
-            letterSpacing: 1.5,
+            color: Colors.white,
+            letterSpacing: 2,
           ),
         ),
         const SizedBox(height: 20),
@@ -320,9 +320,10 @@ class _FooterLinkState extends State<_FooterLink> {
             style: TextStyle(
               fontFamily: Fonts.body,
               fontSize: 14,
+              fontWeight: _isHovered ? FontWeight.w600 : FontWeight.w500,
               color: _isHovered
-                  ? Palette.primary
-                  : Colors.white.withValues(alpha: 0.4),
+                  ? Palette.primaryLight
+                  : Colors.white.withValues(alpha: 0.7),
             ),
             child: Text(widget.text),
           ),
@@ -356,8 +357,8 @@ class _FooterLegalLinkState extends State<_FooterLegalLink> {
           fontFamily: Fonts.body,
           fontSize: 13,
           color: _isHovered
-              ? Colors.white.withValues(alpha: 0.5)
-              : Colors.white.withValues(alpha: 0.25),
+              ? Colors.white.withValues(alpha: 0.85)
+              : Colors.white.withValues(alpha: 0.5),
         ),
         child: Text(widget.text),
       ),

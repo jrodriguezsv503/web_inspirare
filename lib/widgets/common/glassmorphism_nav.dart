@@ -59,30 +59,40 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
     final isMobile = MediaQuery.of(context).size.width < Breakpoints.mobile;
     final s = AppStrings.of(context);
 
+    // Nav floats above the sky — translucent at rest, denser when scrolled
+    // so content stays legible. Border + shadow appear only after scroll.
+    final navBgAlpha = _isScrolled ? 0.88 : 0.55;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         ClipRect(
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+            filter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
             child: AnimatedContainer(
               duration: AppTransitions.normal,
-              height: 72,
+              curve: AppCurves.cloud,
+              height: 74,
               padding: EdgeInsets.symmetric(horizontal: isMobile ? 24 : 40),
               decoration: BoxDecoration(
-                color: Palette.primary,
-                border: const Border(
-                  bottom: BorderSide(color: Palette.dark, width: 1),
+                color: Palette.primary.withValues(alpha: navBgAlpha),
+                border: Border(
+                  bottom: BorderSide(
+                    color: _isScrolled
+                        ? Palette.dark.withValues(alpha: 0.10)
+                        : Colors.transparent,
+                    width: 1,
+                  ),
                 ),
                 boxShadow: _isScrolled
                     ? [
-                        const BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 30,
-                          offset: Offset(0, 4),
+                        BoxShadow(
+                          color: Palette.primaryDark.withValues(alpha: 0.12),
+                          blurRadius: 32,
+                          offset: const Offset(0, 8),
                         ),
                       ]
-                    : [],
+                    : const [],
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,7 +154,7 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                       onPressed: () {
                         setState(() => _isMobileMenuOpen = !_isMobileMenuOpen);
                       },
-                      color: Palette.dark,
+                      color: Colors.white,
                       iconSize: 28,
                     ),
                 ],
@@ -164,13 +174,20 @@ class _GlassmorphismNavState extends State<GlassmorphismNav> {
                   vertical: 24,
                 ),
                 decoration: BoxDecoration(
-                  color: Palette.background.withValues(alpha: 0.95),
+                  color: Palette.background.withValues(alpha: 0.88),
                   border: Border(
                     bottom: BorderSide(
-                      color: Palette.dark.withValues(alpha: 0.06),
+                      color: Palette.dark.withValues(alpha: 0.08),
                       width: 1,
                     ),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Palette.dark.withValues(alpha: 0.06),
+                      blurRadius: 24,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -262,9 +279,11 @@ class _NavLinkState extends State<_NavLink> {
           style: TextStyle(
             fontFamily: Fonts.body,
             fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: _isHovered ? Palette.dark : Palette.textSecondary,
-            letterSpacing: 0.2,
+            fontWeight: FontWeight.w600,
+            color: _isHovered
+                ? Colors.white
+                : Colors.white.withValues(alpha: 0.85),
+            letterSpacing: 0.3,
           ),
           child: Text(widget.text),
         ),
@@ -346,8 +365,8 @@ class _MobileNavItem extends StatelessWidget {
           style: const TextStyle(
             fontFamily: Fonts.body,
             fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Palette.textSecondary,
+            fontWeight: FontWeight.w600,
+            color: Palette.dark,
           ),
         ),
       ),

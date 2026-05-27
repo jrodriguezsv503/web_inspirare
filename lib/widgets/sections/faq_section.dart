@@ -118,15 +118,18 @@ class _FAQItemState extends State<_FAQItem>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: AppTransitions.fast,
+      curve: AppCurves.easeOutStrong,
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: _isExpanded
-              ? Palette.primary.withValues(alpha: 0.2)
-              : Colors.black.withValues(alpha: 0.06),
+              ? Palette.primaryDark.withValues(alpha: 0.45)
+              : Palette.hairline,
+          width: _isExpanded ? 1.5 : 1,
         ),
       ),
       child: Column(
@@ -153,12 +156,15 @@ class _FAQItemState extends State<_FAQItem>
                     ),
                     const SizedBox(width: 16),
                     AnimatedRotation(
-                      turns: _isExpanded ? 0.125 : 0,
+                      turns: _isExpanded ? 0.5 : 0,
                       duration: AppTransitions.normal,
+                      curve: AppCurves.easeOutStrong,
                       child: Icon(
-                        Icons.add,
-                        size: 20,
-                        color: _isExpanded ? Palette.primary : Palette.textMuted,
+                        Icons.expand_more_rounded,
+                        size: 24,
+                        color: _isExpanded
+                            ? Palette.primaryDark
+                            : Palette.textSecondary,
                       ),
                     ),
                   ],
@@ -185,10 +191,10 @@ class _FAQItemState extends State<_FAQItem>
                 ),
                 child: Text(
                   widget.answer,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: Fonts.body,
-                    fontSize: 14,
-                    color: Palette.textSecondary.withValues(alpha: 0.8),
+                    fontSize: 14.5,
+                    color: Palette.textSecondary,
                     height: 1.7,
                   ),
                 ),

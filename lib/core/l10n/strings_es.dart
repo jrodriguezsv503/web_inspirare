@@ -146,7 +146,7 @@ class StringsEs extends AppStrings {
     WhyCardStrings(
       title: '20+ A\u00f1os y Entrega de Extremo a Extremo',
       description:
-          'Ingenieros senior con certificaciones Apple y Cisco. '
+          'Ingenieros Senior '
           'Dise\u00f1o \u2192 c\u00f3digo \u2192 despliegue \u2192 soporte \u2014 un solo equipo '
           'maneja todo, sin malabarismo de proveedores.',
     ),
@@ -250,6 +250,24 @@ class StringsEs extends AppStrings {
         'Pasarela de pago integrada',
       ],
       status: 'Activo \u2022 trama.store',
+    ),
+    ProjectStrings(
+      name: 'EXVE',
+      subtitle: 'Expediente Vehicular Portable',
+      challenge:
+          'Los due\u00f1os pierden los registros f\u00edsicos del auto; los talleres '
+          'mantienen informaci\u00f3n aislada; comprar un usado significa confiar '
+          'en un historial no verificable.',
+      solution:
+          'PWA mobile-first donde el due\u00f1o registra mantenimientos, autoriza '
+          'a los talleres a escribir en su expediente, y lleva el historial '
+          'completo a cualquier inspecci\u00f3n o reventa.',
+      results: [
+        'Expediente controlado por el due\u00f1o',
+        'Flujo de autorizaci\u00f3n para talleres',
+        'Historial completo del veh\u00edculo, port\u00e1til',
+      ],
+      status: 'Activo \u2022 Beta P\u00fablica',
     ),
   ];
 

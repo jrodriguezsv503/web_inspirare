@@ -1,11 +1,17 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:inspirare/core/analytics/analytics_events.dart';
 import 'package:inspirare/core/analytics/analytics_service.dart';
 import 'package:inspirare/core/l10n/app_strings.dart';
 import 'package:inspirare/theme/web_theme.dart';
 import 'package:inspirare/widgets/common/animated_section.dart';
+import 'package:inspirare/widgets/common/atmospheric_backdrop.dart';
 
-/// Hero section with badge, headline, CTAs and metrics bar.
+/// Hero section — landing entry point.
+///
+/// Sits inside an [AtmosphericBackdrop] so the brand metaphor (white clouds
+/// on a blue sky) lives in the layout, not only the typography.
 class HeroSection extends StatelessWidget {
   final bool isMobile;
   final VoidCallback? onPortfolioTap;
@@ -22,122 +28,117 @@ class HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < Breakpoints.mobile;
-    final heroFontSize = (screenWidth * 0.055).clamp(42.0, 72.0);
+    final heroFontSize = (screenWidth * 0.058).clamp(44.0, 80.0);
     final s = AppStrings.of(context);
 
-    return Container(
-      color: Palette.background,
-      padding: EdgeInsets.only(
-        top: isSmall ? 130 : 160,
-        bottom: isSmall ? 32 : 48,
-        left: isSmall ? 24 : 40,
-        right: isSmall ? 24 : 40,
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1280),
-          child: Column(
-            children: [
-              // Badge
-              AnimatedSection(child: _HeroBadge(isMobile: isSmall)),
-              const SizedBox(height: 32),
-              // Headline
-              AnimatedSection(
-                delay: const Duration(milliseconds: 100),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 900),
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontFamily: Fonts.title,
-                        fontSize: heroFontSize,
-                        height: 1.08,
-                        color: Palette.dark,
-                        letterSpacing: -1.5,
-                      ),
-                      children: [
-                        TextSpan(text: s.heroHeadlinePart1),
-                        TextSpan(
-                          text: s.heroHeadlineAccent,
-                          style: const TextStyle(
-                            fontFamily: Fonts.brand,
-                            fontStyle: FontStyle.italic,
-                            color: Palette.primary,
-                          ),
+    return AtmosphericBackdrop(
+      cloudCount: isSmall ? 3 : 5,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: isSmall ? 140 : 180,
+          bottom: isSmall ? 48 : 88,
+          left: isSmall ? 24 : 40,
+          right: isSmall ? 24 : 40,
+        ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1280),
+            child: Column(
+              children: [
+                AnimatedSection(child: _HeroBadge(isMobile: isSmall)),
+                const SizedBox(height: 36),
+                AnimatedSection(
+                  delay: const Duration(milliseconds: 120),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 920),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontFamily: Fonts.title,
+                          fontSize: heroFontSize,
+                          height: 1.04,
+                          color: Palette.dark,
+                          letterSpacing: -2.2,
                         ),
-                        TextSpan(text: s.heroHeadlinePart2),
-                      ],
+                        children: [
+                          TextSpan(text: s.heroHeadlinePart1),
+                          TextSpan(
+                            text: s.heroHeadlineAccent,
+                            style: const TextStyle(
+                              color: Palette.primaryDark,
+                            ),
+                          ),
+                          TextSpan(text: s.heroHeadlinePart2),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              // Subtitle
-              AnimatedSection(
-                delay: const Duration(milliseconds: 200),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 600),
-                  child: Text(
-                    s.heroSubtitle,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: Fonts.body,
-                      fontSize: isSmall ? 16 : 18,
-                      color: Palette.textSecondary,
-                      height: 1.7,
-                      fontWeight: FontWeight.w400,
+                const SizedBox(height: 28),
+                AnimatedSection(
+                  delay: const Duration(milliseconds: 220),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 620),
+                    child: Text(
+                      s.heroSubtitle,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: Fonts.body,
+                        fontSize: isSmall ? 16 : 18.5,
+                        color: Palette.textSecondary,
+                        height: 1.72,
+                        letterSpacing: 0.1,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              // Action buttons
-              AnimatedSection(
-                delay: const Duration(milliseconds: 300),
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 16,
-                  runSpacing: 16,
-                  children: [
-                    _PrimaryButton(
-                      label: s.heroCtaPrimary,
-                      onTap: () {
-                        AnalyticsService.instance.logLeadGenerated(
-                          source: 'hero',
-                          extra: {'cta_id': CtaIds.heroPrimary},
-                        );
-                        onContactTap?.call();
-                      },
-                      fullWidth: isSmall,
-                    ),
-                    _SecondaryButton(
-                      label: s.heroCtaSecondary,
-                      onTap: () {
-                        AnalyticsService.instance.logSelectContent(
-                          contentType: 'portfolio',
-                          itemId: CtaIds.heroSecondary,
-                        );
-                        onPortfolioTap?.call();
-                      },
-                      fullWidth: isSmall,
-                    ),
-                  ],
+                const SizedBox(height: 44),
+                AnimatedSection(
+                  delay: const Duration(milliseconds: 320),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 16,
+                    runSpacing: 16,
+                    children: [
+                      _PrimaryButton(
+                        label: s.heroCtaPrimary,
+                        onTap: () {
+                          AnalyticsService.instance.logLeadGenerated(
+                            source: 'hero',
+                            extra: {'cta_id': CtaIds.heroPrimary},
+                          );
+                          onContactTap?.call();
+                        },
+                        fullWidth: isSmall,
+                      ),
+                      _SecondaryButton(
+                        label: s.heroCtaSecondary,
+                        onTap: () {
+                          AnalyticsService.instance.logSelectContent(
+                            contentType: 'portfolio',
+                            itemId: CtaIds.heroSecondary,
+                          );
+                          onPortfolioTap?.call();
+                        },
+                        fullWidth: isSmall,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(height: isSmall ? 60 : 80),
-              // Trust badges
-              AnimatedSection(
-                delay: const Duration(milliseconds: 400),
-                child: _TrustBadgesRow(isMobile: isSmall),
-              ),
-              SizedBox(height: isSmall ? 24 : 32),
-              // Metrics bar
-              AnimatedSection(
-                delay: const Duration(milliseconds: 500),
-                child: _MetricsBar(isMobile: isSmall),
-              ),
-            ],
+                SizedBox(height: isSmall ? 64 : 96),
+                AnimatedSection(
+                  delay: const Duration(milliseconds: 420),
+                  child: _TrustBadgesRow(isMobile: isSmall),
+                ),
+                SizedBox(height: isSmall ? 28 : 40),
+                AnimatedSection(
+                  delay: const Duration(milliseconds: 520),
+                  child: _MetricsBar(isMobile: isSmall),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -145,6 +146,7 @@ class HeroSection extends StatelessWidget {
   }
 }
 
+/// Badge with a slow vertical "float" — the cloud is alive but unhurried.
 class _HeroBadge extends StatefulWidget {
   final bool isMobile;
 
@@ -155,25 +157,29 @@ class _HeroBadge extends StatefulWidget {
 }
 
 class _HeroBadgeState extends State<_HeroBadge>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
+    with TickerProviderStateMixin {
+  late final AnimationController _pulse;
+  late final AnimationController _float;
+  late final Animation<double> _pulseAnim;
 
   @override
   void initState() {
     super.initState();
-    _pulseController = AnimationController(
+    _pulse = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 2400),
     )..repeat(reverse: true);
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 0.5).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    _pulseAnim = Tween<double>(begin: 1.0, end: 0.55).animate(
+      CurvedAnimation(parent: _pulse, curve: Curves.easeInOut),
     );
+    _float = AnimationController(vsync: this, duration: AppDurations.float)
+      ..repeat(reverse: true);
   }
 
   @override
   void dispose() {
-    _pulseController.dispose();
+    _pulse.dispose();
+    _float.dispose();
     super.dispose();
   }
 
@@ -181,27 +187,35 @@ class _HeroBadgeState extends State<_HeroBadge>
   Widget build(BuildContext context) {
     final isMobile = widget.isMobile;
     final s = AppStrings.of(context);
+    final reduceMotion = MediaQuery.of(context).disableAnimations;
 
-    return Container(
+    final badge = Container(
       padding: EdgeInsets.symmetric(
         horizontal: isMobile ? 14 : 20,
-        vertical: 8,
+        vertical: 9,
       ),
       decoration: BoxDecoration(
-        color: Palette.primary.withValues(alpha: 0.1),
-        border: Border.all(color: Palette.primary.withValues(alpha: 0.25)),
-        borderRadius: BorderRadius.circular(100),
+        color: Colors.white.withValues(alpha: 0.72),
+        border: Border.all(color: Palette.primaryDark.withValues(alpha: 0.22)),
+        borderRadius: BorderRadius.circular(AppRadii.pill),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0F069AAA),
+            blurRadius: 24,
+            offset: Offset(0, 6),
+          ),
+        ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           AnimatedBuilder(
-            animation: _pulseAnimation,
+            animation: _pulseAnim,
             builder: (context, child) {
               return Opacity(
-                opacity: _pulseAnimation.value,
+                opacity: _pulseAnim.value,
                 child: Transform.scale(
-                  scale: 0.8 + (_pulseAnimation.value * 0.2),
+                  scale: 0.8 + (_pulseAnim.value * 0.2),
                   child: child,
                 ),
               );
@@ -210,12 +224,12 @@ class _HeroBadgeState extends State<_HeroBadge>
               width: 8,
               height: 8,
               decoration: const BoxDecoration(
-                color: Palette.primary,
+                color: Palette.primaryDark,
                 shape: BoxShape.circle,
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 10),
           Flexible(
             child: Text(
               s.heroBadge,
@@ -223,13 +237,24 @@ class _HeroBadgeState extends State<_HeroBadge>
                 fontFamily: Fonts.body,
                 fontSize: isMobile ? 11 : 13,
                 fontWeight: FontWeight.w600,
-                color: Palette.primary,
+                color: Palette.primaryDark,
                 letterSpacing: isMobile ? 0 : 0.5,
               ),
             ),
           ),
         ],
       ),
+    );
+
+    if (reduceMotion) return badge;
+
+    return AnimatedBuilder(
+      animation: _float,
+      builder: (context, child) {
+        final dy = math.sin(_float.value * math.pi) * 3.0;
+        return Transform.translate(offset: Offset(0, -dy), child: child);
+      },
+      child: badge,
     );
   }
 }
@@ -255,12 +280,12 @@ class _TrustBadgesRow extends StatelessWidget {
           .map(
             (b) => Container(
               padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 10 : 14,
-                vertical: 6,
+                horizontal: isMobile ? 11 : 14,
+                vertical: 7,
               ),
               decoration: BoxDecoration(
-                color: Palette.dark.withValues(alpha: 0.04),
-                borderRadius: BorderRadius.circular(100),
+                color: Colors.white.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(AppRadii.pill),
                 border: Border.all(
                   color: Palette.dark.withValues(alpha: 0.08),
                 ),
@@ -271,9 +296,9 @@ class _TrustBadgesRow extends StatelessWidget {
                   Icon(
                     b.$2,
                     size: isMobile ? 13 : 15,
-                    color: Palette.primary,
+                    color: Palette.primaryDark,
                   ),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 7),
                   Text(
                     b.$1,
                     style: TextStyle(
@@ -292,6 +317,7 @@ class _TrustBadgesRow extends StatelessWidget {
   }
 }
 
+/// Metrics bar — a suspended white cloud carrying the proof points.
 class _MetricsBar extends StatelessWidget {
   final bool isMobile;
 
@@ -308,26 +334,23 @@ class _MetricsBar extends StatelessWidget {
     ];
 
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 900),
+      constraints: const BoxConstraints(maxWidth: 940),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              blurRadius: 40,
-              offset: const Offset(0, 2),
-            ),
-          ],
-          border: Border.all(color: Colors.black.withValues(alpha: 0.04)),
+          color: Colors.white.withValues(alpha: 0.78),
+          borderRadius: BorderRadius.circular(AppRadii.xl),
+          boxShadow: CloudShadows.floating,
+          border: Border.all(color: Colors.white.withValues(alpha: 0.9)),
         ),
-        padding: EdgeInsets.symmetric(vertical: isMobile ? 32 : 40),
+        padding: EdgeInsets.symmetric(
+          vertical: isMobile ? 36 : 44,
+          horizontal: isMobile ? 8 : 16,
+        ),
         child: isMobile
             ? Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 0,
-                runSpacing: 24,
+                runSpacing: 28,
                 children: metrics
                     .map(
                       (m) => SizedBox(
@@ -351,7 +374,7 @@ class _MetricsBar extends StatelessWidget {
                         Container(
                           width: 1,
                           height: 40,
-                          color: Colors.black.withValues(alpha: 0.08),
+                          color: Palette.hairline,
                         ),
                     ],
                   ],
@@ -376,21 +399,24 @@ class _MetricItem extends StatelessWidget {
         Text(
           number,
           style: const TextStyle(
-            fontFamily: Fonts.body,
-            fontSize: 36,
-            fontWeight: FontWeight.w700,
+            fontFamily: Fonts.title,
+            fontSize: 38,
+            fontWeight: FontWeight.w800,
             color: Palette.dark,
-            letterSpacing: -1,
+            letterSpacing: -1.4,
+            fontFeatures: [FontFeature.tabularFigures()],
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         Text(
           label,
+          textAlign: TextAlign.center,
           style: const TextStyle(
             fontFamily: Fonts.body,
-            fontSize: 13,
-            color: Palette.textMuted,
+            fontSize: 12.5,
+            color: Palette.textSecondary,
             fontWeight: FontWeight.w500,
+            letterSpacing: 0.3,
           ),
         ),
       ],
@@ -415,53 +441,78 @@ class _PrimaryButton extends StatefulWidget {
 
 class _PrimaryButtonState extends State<_PrimaryButton> {
   bool _isHovered = false;
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
+    final scale = _isPressed ? 0.97 : 1.0;
+    final lift = _isHovered && !_isPressed ? -2.0 : 0.0;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
+      onExit: (_) => setState(() {
+        _isHovered = false;
+        _isPressed = false;
+      }),
       child: GestureDetector(
+        onTapDown: (_) => setState(() => _isPressed = true),
+        onTapUp: (_) => setState(() => _isPressed = false),
+        onTapCancel: () => setState(() => _isPressed = false),
         onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: AppTransitions.fast,
-          width: widget.fullWidth ? double.infinity : null,
-          padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
-          transform: _isHovered
-              ? Matrix4.translationValues(0, -2, 0)
-              : Matrix4.identity(),
-          decoration: BoxDecoration(
-            color: Palette.dark,
-            borderRadius: BorderRadius.circular(100),
-            boxShadow: _isHovered
-                ? [
-                    BoxShadow(
-                      color: Palette.dark.withValues(alpha: 0.25),
-                      blurRadius: 30,
-                      offset: const Offset(0, 8),
-                    ),
-                  ]
-                : [],
-          ),
-          child: Row(
-            mainAxisSize: widget.fullWidth
-                ? MainAxisSize.max
-                : MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                widget.label,
-                style: const TextStyle(
-                  fontFamily: Fonts.body,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+        child: AnimatedScale(
+          scale: scale,
+          duration: const Duration(milliseconds: 120),
+          curve: AppCurves.cloud,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            curve: AppCurves.cloud,
+            width: widget.fullWidth ? double.infinity : null,
+            padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 17),
+            transform: Matrix4.translationValues(0, lift, 0),
+            decoration: BoxDecoration(
+              color: Palette.dark,
+              borderRadius: BorderRadius.circular(AppRadii.pill),
+              boxShadow: _isHovered
+                  ? [
+                      BoxShadow(
+                        color: Palette.dark.withValues(alpha: 0.22),
+                        blurRadius: 36,
+                        offset: const Offset(0, 12),
+                      ),
+                      const BoxShadow(
+                        color: Color(0x0A000000),
+                        blurRadius: 8,
+                        offset: Offset(0, 2),
+                      ),
+                    ]
+                  : const [
+                      BoxShadow(
+                        color: Color(0x14000000),
+                        blurRadius: 18,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+            ),
+            child: Row(
+              mainAxisSize:
+                  widget.fullWidth ? MainAxisSize.max : MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.label,
+                  style: const TextStyle(
+                    fontFamily: Fonts.body,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    letterSpacing: 0.2,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
-            ],
+                const SizedBox(width: 10),
+                const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
+              ],
+            ),
           ),
         ),
       ),
@@ -486,40 +537,55 @@ class _SecondaryButton extends StatefulWidget {
 
 class _SecondaryButtonState extends State<_SecondaryButton> {
   bool _isHovered = false;
+  bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
+    final scale = _isPressed ? 0.97 : 1.0;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
+      onExit: (_) => setState(() {
+        _isHovered = false;
+        _isPressed = false;
+      }),
       child: GestureDetector(
+        onTapDown: (_) => setState(() => _isPressed = true),
+        onTapUp: (_) => setState(() => _isPressed = false),
+        onTapCancel: () => setState(() => _isPressed = false),
         onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: AppTransitions.fast,
-          width: widget.fullWidth ? double.infinity : null,
-          padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
-          transform: _isHovered
-              ? Matrix4.translationValues(0, -2, 0)
-              : Matrix4.identity(),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(
+        child: AnimatedScale(
+          scale: scale,
+          duration: const Duration(milliseconds: 120),
+          curve: AppCurves.cloud,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            curve: AppCurves.cloud,
+            width: widget.fullWidth ? double.infinity : null,
+            padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 17),
+            decoration: BoxDecoration(
               color: _isHovered
-                  ? Palette.dark
-                  : Palette.dark.withValues(alpha: 0.15),
-              width: 1.5,
+                  ? Colors.white.withValues(alpha: 0.6)
+                  : Colors.white.withValues(alpha: 0.35),
+              borderRadius: BorderRadius.circular(AppRadii.pill),
+              border: Border.all(
+                color: _isHovered
+                    ? Palette.dark.withValues(alpha: 0.5)
+                    : Palette.dark.withValues(alpha: 0.18),
+                width: 1,
+              ),
             ),
-          ),
-          child: Text(
-            widget.label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: Fonts.body,
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              color: Palette.dark,
+            child: Text(
+              widget.label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontFamily: Fonts.body,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Palette.dark,
+                letterSpacing: 0.2,
+              ),
             ),
           ),
         ),
