@@ -51,3 +51,6 @@ desktop.ini
 
 # Claude Code personal settings
 .claude/settings.local.json
+
+# Firebase CLI local deploy cache
+.firebase/
