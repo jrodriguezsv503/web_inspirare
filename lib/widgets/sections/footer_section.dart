@@ -193,7 +193,7 @@ class FooterSection extends StatelessWidget {
           onTap: () => safeLaunchUrl(context, AppUrls.email),
         ),
         _FooterLink(
-          text: '+503 7933-6960',
+          text: '+503 7100-4131',
           onTap: () => safeLaunchUrl(context, AppUrls.whatsapp),
         ),
         _FooterLink(text: s.ctaLocation),

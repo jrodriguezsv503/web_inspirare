@@ -223,7 +223,7 @@ San Salvador, El Salvador
 D-U-N-S® 81-605-6716
 NIT: 0622-151025-101-4
 
-hello@inspirare.app  |  +503 7933-6960
+hello@inspirare.app  |  +503 7100-4131
 ```
 
 Además, crear un email alias más "enterprise-friendly" para el mercado US:

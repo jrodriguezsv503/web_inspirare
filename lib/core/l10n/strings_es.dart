@@ -458,7 +458,7 @@ class StringsEs extends AppStrings {
   @override
   String get ctaEmail => 'hello@inspirare.app';
   @override
-  String get ctaWhatsapp => 'WhatsApp: +503 7933-6960';
+  String get ctaWhatsapp => 'WhatsApp: +503 7100-4131';
   @override
   String get ctaTimezone => 'CST (UTC-6) \u2022 Igual que Chicago';
   @override

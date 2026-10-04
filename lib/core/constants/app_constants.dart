@@ -4,7 +4,7 @@ import 'package:inspirare/core/l10n/app_strings.dart';
 class AppUrls {
   AppUrls._();
 
-  static const String whatsapp = 'https://wa.me/50379336960';
+  static const String whatsapp = 'https://wa.me/50371004131';
   static const String email = 'mailto:hello@inspirare.app';
   static const String calendly = 'https://calendly.com/inspirare';
   static const String linkedin = 'https://www.linkedin.com/in/joel-rodriguez-inspirare';
